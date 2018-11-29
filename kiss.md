@@ -1,7 +1,6 @@
 # Kiss Principle
 
-[![KIss Principle](images/kiss.png)](https://opensource.byjg.com/)
-
+[![Kiss Principle](https://img.shields.io/badge/Kiss%20Principle-ok-brightgreen.svg)](http://opensource.byjg.com)
 
 KISS is an acronym for "Keep it stupid simple". 
 The KISS principle states that most systems work best if they are kept simple rather than made complicated; 
