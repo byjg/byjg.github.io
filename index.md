@@ -165,7 +165,7 @@ A lightweigth Yaj Plugin for Server-Sent Events (SSE) EventSource Polyfill
 
 This is a service provide by us. Search Zip Codes and send SMS
 
-More info: http://www.byjg.com.br/ (Portuguese Brazil)
+More info: [http://www.byjg.com.br/](http://www.byjg.com.br/) (Portuguese Brazil)
 
 - [sms-cep-service-csharp](/sms-cep-service-csharp):
 Código fonte do serviço SMS e CEP ByJG
