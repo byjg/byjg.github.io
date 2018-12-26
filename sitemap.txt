@@ -47,19 +47,4 @@ https://opensource.byjg.com/jquery-sse/
 https://opensource.byjg.com/lazy-dependency-require/
 https://opensource.byjg.com/yaj/
 https://opensource.byjg.com/yaj-sse/
-https://github.com/byjg/sms-cep-service-csharp/
-https://github.com/byjg/sms-cep-service-delphi/
-https://github.com/byjg/sms-cep-service-foxpro/
-https://github.com/byjg/sms-cep-service-html/
-https://github.com/byjg/sms-cep-service-java/
-https://github.com/byjg/sms-cep-service-joomla-1.5/
-https://github.com/byjg/sms-cep-service-joomla-2.5/
-https://github.com/byjg/sms-cep-service-objectivec/
-https://github.com/byjg/sms-cep-service-php5/
-https://github.com/byjg/sms-cep-service-sqlserver/
-https://github.com/byjg/sms-cep-service-vb.net/
-https://github.com/byjg/sms-cep-service-vb6/
-https://github.com/byjg/sms-cep-service-xHarbour/
-https://github.com/byjg/codegenx/
-https://github.com/byjg/xmlnuke/
 
