@@ -1,29 +1,29 @@
-name: byjg
+name: byjg.github.io
 
 project:
   version: 1.0.0
-  download_url: https://github.com/byjg/byjg/releases
+  download_url: https://github.com/byjg/byjg.github.io/releases
 
 license:
   software: MIT
   software_url: https://opensource.org/licenses/MIT
-  
+
   docs: MIT
   docs_url: https://opensource.org/licenses/MIT
-  
-git_edit_address: https://github.com/byjg/byjg/blob/master/
+
+git_edit_address: https://github.com/byjg/byjg.github.io/blob/master/
 
 links:
   header:
   - title: GitHub
-    url: https://github.com/byjg/byjg
+    url: https://github.com/byjg/byjg.github.io
   - title: ByJG
     url: https://opensource.byjg.com/
   footer:
   - title: GitHub
-    url: https://github.com/byjg/byjg
+    url: https://github.com/byjg/byjg.github.io
   - title: Issues
-    url: https://github.com/byjg/byjg/issues
+    url: https://github.com/byjg/byjg.github.io/issues
 
 ui:
   header:
@@ -34,12 +34,12 @@ ui:
 social:
   github:
     user: byjg
-    repo: byjg
+    repo: byjg.github.io
   twitter:
     enabled: false
-    via: 
+    via:
     hash: opensourcebyjg
-    account: 
+    account:
   facebook:
     enabled: true
     url: https://opensource.byjg.com/
