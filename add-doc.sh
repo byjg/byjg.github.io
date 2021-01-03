@@ -22,11 +22,12 @@ TMP_FOLDER=/tmp/byjg.github.io
 
 git clone --depth 1 https://byjg:$DOC_GITHUB_TOKEN@github.com/byjg/byjg.github.io $TMP_FOLDER
 
+rm -rf ${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}*
 if [ -z "$EXTRA_FOLDER" ]
 then
   cp README.md "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}.md"
 else
-  mkdir "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
+  mkdir -p "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
   cp README.md "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
   cp -r ${EXTRA_FOLDER}/* "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
 fi
