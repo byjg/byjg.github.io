@@ -1,67 +1,37 @@
-name: byjg.github.io
+title: opensource.byjg.com
+description: Opensource Projects ByJG
+theme: null
 
-project:
-  version: 1.0.0
-  download_url: https://github.com/byjg/byjg.github.io/releases
+# debug:
+#   compress: true
+#   dist: false
+#   shortcodes: true
 
-license:
-  software: MIT
-  software_url: https://opensource.org/licenses/MIT
+readme_index:
+  with_frontmatter: true
 
-  docs: MIT
-  docs_url: https://opensource.org/licenses/MIT
-
-git_edit_address: https://github.com/byjg/byjg.github.io/blob/master/
-
-links:
-  header:
-  - title: GitHub
-    url: https://github.com/byjg/byjg.github.io
-  - title: ByJG
-    url: https://opensource.byjg.com/
-  footer:
-  - title: GitHub
-    url: https://github.com/byjg/byjg.github.io
-  - title: Issues
-    url: https://github.com/byjg/byjg.github.io/issues
-
-ui:
-  header:
-    color1: "#080331"
-    color2: "#0033cc"
-    trianglify: true
-
-social:
-  github:
-    user: byjg
-    repo: byjg.github.io
-  twitter:
-    enabled: false
-    via:
-    hash: opensourcebyjg
-    account:
-  facebook:
-    enabled: true
-    url: https://opensource.byjg.com/
-    profileUrl:
-
-author:
-  twitter: byjg
-
-twitter:
-  card: summary
-  username: byjg
-
-logo: https://opensource.byjg.com/images/logo_byjg.png
-
-analytics:
-  google: UA-130014324-1
-
+google:
+  gtag: UA-130014324-1
+  
 plugins:
-  - jekyll-seo-tag
+  - jemoji
+  - jekyll-avatar
+  - jekyll-mentions
 
-# Build settings
-markdown: kramdown
-remote_theme: byjg/jekyll-docs-theme
-# theme: bulma-clean-theme
+exclude:
+  - Makefile
+  - CNAME
+  - LICENSE
+  - update.sh
+  - Gemfile
+  - Gemfile.lock
+  - requirements.txt
+  - node_modules
+  - package.json
+  - package-lock.json
+  - webpack.config.js
+  - jekyll-rtd-theme.gemspec
+  
+remote_theme: rundocs/jekyll-rtd-theme
+
 
