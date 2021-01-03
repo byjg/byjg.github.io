@@ -1,6 +1,6 @@
 # Opensource ByJG
 
-[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg.com-brightgreen.svg)](http://opensource.byjg.com)
+[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 
 
 Every project we work, we had a chance to create some useful routine. The best part is that we want to share this
