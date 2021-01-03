@@ -62,6 +62,6 @@ plugins:
 
 # Build settings
 markdown: kramdown
-# remote_theme: byjg/jekyll-docs-theme
-theme: bulma-clean-theme
+remote_theme: byjg/jekyll-docs-theme
+# theme: bulma-clean-theme
 
