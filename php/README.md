@@ -6,7 +6,7 @@ sort: 1
 
 ## Class Dependency
 
-![Image of Yaktocat](php_class_dependency.png)
+![Image of class dependency](php_class_dependency.png)
 
 ## Documentation
 
