@@ -1,6 +1,8 @@
 # PHP Docker Images ByJG
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
+[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/docker-php/)
+[![Build Status](https://travis-ci.com/byjg/docker-php.svg?branch=master)](https://travis-ci.com/byjg/docker-php)
 
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php]()**
 
@@ -11,16 +13,16 @@ A complete and small PHP Docker image based on Alpine Linux and run on the archi
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
 The PHP images are ready to use in:
- - Development Environment
- - Production Environment
- - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
- - IDE Integration
- 
+- Development Environment
+- Production Environment
+- CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
+- [IDE Integration](ide)
+
 ## PHP Versions
 
-- 8.0.0 (some extensions are not available yet)
-- 7.4.13
-- 7.3.25
+- 8.0.7
+- 7.4.20
+- 7.3.27
 - 7.2.33
 - 7.1.33
 - 7.0.33
@@ -35,6 +37,10 @@ Five different images for each PHP Version
 * [fpm](image-fpm) - PHP with FPM installed
 * [fpm-apache](image-fpm) - PHP and Apache using FPM
 * [fpm-nginx](image-fpm) - PHP and Nginx using FPM
+
+## Environment variables
+
+[Here](environment) a list of environment variables.
 
 ## Supported Tags
 
@@ -77,19 +83,23 @@ Five different images for each PHP Version
 Since January 2021 all tags have also the suffix YYYY.MM. e.d
 - 8.0-fpm-nginx-2021.01
 
-
-
 ## Image Sizes
 
 Below a table with images uncompressed
 
-| PHP Version   | base   | cli   | fpm    | fpm-nginx | fpm-apache |
-|:-------------:|:------:|:-----:|:------:|:---------:|:----------:|
-| 5.6           |   94MB | 131MB | 109MB  | 156MB     | 155MB      |
-| 7.0           | 92.6MB | 136MB | 101MB  | 147MB     | 146MB      |
-| 7.1           | 82.4MB | 126MB | 87MB   | 134MB     | 133MB      |
-| 7.2           |   94MB | 140MB | 104MB  | 151MB     | 150MB      |
-| 7.3           |   99MB | 151MB | 104MB  | 152MB     | 152MB      |
+| PHP Version   | base  | cli   | fpm    | fpm-nginx | fpm-apache |
+|:-------------:|:-----:|:-----:|:------:|:---------:|:----------:|
+| 8.0           | 136MB | 154MB | 145MB  | 156MB     | 156MB      |
+| 7.4           | 136MB | 154MB | 144MB  | 156MB     | 156MB      |
+| 7.3           | 104MB | 123MB | 109MB  | 161MB     | 161MB      |
+| 7.2           | 106MB | 124MB | 111MB  | 157MB     | 157MB      |
+| 7.1           | 101MB | 119MB | 105MB  | 151MB     | 150MB      |
+| 7.0           | 117MB | 136MB | 125MB  | 170MB     | 169MB      |
+| 5.6           | 103MB | 122MB | 127MB  | 173MB     | 173MB      |
+
+## Building your own image
+
+Detailed instructions can be found [here](building).
 
 ----
 [Open source ByJG](http://opensource.byjg.com)
