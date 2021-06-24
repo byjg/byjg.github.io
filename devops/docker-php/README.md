@@ -2,7 +2,11 @@
 
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 
-A complete and small PHP Docker image based on Alpine Linux.
+**See full documentation at: [https://opensource.byjg.com/devops/docker-php]()**
+
+A complete and small PHP Docker image based on Alpine Linux and run on the archictectures
+- amd64 (x86_64)
+- arm64 (Raspberry PI, Graviton, etc) - available after February 2021
 
 The Docker ByJG PHP Images has several bundled images based on PHP in different versions.
 
@@ -26,11 +30,11 @@ The PHP images are ready to use in:
 
 Five different images for each PHP Version
 
-* base - Minimal Image, base for the other
-* cli - PHP with Command Line installed (composer, phpunit, etc)
-* fpm - PHP with FPM installed
-* fpm-apache - PHP and Apache using FPM
-* fpm-nginx - PHP and Nginx using FPM
+* [base](image-base) - Minimal Image, base for the other
+* [cli](image-cli) - PHP with Command Line installed (composer, phpunit, etc)
+* [fpm](image-fpm) - PHP with FPM installed
+* [fpm-apache](image-fpm) - PHP and Apache using FPM
+* [fpm-nginx](image-fpm) - PHP and Nginx using FPM
 
 ## Supported Tags
 
@@ -70,7 +74,9 @@ Five different images for each PHP Version
 - 5.6-fpm-apache
 - 5.6-fpm-nginx
 
-More info read the documentation on: [https://opensource.byjg.com/devops/docker-php]()
+Since January 2021 all tags have also the suffix YYYY.MM. e.d
+- 8.0-fpm-nginx-2021.01
+
 
 
 ## Image Sizes
