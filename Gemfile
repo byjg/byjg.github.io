@@ -32,3 +32,5 @@ gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 gem "liquid", "~> 4.0"
 
 gem "jemoji", "~> 0.12.0"
+
+gem "jekyll-avatar", "~> 0.7.0"
