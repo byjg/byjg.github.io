@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  easyhaproxy-ingress:
+  - apiVersion: v2
+    appVersion: test
+    created: "2022-08-27T20:53:30.529129027Z"
+    description: EasyHAProxy - A service discovery backed on HAProxy
+    digest: a634e1ba8c137a780f95da1f37c0530cc7186eda607c8f2a05419019fd951419
+    name: easyhaproxy-ingress
+    type: application
+    urls:
+    - https://opensource.byjg.com.br/helm/easyhaproxy-ingress-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-08-27T20:53:30.528620217Z"
