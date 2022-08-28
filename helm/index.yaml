@@ -3,7 +3,7 @@ entries:
   easyhaproxy-ingress:
   - apiVersion: v2
     appVersion: test
-    created: "2022-08-28T03:26:20.434188366Z"
+    created: "2022-08-28T03:37:04.612601437Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: 6b8a6221791852b04b0690992e0229f32b425711861a49d98a2776fb9423d9e5
     name: easyhaproxy-ingress
@@ -14,13 +14,13 @@ entries:
   static-httpserver:
   - apiVersion: v2
     appVersion: latest
-    created: "2022-08-28T03:26:20.434911674Z"
+    created: "2022-08-28T03:37:04.612970351Z"
     description: A minimal HTTP server for static pages. Full version with "parking"
       HTML.
-    digest: b9988f62e7394d59c73a6bdda92bdbe388f69041e1f21fccf611c7a5a118d592
+    digest: ff711b4532dbf6897eed2bfbb07de99d6ab4f6eb30e15165e2d555dda9979fd5
     name: static-httpserver
     type: application
     urls:
     - https://opensource.byjg.com/helm/static-httpserver-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-28T03:26:20.433060055Z"
+generated: "2022-08-28T03:37:04.612045616Z"
