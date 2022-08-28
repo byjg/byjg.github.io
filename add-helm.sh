@@ -31,7 +31,7 @@ helm version
 cd $HELM_FOLDER
 helm package $HELM_PROJECT
 mv $HELM_PROJECT*.tgz $TMP_FOLDER/helm
-helm repo index $TMP_FOLDER/helm --url https://opensource.byjg.com.br/helm
+helm repo index $TMP_FOLDER/helm --url https://opensource.byjg.com/helm
 
 cd "$TMP_FOLDER"
 git add "helm/*"

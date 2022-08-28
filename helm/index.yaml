@@ -9,6 +9,6 @@ entries:
     name: easyhaproxy-ingress
     type: application
     urls:
-    - https://opensource.byjg.com.br/helm/easyhaproxy-ingress-0.1.0.tgz
+    - https://opensource.byjg.com/helm/easyhaproxy-ingress-0.1.0.tgz
     version: 0.1.0
 generated: "2022-08-28T01:08:53.620636872Z"
