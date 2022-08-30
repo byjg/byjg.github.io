@@ -3,9 +3,9 @@ entries:
   easyhaproxy:
   - apiVersion: v2
     appVersion: test
-    created: "2022-08-29T23:15:57.946474734Z"
+    created: "2022-08-30T20:20:14.902924841Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
-    digest: 258ef6780f7c35d4fe6d1e7d3c736e6e61e0ce7ea0402e9093fb51350ad7f884
+    digest: a5dee1fe1c339cb4916fc076657db77957d12a2c87279acab1fded1501196e87
     name: easyhaproxy
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: test
-    created: "2022-08-29T23:15:57.945817695Z"
+    created: "2022-08-30T20:20:14.902052628Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: e2019a2ec047d4289cabe25b7556b74411689e1612505a787ddd6c6d7730ce53
     name: easyhaproxy
@@ -23,7 +23,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: test
-    created: "2022-08-29T23:15:57.945261762Z"
+    created: "2022-08-30T20:20:14.901057613Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: fcdf99bf482fd2830f1a6de441aa8d5d7dfc973633a035c063ad9a1bf9bb9f93
     name: easyhaproxy
@@ -34,7 +34,7 @@ entries:
   static-httpserver:
   - apiVersion: v2
     appVersion: latest
-    created: "2022-08-29T23:15:57.947006766Z"
+    created: "2022-08-30T20:20:14.90354735Z"
     description: A minimal HTTP server for static pages. Full version with "parking"
       HTML.
     digest: ff711b4532dbf6897eed2bfbb07de99d6ab4f6eb30e15165e2d555dda9979fd5
@@ -43,4 +43,4 @@ entries:
     urls:
     - https://opensource.byjg.com/helm/static-httpserver-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-29T23:15:57.944428112Z"
+generated: "2022-08-30T20:20:14.899612692Z"
