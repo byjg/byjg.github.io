@@ -27,12 +27,10 @@ rm -rf ${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}.md
 if [ -z "$EXTRA_FOLDER" ]
 then
   cp README.md "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}.md"
-  cp *.png "${TMP_FOLDER}/${DOC_FOLDER}" | true
 else
   mkdir -p "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
-  cp README.md "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
+  sed "s~(docs/~(~g"  README.md > "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
   cp -r ${EXTRA_FOLDER}/* "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
-  cp *.png "${TMP_FOLDER}/${DOC_FOLDER}" | true
 fi
 
 cd "$TMP_FOLDER"
