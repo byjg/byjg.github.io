@@ -3,9 +3,9 @@ entries:
   easyhaproxy:
   - apiVersion: v2
     appVersion: 4.2.0
-    created: "2022-09-02T20:05:00.839080042Z"
+    created: "2022-09-02T20:05:41.300253696Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
-    digest: a6bbec3ed08754a14a434c41476c375f7e0001d0409db7360946cd8f57c826a1
+    digest: c478cb3506c39a8e69c3123029b7b5493d790165d9163d2bc87824da227761f1
     name: easyhaproxy
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: master
-    created: "2022-09-02T20:05:00.838591413Z"
+    created: "2022-09-02T20:05:41.299671664Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: a111f02e52ff8b1c8be11f32c5a5ed43ad7f3cb6108d74de296a774e3dbc28a0
     name: easyhaproxy
@@ -23,7 +23,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: test
-    created: "2022-09-02T20:05:00.838069582Z"
+    created: "2022-09-02T20:05:41.299106233Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: a5dee1fe1c339cb4916fc076657db77957d12a2c87279acab1fded1501196e87
     name: easyhaproxy
@@ -33,7 +33,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: test
-    created: "2022-09-02T20:05:00.837470546Z"
+    created: "2022-09-02T20:05:41.298497899Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: e2019a2ec047d4289cabe25b7556b74411689e1612505a787ddd6c6d7730ce53
     name: easyhaproxy
@@ -43,7 +43,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: test
-    created: "2022-09-02T20:05:00.836985517Z"
+    created: "2022-09-02T20:05:41.297338834Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: fcdf99bf482fd2830f1a6de441aa8d5d7dfc973633a035c063ad9a1bf9bb9f93
     name: easyhaproxy
@@ -54,7 +54,7 @@ entries:
   static-httpserver:
   - apiVersion: v2
     appVersion: latest
-    created: "2022-09-02T20:05:00.839610074Z"
+    created: "2022-09-02T20:05:41.300985237Z"
     description: A minimal HTTP server for static pages. Full version with "parking"
       HTML.
     digest: 25900bad407e9a54495c28ba1791cfdd797e90e7324a27fa1f6168cdacf99682
@@ -63,4 +63,4 @@ entries:
     urls:
     - https://opensource.byjg.com/helm/static-httpserver-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-02T20:05:00.836286476Z"
+generated: "2022-09-02T20:05:41.296769303Z"
