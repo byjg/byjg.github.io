@@ -29,7 +29,7 @@ then
   cp README.md "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}.md"
 else
   mkdir -p "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
-  sed "s~(docs/~(~g"  README.md > "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
+  sed "s~(docs/~(~g"  README.md > "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}/README.md"
   cp -r ${EXTRA_FOLDER}/* "${TMP_FOLDER}/${DOC_FOLDER}/${PROJECT_NAME}"
 fi
 
