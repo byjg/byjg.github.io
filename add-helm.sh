@@ -37,5 +37,5 @@ cd "$TMP_FOLDER"
 git add "helm/*"
 git config user.name "CI/CD"
 git config user.email "info@byjg.com.br"
-git commit -m "Add helm package '$HELM_PROJECT'"
+git commit -m "[skip ci] Add helm package '$HELM_PROJECT'"
 git push
