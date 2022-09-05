@@ -54,7 +54,7 @@ For detailed instructions on how to use EasyHAProxy, follow the instructions for
 ## See EasyHAProxy in action
 
 Click on the image to see the videos (use HD for better visualization)
-| . |. | 
+| . | . | 
 |:----------:|:------------:|
 | [![Docker In Action](video-docker.png)](https://youtu.be/ar8raFK0R1k) | [![Docker and Letsencrypt](video-docker-ssl.png)](https://youtu.be/xwIdj9mc2mU) | 
 | [![K8s In Action](video-kubernetes.png)](https://youtu.be/uq7TuLIijks) | [![K8s and Letsencrypt](video-kubernetes-letsencrypt.png)](https://youtu.be/v9Q4M5Al7AQ) | 
