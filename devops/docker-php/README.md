@@ -7,6 +7,7 @@
 **See full documentation at: [https://opensource.byjg.com/devops/docker-php](https://opensource.byjg.com/devops/docker-php)**
 
 A complete and small PHP Docker image based on Alpine Linux and run on the archictectures
+
 - amd64 (x86_64)
 - arm64 (Raspberry PI, Graviton, etc) - available after February 2021
 
@@ -21,10 +22,15 @@ The PHP images are ready to use in:
 
 ## PHP Versions
 
-- 8.2.0RC4
-- 8.1.11
-- 8.0.24
-- 7.4.32
+### "Live" versions
+
+- 8.2.3
+- 8.1.16
+- 8.0.28
+
+### Versions are not updated
+
+- 7.4.26
 - 7.3.33
 - 7.2.33
 - 7.1.33
