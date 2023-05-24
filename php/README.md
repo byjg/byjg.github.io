@@ -6,6 +6,9 @@ sort: 2
 
 ## Class Dependency
 
+[authuser](authuser)
+
+
 ![Image of class dependency](php_class_dependency.png)
 
 ## Documentation
