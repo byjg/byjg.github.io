@@ -18,15 +18,16 @@ The PHP images are ready to use in:
 - Development Environment
 - Production Environment
 - CI/CD environments (like Travis-CI, Circle-CI, Jenkis, Bitbucket Pipelines, and others)
-- [IDE Integration](ide)
+- [IDE Integration](ide.md)
 
 ## PHP Versions
 
 ### "Live" versions
 
-- 8.2.5
-- 8.1.18
-- 8.0.28
+- 8.3-0alpha1
+- 8.2.7
+- 8.1.20
+- 8.0.29
 
 ### Versions are not updated
 
@@ -55,6 +56,11 @@ Five different images for each PHP Version
 
 | Tag            | Montly builds |
 |:---------------|:-------------:|
+| 8.3-base       |      yes      |
+| 8.3-cli        |      yes      |
+| 8.3-fpm        |      yes      |
+| 8.3-fpm-apache |      yes      |
+| 8.3-fpm-nginx  |      yes      |
 | 8.2-base       |      yes      |
 | 8.2-cli        |      yes      |
 | 8.2-fpm        |      yes      |
@@ -70,11 +76,11 @@ Five different images for each PHP Version
 | 8.0-fpm        |      yes      |
 | 8.0-fpm-apache |      yes      |
 | 8.0-fpm-nginx  |      yes      |
-| 7.4-base       |      yes      |
-| 7.4-cli        |      yes      |
-| 7.4-fpm        |      yes      |
-| 7.4-fpm-apache |      yes      |
-| 7.4-fpm-nginx  |      yes      |
+| 7.4-base       |       -       |
+| 7.4-cli        |       -       |
+| 7.4-fpm        |       -       |
+| 7.4-fpm-apache |       -       |
+| 7.4-fpm-nginx  |       -       |
 | 7.3-base       |       -       |
 | 7.3-cli        |       -       |
 | 7.3-fpm        |       -       |
@@ -108,15 +114,15 @@ Since January 2021 all tags have also the suffix YYYY.MM. e.d
 
 Below a table with images uncompressed
 
-| PHP Version   | base  | cli   | fpm    | fpm-nginx | fpm-apache |
+|  PHP Version  | base  |  cli  |  fpm   | fpm-nginx | fpm-apache |
 |:-------------:|:-----:|:-----:|:------:|:---------:|:----------:|
-| 8.0           | 136MB | 154MB | 145MB  | 156MB     | 156MB      |
-| 7.4           | 136MB | 154MB | 144MB  | 156MB     | 156MB      |
-| 7.3           | 104MB | 123MB | 109MB  | 161MB     | 161MB      |
-| 7.2           | 106MB | 124MB | 111MB  | 157MB     | 157MB      |
-| 7.1           | 101MB | 119MB | 105MB  | 151MB     | 150MB      |
-| 7.0           | 117MB | 136MB | 125MB  | 170MB     | 169MB      |
-| 5.6           | 103MB | 122MB | 127MB  | 173MB     | 173MB      |
+|      8.0      | 136MB | 154MB | 145MB  |   156MB   |   156MB    |
+|      7.4      | 136MB | 154MB | 144MB  |   156MB   |   156MB    |
+|      7.3      | 104MB | 123MB | 109MB  |   161MB   |   161MB    |
+|      7.2      | 106MB | 124MB | 111MB  |   157MB   |   157MB    |
+|      7.1      | 101MB | 119MB | 105MB  |   151MB   |   150MB    |
+|      7.0      | 117MB | 136MB | 125MB  |   170MB   |   169MB    |
+|      5.6      | 103MB | 122MB | 127MB  |   173MB   |   173MB    |
 
 ## Building your own image
 
