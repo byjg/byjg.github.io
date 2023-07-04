@@ -19,11 +19,23 @@ EasyHAProxy can detect and configure HAProxy automatically on the following plat
 - Docker Swarm
 - Kubernetes
 
+## Who is using?
+
+EasyHAProxy is part of some projects:
+- Dokku 
+- MicroK8s
+
+See detailed instructions on how to install below.
+
+## EasyHAProxy Mission
+
+Easy to set up and low configuration to numerous features. 
+
 ## Features
 
 EasyHAProxy will discover the services based on the Docker Tags of the containers running on a Docker host or Docker Swarm cluster and dynamically set up the `haproxy.cfg`. Below, EasyHAProxy main features:
 
-- Use Letsencrypt with HAProxy.
+- Support Automatic Certificate Management Environment (ACME) protocol compatible with Let's encrypt and others CA.
 - Set your custom SSL certificates
 - Balance traffic between multiple replicas
 - Set SSL with three different levels of validations and according to the most recent definitions.
@@ -34,7 +46,7 @@ EasyHAProxy will discover the services based on the Docker Tags of the container
 
 Also, it is possible to set up HAProxy from a simple Yaml file instead of creating `haproxy.cfg` file.
 
-## How Does It Works?
+## How Does It Work?
 
 You don't need to change your current infrastructure and don't need to learn the HAProxy configuration.
 
@@ -58,6 +70,13 @@ Or you can install using tools:
 [![Helm](easyhaproxy_helm.png)](helm.md)
 [![MicroK8s](easyhaproxy_microk8s.png)](microk8s.md)
 [![Dokku](easyhaproxy_dokku.png)](dokku.md)
+
+## Special Topics
+
+If you already set up the EasyHAProxy, is time to go deeper:
+
+- [Custom SSL](ssl.md)
+- [Automatic Certificate Issuing](acme.md) (e.g. Letsencrypt)
 
 ## See EasyHAProxy in action
 
