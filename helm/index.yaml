@@ -3,9 +3,9 @@ entries:
   easyhaproxy:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2023-12-04T07:12:34.455371934Z"
+    created: "2023-12-04T07:31:44.19964645Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
-    digest: 7fdf683908c3af8b5f2a8aa76ae23cbd20d86f7d471ef41559d9199c0ceabe2f
+    digest: e86beb9f12572d79707bffa95cb097bc686804890f5a7d2c404282d79c4a1d1a
     name: easyhaproxy
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 4.3.1-rc1
-    created: "2023-12-04T07:12:34.455050363Z"
+    created: "2023-12-04T07:31:44.199303231Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: 585ff193a79065e2a8680bb10dda2631c92a22e2f3c8332f8e319453dfaae8d2
     name: easyhaproxy
@@ -23,7 +23,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 4.3.0
-    created: "2023-12-04T07:12:34.454678396Z"
+    created: "2023-12-04T07:31:44.19900122Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: 3d36cdb187b11bb71667286593f0f58da93312c59fbc27ff166b7d8e7921412c
     name: easyhaproxy
@@ -33,7 +33,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 4.2.0
-    created: "2023-12-04T07:12:34.454353929Z"
+    created: "2023-12-04T07:31:44.198671716Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: 2f2ef5dba014e2e308ea7b1d7034a43b214839449dddcbedc04933d8fe1f77a4
     name: easyhaproxy
@@ -43,7 +43,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: master
-    created: "2023-12-04T07:12:34.454037467Z"
+    created: "2023-12-04T07:31:44.198346622Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: a111f02e52ff8b1c8be11f32c5a5ed43ad7f3cb6108d74de296a774e3dbc28a0
     name: easyhaproxy
@@ -53,7 +53,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: test
-    created: "2023-12-04T07:12:34.453687071Z"
+    created: "2023-12-04T07:31:44.198017339Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: a5dee1fe1c339cb4916fc076657db77957d12a2c87279acab1fded1501196e87
     name: easyhaproxy
@@ -63,7 +63,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: test
-    created: "2023-12-04T07:12:34.453351272Z"
+    created: "2023-12-04T07:31:44.197678849Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: e2019a2ec047d4289cabe25b7556b74411689e1612505a787ddd6c6d7730ce53
     name: easyhaproxy
@@ -73,7 +73,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: test
-    created: "2023-12-04T07:12:34.453047254Z"
+    created: "2023-12-04T07:31:44.197381856Z"
     description: EasyHAProxy - A service discovery backed on HAProxy
     digest: fcdf99bf482fd2830f1a6de441aa8d5d7dfc973633a035c063ad9a1bf9bb9f93
     name: easyhaproxy
@@ -84,7 +84,7 @@ entries:
   static-httpserver:
   - apiVersion: v2
     appVersion: latest
-    created: "2023-12-04T07:12:34.455699217Z"
+    created: "2023-12-04T07:31:44.199949995Z"
     description: A minimal HTTP server for static pages. Full version with "parking"
       HTML.
     digest: 0d28be80f4ae1c62505cb14e075434e88b3119ffd4b1c2d626df9d11df846b5d
@@ -93,4 +93,4 @@ entries:
     urls:
     - https://opensource.byjg.com/helm/static-httpserver-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-04T07:12:34.452602301Z"
+generated: "2023-12-04T07:31:44.196923694Z"
