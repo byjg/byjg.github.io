@@ -55,7 +55,7 @@ jobs:
 
       - name: Copy Doc files
         run: |
-          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}/~~g")
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
           rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
           rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
           
@@ -64,7 +64,7 @@ jobs:
             cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
             sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
           else
-            cp README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
+            cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
           fi
           
           cd byjg.github.io
