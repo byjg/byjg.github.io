@@ -58,6 +58,8 @@ jobs:
           PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
           rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
           rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
+
+          find . -print
           
           if [ -d ${{ inputs.project }}/docs ]; then
             mkdir -p byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
