@@ -85,6 +85,11 @@ jobs:
           cd ..
           python3 mermaid.py /tmp/mermaid.txt > "php/README.md"
 
+      - name: Create sitemap
+        run: |
+          cd byjg.github.io
+          find . -name '*.md' | sed 's~README.md~~g' | sed 's~\.md~.html~g' | sed 's~^\./~~g' | sort | xargs -I {} echo "https://opensource.byjg.com/{}" > sitemap.txt
+
       - name: Commit and push
         run: |
           cd byjg.github.io
