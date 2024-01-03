@@ -66,11 +66,6 @@ jobs:
           else
             cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
           fi
-          
-          cd byjg.github.io
-          git add .
-          git status
-          git diff
 
       - name: Add Mermaid if "php" folder
         if: ${{ inputs.folder == 'php' }}
@@ -86,7 +81,11 @@ jobs:
           cd ..
           python3 mermaid.py /tmp/mermaid.txt > "php/README.md"
 
-          git diff
-
+      - name: Commit and push
+        run: |
+          cd byjg.github.io
           git add .
-          git status
+          git config user.name "CI/CD"
+          git config user.email "info@byjg.com.br"
+          git commit -m "Update documentation '${{ inputs.folder }}' '${{ inputs.project }}'"
+          git push
