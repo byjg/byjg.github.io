@@ -1,0 +1,57 @@
+name: Add project to the documentation
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: 'Environment to deploy'
+        type: choice
+        options:
+          - php
+          - js
+          - devops
+          - archived
+        required: true
+      project:
+        required: true
+        description: 'Project name. e.g. byjg/{....}'
+  workflow_call:
+    inputs:
+      folder:
+        type: string
+        required: true
+      project:
+        type: string
+        required: true
+#    secrets:
+#      DO_PASSWORD:
+#        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      REPOSITORY: byjg/${{ inputs.project }}
+      PROJECT_PATH: /tmp/${{ inputs.project }}
+
+    steps:
+      - name: Checkout repository (byjg.github.io)
+        uses: actions/checkout@v4
+
+      - name: Checkout Project ${{ env.REPOSITORY }} repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          repository: ${{ env.REPOSITORY }}
+          path: ${{ env.PROJECT_PATH }}
+          sparse-checkout: |
+            README.md
+            docs
+
+      - name: DEBUG
+        run: |
+          find ${{ env.PROJECT_PATH }} -print
