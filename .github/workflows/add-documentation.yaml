@@ -68,5 +68,6 @@ jobs:
           fi
           
           cd byjg.github.io
+          git add .
           git status
           git diff
