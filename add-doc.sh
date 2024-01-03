@@ -36,7 +36,9 @@ fi
 
 # Extract mermaid diagrams
 rm "${TMP_FOLDER}/php/README.md"
-find "${TMP_FOLDER}/php -maxdepth 2 -name '*.md -exec grep -A 12 "## Dependencies" {} \; | sed -n '/flowchart TD/,/```/ {/flowchart TD/b;/```/b;p}' | tr -s ' ' | grep '\-\-> byjg' > /tmp/mermaid.txt
+find "${TMP_FOLDER}/php -maxdepth 2 -name '*.md -exec grep -A 12 "## Dependencies" {} \; | sed -n '/flowchart TD/,/```/ {/flowchart TD/b;/```/b;p}' | tr -s ' ' > /tmp/mermaid-all.txt
+grep '\-\-> byjg' /tmp/mermaid-all.txt > /tmp/mermaid.txt
+grep ' byjg' /tmp/mermaid-all.txt | sed 's/ -->.*//g' | sort | uniq >> /tmp/mermaid.txt
 python3 mermaid.py /tmp/mermaid.txt > "${TMP_FOLDER}/php/README.md"
 
 # Commit and push

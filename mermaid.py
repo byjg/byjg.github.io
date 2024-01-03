@@ -32,6 +32,9 @@ def minimize_line_crossings_from_text(input_text):
     connections = []
     for line in lines:
         parts = line.strip().split('-->')
+        if len(parts) == 1:
+            nodes.add(line.strip())
+
         if len(parts) == 2:
             source, target = parts
             nodes.add(source.strip())
