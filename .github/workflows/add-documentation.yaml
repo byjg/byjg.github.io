@@ -31,7 +31,7 @@ permissions:
   packages: write
 
 jobs:
-  deploy:
+  add_doc:
     runs-on: ubuntu-latest
 
     env:
@@ -53,9 +53,20 @@ jobs:
             README.md
             docs
 
-      - name: DEBUG
+      - name: Copy Doc files
         run: |
-          echo "=======A"
-          find . -print
-          echo "=======B"
-          find ${{ env.PROJECT_PATH }} -print
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}/~~g")
+          rm -rf byjg.github.io/${{ inputs.folder }}/${{ PROJECT_WITHOUT_FOLDER }}/
+          rm -rf byjg.github.io/${{ inputs.folder }}/${{ PROJECT_WITHOUT_FOLDER }}.md
+          
+          if [ -d ${{ inputs.project }}/docs ]; then
+            mkdir -p byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+          else
+            cp README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
+          fi
+          
+          cd byjg.github.io
+          git status
+          git diff
