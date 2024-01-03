@@ -22,9 +22,9 @@ on:
       project:
         type: string
         required: true
-#    secrets:
-#      DO_PASSWORD:
-#        required: true
+    secrets:
+      DOC_TOKEN:
+        required: true
 
 permissions:
   contents: read
