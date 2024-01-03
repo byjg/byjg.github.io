@@ -31,27 +31,61 @@ permissions:
   packages: write
 
 jobs:
-  deploy:
+  add_doc:
     runs-on: ubuntu-latest
 
     env:
       REPOSITORY: byjg/${{ inputs.project }}
-      PROJECT_PATH: /tmp/${{ inputs.project }}
 
     steps:
       - name: Checkout repository (byjg.github.io)
         uses: actions/checkout@v4
+        with:
+          path: byjg.github.io
 
       - name: Checkout Project ${{ env.REPOSITORY }} repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           repository: ${{ env.REPOSITORY }}
-          path: ${{ env.PROJECT_PATH }}
+          path: ${{ inputs.project }}
           sparse-checkout: |
             README.md
             docs
 
-      - name: DEBUG
+      - name: Copy Doc files
         run: |
-          find ${{ env.PROJECT_PATH }} -print
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
+          rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
+          rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
+          
+          if [ -d ${{ inputs.project }}/docs ]; then
+            mkdir -p byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+          else
+            cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
+          fi
+
+      - name: Add Mermaid if "php" folder
+        if: ${{ inputs.folder == 'php' }}
+        run: |
+          cd byjg.github.io/php
+
+          rm "README.md"
+          
+          find . -maxdepth 2 -name '*.md' -exec grep -A 12 "## Dependencies" {} \; | sed -n '/flowchart TD/,/```/ {/flowchart TD/b;/```/b;p}' | tr -s ' ' > /tmp/mermaid-all.txt
+          grep '\-\-> byjg' /tmp/mermaid-all.txt > /tmp/mermaid.txt
+          grep ' byjg' /tmp/mermaid-all.txt | sed 's/ -->.*//g' | sort | uniq >> /tmp/mermaid.txt
+          
+          cd ..
+          python3 mermaid.py /tmp/mermaid.txt > "php/README.md"
+
+      - name: Commit and push
+        run: |
+          cd byjg.github.io
+          git add .
+          git config user.name "CI/CD"
+          git config user.email "info@byjg.com.br"
+          git commit -m "Update documentation '${{ inputs.folder }}' '${{ inputs.project }}'"
+          git push
