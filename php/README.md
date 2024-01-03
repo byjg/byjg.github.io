@@ -2,9 +2,10 @@
 ## Class Dependency
 ```mermaid
 graph LR;
+  byjg/migration-cli;
+  byjg/xmlutil;
   byjg/uri;
   byjg/swagger-test;
-  byjg/migration-cli;
   byjg/mail-wrapper;
   byjg/shortid;
   byjg/migration;
