@@ -41,6 +41,7 @@ jobs:
       - name: Checkout repository (byjg.github.io)
         uses: actions/checkout@v4
         with:
+          repository: byjg/byjg.github.io
           path: byjg.github.io
 
       - name: Checkout Project ${{ env.REPOSITORY }} repository
