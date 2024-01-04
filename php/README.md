@@ -2,20 +2,22 @@
 ## Class Dependency
 ```mermaid
 graph LR;
-  byjg/uri;
-  byjg/mail-wrapper;
-  byjg/anydataset-array;
-  byjg/anydataset-json;
-  byjg/migration-cli;
-  byjg/anydataset-xml;
-  byjg/shortid;
   byjg/swagger-test;
+  byjg/anydataset-json;
+  byjg/shortid;
+  byjg/mail-wrapper;
+  byjg/anydataset-xml;
+  byjg/anydataset-array;
+  byjg/migration-cli;
+  byjg/uri;
+  byjg/anydataset-text;
   byjg/convert;
+  byjg/webrequest;
   byjg/migration;
   byjg/anydataset;
-  byjg/webrequest;
   byjg/serializer;
   byjg/xmlutil;
+  byjg/anydataset-text --> byjg/anydataset;
   byjg/anydataset-xml --> byjg/anydataset;
   byjg/anydataset-xml --> byjg/xmlutil;
   byjg/anydataset-array --> byjg/anydataset;
