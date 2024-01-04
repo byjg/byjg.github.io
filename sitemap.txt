@@ -131,6 +131,9 @@ https://opensource.byjg.com/php/convert.html
 https://opensource.byjg.com/php/daemonize.html
 https://opensource.byjg.com/php/jwt-wrapper.html
 https://opensource.byjg.com/php/mailwrapper.html
+https://opensource.byjg.com/php/message-queue-client/
+https://opensource.byjg.com/php/message-queue-client/consumer-client-trait.html
+https://opensource.byjg.com/php/message-queue-client/mock-connector.html
 https://opensource.byjg.com/php/micro-orm.html
 https://opensource.byjg.com/php/migration-cli.html
 https://opensource.byjg.com/php/migration.html
