@@ -2,20 +2,21 @@
 ## Class Dependency
 ```mermaid
 graph LR;
-  byjg/message-queue-client;
-  byjg/shortid;
-  byjg/jwt-wrapper;
-  byjg/swagger-test;
-  byjg/anydataset-text;
-  byjg/singleton-pattern;
-  byjg/cache-engine;
   byjg/mail-wrapper;
-  byjg/anydataset-json;
+  byjg/cache-engine;
+  byjg/swagger-test;
+  byjg/rabbitmq-client;
+  byjg/jwt-wrapper;
   byjg/migration-cli;
+  byjg/singleton-pattern;
   byjg/anydataset-xml;
+  byjg/anydataset-text;
   byjg/anydataset-db;
+  byjg/shortid;
+  byjg/anydataset-json;
   byjg/convert;
   byjg/webrequest;
+  byjg/message-queue-client;
   byjg/migration;
   byjg/anydataset-array;
   byjg/uri;
@@ -24,6 +25,7 @@ graph LR;
   byjg/xmlutil;
   byjg/anydataset-text --> byjg/anydataset;
   byjg/webrequest --> byjg/uri;
+  byjg/rabbitmq-client --> byjg/message-queue-client;
   byjg/anydataset-xml --> byjg/anydataset;
   byjg/anydataset-xml --> byjg/xmlutil;
   byjg/anydataset-array --> byjg/anydataset;
