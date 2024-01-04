@@ -140,6 +140,7 @@ https://opensource.byjg.com/php/migration.html
 https://opensource.byjg.com/php/php-swagger-test.html
 https://opensource.byjg.com/php/phpthread.html
 https://opensource.byjg.com/php/rabbitmq-client.html
+https://opensource.byjg.com/php/redis-queue-client.html
 https://opensource.byjg.com/php/restserver.html
 https://opensource.byjg.com/php/serializer.html
 https://opensource.byjg.com/php/shortid.html
