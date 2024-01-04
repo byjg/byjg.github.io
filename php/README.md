@@ -3,18 +3,19 @@
 ```mermaid
 graph LR;
   byjg/mail-wrapper;
+  byjg/anydataset-xml;
+  byjg/cache-engine;
+  byjg/anydataset-array;
   byjg/anydataset-text;
-  byjg/migration-cli;
-  byjg/singleton-pattern;
-  byjg/anydataset-json;
   byjg/swagger-test;
   byjg/shortid;
-  byjg/cache-engine;
-  byjg/anydataset-xml;
-  byjg/anydataset-array;
+  byjg/singleton-pattern;
+  byjg/migration-cli;
+  byjg/jwt-wrapper;
+  byjg/anydataset-json;
   byjg/convert;
-  byjg/migration;
   byjg/webrequest;
+  byjg/migration;
   byjg/anydataset;
   byjg/uri;
   byjg/serializer;
