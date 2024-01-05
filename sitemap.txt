@@ -140,6 +140,7 @@ https://opensource.byjg.com/php/crypto/advanced-uses-keyset.html
 https://opensource.byjg.com/php/crypto/interoperability.html
 https://opensource.byjg.com/php/daemonize.html
 https://opensource.byjg.com/php/fonemabr.html
+https://opensource.byjg.com/php/imageutil.html
 https://opensource.byjg.com/php/jinja.html
 https://opensource.byjg.com/php/jwt-wrapper.html
 https://opensource.byjg.com/php/mailwrapper.html
@@ -149,7 +150,6 @@ https://opensource.byjg.com/php/message-queue-client/mock-connector.html
 https://opensource.byjg.com/php/micro-orm.html
 https://opensource.byjg.com/php/migration-cli.html
 https://opensource.byjg.com/php/migration.html
-https://opensource.byjg.com/php/php-swagger-test.html
 https://opensource.byjg.com/php/phpthread.html
 https://opensource.byjg.com/php/rabbitmq-client.html
 https://opensource.byjg.com/php/redis-queue-client.html
