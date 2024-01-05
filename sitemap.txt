@@ -164,6 +164,7 @@ https://opensource.byjg.com/php/shortid.html
 https://opensource.byjg.com/php/singleton-pattern.html
 https://opensource.byjg.com/php/singleton.html
 https://opensource.byjg.com/php/statemachine.html
+https://opensource.byjg.com/php/swagger-test.html
 https://opensource.byjg.com/php/uri.html
 https://opensource.byjg.com/php/webrequest.html
 https://opensource.byjg.com/php/xmlutil.html
