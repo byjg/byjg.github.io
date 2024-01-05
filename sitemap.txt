@@ -168,6 +168,7 @@ https://opensource.byjg.com/php/serializer.html
 https://opensource.byjg.com/php/shortid.html
 https://opensource.byjg.com/php/singleton-pattern.html
 https://opensource.byjg.com/php/singleton.html
+https://opensource.byjg.com/php/sms-client.html
 https://opensource.byjg.com/php/statemachine.html
 https://opensource.byjg.com/php/swagger-test.html
 https://opensource.byjg.com/php/uri.html
