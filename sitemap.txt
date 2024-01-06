@@ -170,7 +170,11 @@ https://opensource.byjg.com/php/singleton-pattern.html
 https://opensource.byjg.com/php/singleton.html
 https://opensource.byjg.com/php/sms-client.html
 https://opensource.byjg.com/php/statemachine.html
-https://opensource.byjg.com/php/swagger-test.html
+https://opensource.byjg.com/php/swagger-test/
+https://opensource.byjg.com/php/swagger-test/contract-tests.html
+https://opensource.byjg.com/php/swagger-test/functional-tests.html
+https://opensource.byjg.com/php/swagger-test/mock-requests.html
+https://opensource.byjg.com/php/swagger-test/runtime-parameters-validator.html
 https://opensource.byjg.com/php/uri.html
 https://opensource.byjg.com/php/webrequest.html
 https://opensource.byjg.com/php/wordnumber.html
