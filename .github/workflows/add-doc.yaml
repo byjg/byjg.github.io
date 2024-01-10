@@ -96,5 +96,5 @@ jobs:
           git add .
           git config user.name "CI/CD"
           git config user.email "info@byjg.com.br"
-          git commit -m "Update documentation '${{ inputs.folder }}' '${{ inputs.project }}'" --allow-empty
+          git diff-index --quiet HEAD || git commit -m "Update documentation '${{ inputs.folder }}' '${{ inputs.project }}'"
           git push
