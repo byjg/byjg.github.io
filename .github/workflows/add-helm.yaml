@@ -20,7 +20,7 @@ permissions:
   packages: write
 
 jobs:
-  add_doc:
+  add_helm:
     runs-on: ubuntu-latest
 
     env:
@@ -39,7 +39,7 @@ jobs:
         with:
           fetch-depth: 1
           repository: ${{ env.REPOSITORY }}
-          path: ${{ inputs.project }}
+          path: ${{ inputs.repo }}
 
       - name: Install Helm
         run: |
