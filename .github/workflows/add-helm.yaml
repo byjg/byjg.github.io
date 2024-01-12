@@ -1,0 +1,66 @@
+name: Add project to the documentation
+on:
+  workflow_call:
+    inputs:
+      repo:
+        type: string
+        required: true
+      project:
+        type: string
+        required: true
+      folder:
+        type: string
+        required: true
+    secrets:
+      DOC_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  add_doc:
+    runs-on: ubuntu-latest
+
+    env:
+      REPOSITORY: byjg/${{ inputs.repo }}
+
+    steps:
+      - name: Checkout repository (byjg.github.io)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DOC_TOKEN }}
+          repository: byjg/byjg.github.io
+          path: byjg.github.io
+
+      - name: Checkout Project ${{ env.REPOSITORY }} repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          repository: ${{ env.REPOSITORY }}
+          path: ${{ inputs.project }}
+
+      - name: Install Helm
+        run: |
+          wget https://get.helm.sh/helm-v3.9.4-linux-amd64.tar.gz -o /dev/null -O helm.tar.gz
+          tar xvf helm.tar.gz
+          sudo mv linux-amd64/helm /usr/local/bin
+          helm version
+
+      - name: Build Helm Package and Reindex
+        run: |
+          cd ${{ input.repo }}/${{ input.folder }}
+          helm package ${{ input.project }}
+          cd -
+          mv ${{ input.repo }}/${{ input.folder }}/${{ input.project }}*.tgz byjg.github.io/helm
+          helm repo index byjg.github.io/helm --url https://opensource.byjg.com/helm
+
+      - name: Commit and push
+        run: |
+          cd byjg.github.io
+          git add "helm/*"
+          git config user.name "CI/CD"
+          git config user.email "info@byjg.com.br"
+          git diff-index --quiet HEAD || git commit -m "[skip ci] Add helm package '${{ input.project }}'"
+          git push
