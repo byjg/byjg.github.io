@@ -1,4 +1,4 @@
-name: Add project to the documentation
+name: Add helm package
 on:
   workflow_call:
     inputs:
