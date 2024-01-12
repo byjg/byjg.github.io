@@ -1,16 +1,80 @@
----
-sort: 2
----
-
 # PHP Components
-
 ## Class Dependency
-
-[authuser](authuser)
-
-
-![Image of class dependency](php_class_dependency.png)
-
+```mermaid
+graph LR;
+  byjg/rabbitmq-client;
+  byjg/sms-client;
+  byjg/fonemabr;
+  byjg/shortid;
+  byjg/jinja-php;
+  byjg/crypto;
+  byjg/phpthread;
+  byjg/authuser;
+  byjg/anydataset-nosql;
+  byjg/imageutil;
+  byjg/anydataset-xml;
+  byjg/redis-queue-client;
+  byjg/migration-cli;
+  byjg/anydataset-text;
+  byjg/anydataset-json;
+  byjg/mailwrapper;
+  byjg/swagger-test;
+  byjg/wordnumber;
+  byjg/restserver;
+  byjg/daemonize;
+  byjg/statemachine;
+  byjg/config;
+  byjg/account-statements;
+  byjg/message-queue-client;
+  byjg/migration;
+  byjg/convert;
+  byjg/singleton-pattern;
+  byjg/webrequest;
+  byjg/jwt-wrapper;
+  byjg/cache-engine;
+  byjg/micro-orm;
+  byjg/anydataset-db;
+  byjg/anydataset-array;
+  byjg/uri;
+  byjg/anydataset;
+  byjg/serializer;
+  byjg/xmlutil;
+  byjg/sms-client --> byjg/webrequest;
+  byjg/fonemabr --> byjg/convert;
+  byjg/config --> byjg/cache-engine;
+  byjg/anydataset-text --> byjg/anydataset;
+  byjg/webrequest --> byjg/uri;
+  byjg/account-statements --> byjg/micro-orm;
+  byjg/rabbitmq-client --> byjg/message-queue-client;
+  byjg/micro-orm --> byjg/anydataset-db;
+  byjg/phpthread --> byjg/cache-engine;
+  byjg/swagger-test --> byjg/webrequest;
+  byjg/anydataset-xml --> byjg/anydataset;
+  byjg/anydataset-xml --> byjg/xmlutil;
+  byjg/anydataset-array --> byjg/anydataset;
+  byjg/mailwrapper --> byjg/convert;
+  byjg/mailwrapper --> byjg/webrequest;
+  byjg/message-queue-client --> byjg/uri;
+  byjg/anydataset-db --> byjg/anydataset-array;
+  byjg/anydataset-db --> byjg/uri;
+  byjg/anydataset-json --> byjg/anydataset;
+  byjg/migration --> byjg/anydataset-db;
+  byjg/redis-queue-client --> byjg/message-queue-client;
+  byjg/restserver --> byjg/serializer;
+  byjg/restserver --> byjg/singleton-pattern;
+  byjg/restserver --> byjg/cache-engine;
+  byjg/restserver --> byjg/webrequest;
+  byjg/restserver --> byjg/jwt-wrapper;
+  byjg/authuser --> byjg/micro-orm;
+  byjg/authuser --> byjg/cache-engine;
+  byjg/authuser --> byjg/jwt-wrapper;
+  byjg/migration-cli --> byjg/migration;
+  byjg/anydataset --> byjg/serializer;
+  byjg/anydataset --> byjg/xmlutil;
+  byjg/anydataset-nosql --> byjg/anydataset;
+  byjg/anydataset-nosql --> byjg/anydataset-array;
+  byjg/anydataset-nosql --> byjg/serializer;
+  byjg/anydataset-nosql --> byjg/webrequest;
+```
 ## Documentation
-
 {% include list.liquid %}

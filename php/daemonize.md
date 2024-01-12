@@ -104,10 +104,10 @@ daemonize services --only-names
 
 # Install
 
-Daemonize does not need to be associated to your PHP project. Prefer install as a global package and as root user.
+Daemonize does not need to be associated to your PHP project. You can either as a global package or as a local package.
 
 ```bash
-composer global require "byjg/php-daemonize=1.3.*"
+composer global require "byjg/php-daemonize"
 sudo ln -s /root/.composer/vendor/bin/daemonize /usr/local/bin/daemonize
 ```
 
@@ -134,3 +134,13 @@ sudo service tryme start
 ```
 
 If everything is OK, will see on the first terminal a lot of lines added. Do not forget to run `sudo service tryme stop`
+
+## Dependencies
+
+```mermaid  
+flowchart TD  
+    byjg/daemonize --> symfone/console  
+```
+
+----  
+[Open source ByJG](http://opensource.byjg.com)
