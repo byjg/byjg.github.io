@@ -1,5 +1,7 @@
 # yo(selector).els()
 
+## yo(selector).els()
+
 Retrieve all the HTML Elements defined by the selector. 
 
 If selector does not exists returns null;
