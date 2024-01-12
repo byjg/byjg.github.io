@@ -50,10 +50,10 @@ jobs:
 
       - name: Build Helm Package and Reindex
         run: |
-          cd ${{ input.repo }}/${{ input.folder }}
-          helm package ${{ input.project }}
+          cd ${{ inputs.repo }}/${{ inputs.folder }}
+          helm package ${{ inputs.project }}
           cd -
-          mv ${{ input.repo }}/${{ input.folder }}/${{ input.project }}*.tgz byjg.github.io/helm
+          mv ${{ inputs.repo }}/${{ inputs.folder }}/${{ inputs.project }}*.tgz byjg.github.io/helm
           helm repo index byjg.github.io/helm --url https://opensource.byjg.com/helm
 
       - name: Commit and push
@@ -62,5 +62,5 @@ jobs:
           git add "helm/*"
           git config user.name "CI/CD"
           git config user.email "info@byjg.com.br"
-          git diff-index --quiet HEAD || git commit -m "[skip ci] Add helm package '${{ input.project }}'"
+          git diff-index --quiet HEAD || git commit -m "[skip ci] Add helm package '${{ inputs.project }}'"
           git push
