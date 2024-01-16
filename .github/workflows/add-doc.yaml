@@ -58,23 +58,24 @@ jobs:
       - name: Copy Doc files
         run: |
           PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
-          rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
-          rm -rf byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
+          rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/
+          rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER.md
 
           find . -print
           
           if [ -d ${{ inputs.project }}/docs ]; then
-            mkdir -p byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
-            cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
-            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            mkdir -p byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER
+            cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER
+            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/README.md
+            find byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
           else
-            cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
+            cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER.md 
           fi
 
       - name: Add Mermaid if "php" folder
         if: ${{ inputs.folder == 'php' }}
         run: |
-          cd byjg.github.io/php
+          cd byjg.github.io/docs/php
 
           rm "README.md"
           
@@ -85,10 +86,10 @@ jobs:
           cd ..
           python3 mermaid.py /tmp/mermaid.txt > "php/README.md"
 
-      - name: Create sitemap
-        run: |
-          cd byjg.github.io
-          find . -name '*.md' | sed 's~README.md~~g' | sed 's~\.md~.html~g' | sed 's~^\./~~g' | sort | xargs -I {} echo "https://opensource.byjg.com/{}" > sitemap.txt
+#      - name: Create sitemap
+#        run: |
+#          cd byjg.github.io
+#          find . -name '*.md' | sed 's~README.md~~g' | sed 's~\.md~~g' | sed 's~^\./~~g' | sort | xargs -I {} echo "https://opensource.byjg.com/{}" > sitemap.txt
 
       - name: Commit and push
         run: |
