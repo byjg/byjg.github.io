@@ -27,6 +27,11 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
+  customFields:{
+    mendableAnonKey: "8fb2b87d-07d2-4765-9903-f4181fb8205f",
+  },
+
+
   markdown: {
     mermaid: true,
   },
