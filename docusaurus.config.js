@@ -82,6 +82,7 @@ const config = {
           {to: '/docs/php', label: 'PHP Components', position: 'left'},
           {to: '/docs/devops', label: 'Docker & DevOps', position: 'left'},
           {to: '/docs/js', label: 'Node & JS', position: 'left'},
+          {to: '/docs/helm', label: 'Helm Chart', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/facebook/docusaurus',
@@ -107,6 +108,10 @@ const config = {
               {
                 label: 'Node & Js',
                 to: '/docs/js',
+              },
+              {
+                label: 'Helm Charts',
+                to: '/docs/helm',
               },
               {
                 label: 'About Opensource',
