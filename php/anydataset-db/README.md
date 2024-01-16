@@ -24,8 +24,6 @@ The connection string for databases is based on URL.
 
 See below the current implemented drivers:
 
-{:.table}
-
 | Database            | Connection String                                 | Factory                   |
 |---------------------|---------------------------------------------------|---------------------------|
 | Sqlite              | sqlite:///path/to/file                            | getDbRelationalInstance() |
