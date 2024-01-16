@@ -11,7 +11,7 @@ const config = {
   title: 'Opensource ByJG',
   tagline: 'A wide range of opensource projects ByJG',
   favicon: 'img/favicon.ico',
-  staticDirectories: ['helm-packages', 'static'],
+  staticDirectories: ['helm-charts', 'static'],
 
   // Set the production url of your site here
   url: 'https://opensource.byjg.com',
