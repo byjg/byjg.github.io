@@ -14,8 +14,6 @@ A multi-purpose cache engine PSR-6 and PSR-16 implementation with several driver
 PSR-16 defines a Simple Cache interface with less verbosity than PSR-6. Below a list
 of engines available in this library that is PSR-16 compliant:
 
-{:.table}
-
 | Class                                                                            | Description                                                         |
 |:---------------------------------------------------------------------------------|:--------------------------------------------------------------------|
 | [\ByJG\Cache\Psr16\NoCacheEngine](class-no-cache-engine.md)                 | Do nothing. Use it for disable the cache without change your code   |
@@ -68,8 +66,6 @@ See more PSR-6 examples [here](basic-usage-psr6-cachepool.md)
 ## List of Available Factory Commands
 
 **Note: All parameters are optional**
-
-{:.table}
 
 | Engine           | Factory Command                                                       |
 |:-----------------|:----------------------------------------------------------------------|
