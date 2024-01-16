@@ -37,7 +37,7 @@ https://opensource.byjg.com/js/yaj-sse.html
 https://opensource.byjg.com/js/yaj/
 https://opensource.byjg.com/js/yaj/benchmark.html
 https://opensource.byjg.com/js/yaj/faq.html
-https://opensource.byjg.com/js/yaj/index.html
+https://opensource.byjg.com/js/yaj/toc.html
 https://opensource.byjg.com/js/yaj/yaj-addclass.html
 https://opensource.byjg.com/js/yaj/yaj-append.html
 https://opensource.byjg.com/js/yaj/yaj-appendto.html
@@ -71,7 +71,7 @@ https://opensource.byjg.com/js/yaj/yaj-scrollto.html
 https://opensource.byjg.com/js/yaj/yaj-show.html
 https://opensource.byjg.com/js/yaj/yaj-text.html
 https://opensource.byjg.com/js/yaj/yaj-toggle.html
-https://opensource.byjg.com/js/yaj/yaj-togleclass.html
+https://opensource.byjg.com/js/yaj/yaj-toggleclass.html
 https://opensource.byjg.com/js/yaj/yaj-trigger.html
 https://opensource.byjg.com/js/yaj/yaj-yoclone.html
 https://opensource.byjg.com/js/yaj/yaj-yocopy.html
