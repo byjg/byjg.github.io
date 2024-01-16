@@ -53,13 +53,13 @@ jobs:
           cd ${{ inputs.repo }}/${{ inputs.folder }}
           helm package ${{ inputs.project }}
           cd -
-          mv ${{ inputs.repo }}/${{ inputs.folder }}/${{ inputs.project }}*.tgz byjg.github.io/helm
-          helm repo index byjg.github.io/helm --url https://opensource.byjg.com/helm
+          mv ${{ inputs.repo }}/${{ inputs.folder }}/${{ inputs.project }}*.tgz byjg.github.io/helm-packages/helm
+          helm repo index byjg.github.io/helm-packages/helm --url https://opensource.byjg.com/helm-packages/helm
 
       - name: Commit and push
         run: |
           cd byjg.github.io
-          git add "helm/*"
+          git add "helm-packages/*"
           git config user.name "CI/CD"
           git config user.email "info@byjg.com.br"
           git diff-index --quiet HEAD || git commit -m "[skip ci] Add helm package '${{ inputs.project }}'"

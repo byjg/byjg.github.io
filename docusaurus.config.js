@@ -11,10 +11,10 @@ const config = {
   title: 'Opensource ByJG',
   tagline: 'A wide range of opensource projects ByJG',
   favicon: 'img/favicon.ico',
-  staticDirectories: ['helm'],
+  staticDirectories: ['helm-packages', 'static'],
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://opensource.byjg.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
