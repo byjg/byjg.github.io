@@ -67,7 +67,7 @@ microk8s enable easyhaproxy --nodeport
 
 **Remember**: you need to disable any ingress controller you have previously installed, for example, nginx, traefik, etc. before install EasyHaProxy.
 
-For more parameters you can refer to the [Kubernetes](kubernetes.md) page.
+For more parameters you can refer to the [Kubernetes](kubernetes) page.
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

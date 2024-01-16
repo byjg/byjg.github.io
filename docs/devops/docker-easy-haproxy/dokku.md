@@ -4,4 +4,4 @@ Dokku is a Docker powered mini-Heroku in around 100 lines of Bash. It is the sma
 
 ## Installing EasyHAProxy on Dokku
 
-Please refer to the [official documentation](https://github.com/dokku/dokku/blob/master/docs/networking/proxies/haproxy.md).
+Please refer to the [official documentation](https://github.com/dokku/dokku/blob/master/docs/networking/proxies/haproxy).

@@ -72,7 +72,7 @@ docker run -d \
     byjg/easy-haproxy
 ```
 
-You can find other informations on [docker label configuration](container-labels.md) and [environment variable guide](environment-variable.md)
+You can find other informations on [docker label configuration](container-labels) and [environment variable guide](environment-variable)
 
 ## Yaml Definition
 
@@ -116,7 +116,7 @@ easymapping:
 ```
 
 **Note**: The only way to pass SSL certificates in the static configuration file is to map the certificates
-to EasyHAProxy as a docker volume. Refer to the [SSL documentation](ssl.md) to learn how to do it. 
+to EasyHAProxy as a docker volume. Refer to the [SSL documentation](ssl) to learn how to do it. 
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

@@ -51,19 +51,19 @@ Once the container is running, EasyHAProxy will detect automatically and start t
 
 You don't need to expose any port in your container.
 
-Please follow the [docker label configuration](container-labels.md) to see other configurations available.
+Please follow the [docker label configuration](container-labels) to see other configurations available.
 
 ## Setup the EasyHAProxy container
 
-You can configure the behavior of the EasyHAProxy by setup specific environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable.md)
+You can configure the behavior of the EasyHAProxy by setup specific environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable)
 
 ## Setup certificates with ACME (e.g. Letsencrypt)
 
-Follow [this link](acme.md)
+Follow [this link](acme)
 
 ## Setup your own certificates
 
-Follow [this link](ssl.md)
+Follow [this link](ssl)
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

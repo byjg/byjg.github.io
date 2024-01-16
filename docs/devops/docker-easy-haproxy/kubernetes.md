@@ -14,7 +14,7 @@ To install EasyHAProxy in your cluster, follow these steps:
 
 ### 1) Identify the node where your EasyHAProxy container will run
 
-EasyHAProxy will be limited to a single node. To understand that see [limitations](limitations.md) page.
+EasyHAProxy will be limited to a single node. To understand that see [limitations](limitations) page.
 
 ```bash
 $ kubectl get nodes
@@ -39,7 +39,7 @@ kubectl apply -f \
     https://raw.githubusercontent.com/byjg/docker-easy-haproxy/4.4.0/deploy/kubernetes/easyhaproxy-daemonset.yml
 ```
 
-If necessary, you can configure environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable.md)
+If necessary, you can configure environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable)
 
 ## Running containers
 
@@ -106,7 +106,7 @@ spec:
   ....
 ```
 
-More info [here](acme.md).
+More info [here](acme).
 
 Make sure your cluster is accessible both through ports 80 and 443. 
 

@@ -57,7 +57,7 @@ docker stack deploy --compose-file docker-compose.yml easyhaproxy
 
 Mapping to `/var/run/docker.sock` is necessary to discover the docker containers and get the labels;
 
-**Do not** add more than one replica for EasyHAProxy. To understand that see [limitations](limitations.md) page.
+**Do not** add more than one replica for EasyHAProxy. To understand that see [limitations](limitations) page.
 
 ## Running containers
 
@@ -87,15 +87,15 @@ Once the container is running, EasyHAProxy will detect automatically and start t
 
 You don't need to expose any port in your container.
 
-Please follow the [docker label configuration](container-labels.md) to see other configurations available.
+Please follow the [docker label configuration](container-labels) to see other configurations available.
 
 ## Setup the EasyHAProxy container
 
-You can configure the behavior of the EasyHAProxy by setup specific environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable.md)
+You can configure the behavior of the EasyHAProxy by setup specific environment variables. To get a list of the variables, please follow the [environment variable guide](environment-variable)
 
 ## More information
 
-You can refer to the [Docker Documentation](docker.md) to get other detailed instructions.
+You can refer to the [Docker Documentation](docker) to get other detailed instructions.
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

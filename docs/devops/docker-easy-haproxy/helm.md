@@ -6,7 +6,7 @@ Helm is a package manager for Kubernetes. It allows you to install and manage ap
 
 ### 1) Identify the node where your EasyHAProxy container will run
 
-EasyHAProxy will be limited to a single node. To understand that see [limitations](limitations.md) page.
+EasyHAProxy will be limited to a single node. To understand that see [limitations](limitations) page.
 
 ```bash
 $ kubectl get nodes
@@ -73,7 +73,7 @@ masterNode:
     - master
 ```
 
-For more parameters you can refer to the [Kubernetes](kubernetes.md) page.
+For more parameters you can refer to the [Kubernetes](kubernetes) page.
 
 ----
 [Open source ByJG](http://opensource.byjg.com)

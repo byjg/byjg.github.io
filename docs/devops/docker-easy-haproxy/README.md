@@ -60,23 +60,23 @@ The steps are:
 
 For detailed instructions on how to use EasyHAProxy, follow the instructions for the platform you want to use:
 
-[![Kubernetes](easyhaproxy_kubernetes.png)](kubernetes.md)
-[![Docker Swarm](easyhaproxy_swarm.png)](swarm.md)
-[![Docker](easyhaproxy_docker.png)](docker.md)
-[![Static](easyhaproxy_static.png)](static.md)
+[![Kubernetes](easyhaproxy_kubernetes.png)](kubernetes)
+[![Docker Swarm](easyhaproxy_swarm.png)](swarm)
+[![Docker](easyhaproxy_docker.png)](docker)
+[![Static](easyhaproxy_static.png)](static)
 
 Or you can install using tools:
 
-[![Helm](easyhaproxy_helm.png)](helm.md)
-[![MicroK8s](easyhaproxy_microk8s.png)](microk8s.md)
-[![Dokku](easyhaproxy_dokku.png)](dokku.md)
+[![Helm](easyhaproxy_helm.png)](helm)
+[![MicroK8s](easyhaproxy_microk8s.png)](microk8s)
+[![Dokku](easyhaproxy_dokku.png)](dokku)
 
 ## Special Topics
 
 If you already set up the EasyHAProxy, is time to go deeper:
 
-- [Custom SSL](ssl.md)
-- [Automatic Certificate Issuing](acme.md) (e.g. Letsencrypt)
+- [Custom SSL](ssl)
+- [Automatic Certificate Issuing](acme) (e.g. Letsencrypt)
 
 ## See EasyHAProxy in action
 
