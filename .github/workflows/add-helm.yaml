@@ -54,7 +54,7 @@ jobs:
           helm package ${{ inputs.project }}
           cd -
           mv ${{ inputs.repo }}/${{ inputs.folder }}/${{ inputs.project }}*.tgz byjg.github.io/helm-charts/helm
-          helm repo index byjg.github.io/helm-charts/helm --url https://opensource.byjg.com/helm-charts/helm
+          helm repo index byjg.github.io/helm-charts/helm --url https://opensource.byjg.com/helm
 
       - name: Commit and push
         run: |
