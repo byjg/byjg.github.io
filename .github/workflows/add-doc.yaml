@@ -57,6 +57,8 @@ jobs:
 
       - name: Copy Doc files
         run: |
+          set -x
+          
           PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
           rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/
           rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER.md
