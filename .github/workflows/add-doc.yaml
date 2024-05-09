@@ -60,18 +60,18 @@ jobs:
           set -x
           
           PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
-          rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/
-          rm -rf byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER.md
+          rm -rf byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
+          rm -rf byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
 
           find . -print
           
           if [ -d ${{ inputs.project }}/docs ]; then
-            mkdir -p byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER
-            cp -r ${{ inputs.project }}/docs/* byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER
-            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/README.md
-            find byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
+            mkdir -p byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            cp -r ${{ inputs.project }}/docs/* byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            find byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
           else
-            cp ${{ inputs.project }}/README.md byjg.github.io/${{ inputs.folder }}/docs/$PROJECT_WITHOUT_FOLDER.md 
+            cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
           fi
 
       - name: Add Mermaid if "php" folder
