@@ -2,37 +2,37 @@
 ## Class Dependency
 ```mermaid
 graph LR;
-  byjg/jinja-php;
-  byjg/restserver;
+  byjg/imageutil;
   byjg/crypto;
-  byjg/shortid;
-  byjg/mailwrapper;
+  byjg/phpthread;
   byjg/authuser;
-  byjg/anydataset-nosql;
+  byjg/anydataset-xml;
+  byjg/mailwrapper;
+  byjg/migration-cli;
+  byjg/daemonize;
+  byjg/account-statements;
+  byjg/rabbitmq-client;
   byjg/swagger-test;
   byjg/fonemabr;
-  byjg/wordnumber;
-  byjg/anydataset-json;
-  byjg/redis-queue-client;
-  byjg/phpthread;
-  byjg/sms-client;
-  byjg/anydataset-xml;
   byjg/anydataset-text;
-  byjg/imageutil;
-  byjg/daemonize;
-  byjg/config;
-  byjg/account-statements;
-  byjg/migration-cli;
+  byjg/shortid;
+  byjg/sms-client;
   byjg/statemachine;
-  byjg/rabbitmq-client;
+  byjg/wordnumber;
+  byjg/restserver;
+  byjg/anydataset-nosql;
+  byjg/anydataset-json;
+  byjg/jinja-php;
+  byjg/redis-queue-client;
+  byjg/config;
+  byjg/migration;
+  byjg/micro-orm;
+  byjg/convert;
   byjg/singleton-pattern;
   byjg/jwt-wrapper;
-  byjg/convert;
   byjg/webrequest;
-  byjg/cache-engine;
-  byjg/micro-orm;
-  byjg/migration;
   byjg/message-queue-client;
+  byjg/cache-engine;
   byjg/anydataset-db;
   byjg/anydataset-array;
   byjg/uri;
@@ -76,5 +76,3 @@ graph LR;
   byjg/authuser --> byjg/jwt-wrapper;
   byjg/swagger-test --> byjg/webrequest;
 ```
-## Documentation
-{% include list.liquid %}
