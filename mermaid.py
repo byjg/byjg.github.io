@@ -54,8 +54,6 @@ def minimize_line_crossings_from_text(input_text):
     for source, target in connections:
         print(f"  {source} --> {target};")
     print("```")
-    print("## Documentation")
-    print("{% include list.liquid %}")
 
 
 def minimize_line_crossings_from_text_file(file_path):
