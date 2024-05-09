@@ -85,8 +85,8 @@ jobs:
           grep '\-\-> byjg' /tmp/mermaid-all.txt > /tmp/mermaid.txt
           grep ' byjg' /tmp/mermaid-all.txt | sed 's/ -->.*//g' | sort | uniq >> /tmp/mermaid.txt
           
-          cd ..
-          python3 mermaid.py /tmp/mermaid.txt > "php/README.md"
+          cd ../..
+          python3 mermaid.py /tmp/mermaid.txt > "docs/php/README.md"
 
 #      - name: Create sitemap
 #        run: |
