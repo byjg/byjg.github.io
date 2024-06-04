@@ -42,19 +42,19 @@ $conn = \ByJG\AnyDataset\Db\Factory::getDbRelationalInstance("mysql://root:passw
 
 ## Examples
 
-- [Basic Query and Update](basic-query.md)
-- [Cache results](cache.md)
-- [Database Transaction](transaction.md)
-- [Load Balance and Connection Pooling](load-balance.md)
-- [Database Helper](helper.md)
+- [Basic Query and Update](basic-query)
+- [Cache results](cache)
+- [Database Transaction](transaction)
+- [Load Balance and Connection Pooling](load-balance)
+- [Database Helper](helper)
 
 ## Advanced Topics
 
-- [Passing Parameters to PDODriver](parameters.md)
-- [MySQL SSL Connection](mysql-ssl.md)
-- [FreeTDS/Dblib Date Issue](freetds.md)
-- [Generic PDO Driver](generic-pdo-driver.md)
-- [Running Tests](tests.md)
+- [Passing Parameters to PDODriver](parameters)
+- [MySQL SSL Connection](mysql-ssl)
+- [FreeTDS/Dblib Date Issue](freetds)
+- [Generic PDO Driver](generic-pdo-driver)
+- [Running Tests](tests)
 
 
 ## Install
