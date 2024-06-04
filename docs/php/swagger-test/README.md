@@ -23,10 +23,10 @@ The ApiTestCase's assertion process is based on throwing exceptions if some vali
 
 You can use the Swagger Test library as:
 
-- [Functional test cases](functional-tests.md)
-- [Contract test cases](contract-tests.md)
-- [Runtime parameters validator](runtime-parameters-validator.md)
-- [Mocking Requests and Validate your specification](mock-requests.md)
+- [Functional test cases](functional-tests)
+- [Contract test cases](contract-tests)
+- [Runtime parameters validator](runtime-parameters-validator)
+- [Mocking Requests and Validate your specification](mock-requests)
 
 Who is using this library?
 
