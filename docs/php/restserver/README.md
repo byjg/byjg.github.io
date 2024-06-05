@@ -12,21 +12,21 @@ Auto-Generate routes from swagger.json definition.
 ## Documentation
 
 Setup:
-- [Set up the RestServer](setup.md)
+- [Set up the RestServer](setup)
 
 Creating and customizing routes:
-- [Defining Route Names](defining-route-names.md)
-- [Create Routes using Closures](routes-using-closures.md)
-- [Create Routes using Classes](routes-using-classes.md)
-- [Auto-Generate from an OpenApi definition](autogenerator-routes-openapi.md) (**hot**)
+- [Defining Route Names](defining-route-names)
+- [Create Routes using Closures](routes-using-closures)
+- [Create Routes using Classes](routes-using-classes)
+- [Auto-Generate from an OpenApi definition](autogenerator-routes-openapi) (**hot**)
 
 Processing the request and output the response:
-- [HttpRequest and HttpResponse object](httprequest-httpresponse.md)
+- [HttpRequest and HttpResponse object](httprequest-httpresponse)
 
 Advanced:
-- [Middleware](middleware.md)
-- [Error Handler](error-handler.md)
-- [Caching Routes](caching-routes.md)
+- [Middleware](middleware)
+- [Error Handler](error-handler)
+- [Caching Routes](caching-routes)
 
 ## Installation
 
