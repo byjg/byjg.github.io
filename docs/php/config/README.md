@@ -35,9 +35,9 @@ Overall, PSR-11 standardizes the way dependency injection containers are impleme
 
 Follow the steps below:
 
-- [Setup the configuration files](setup.md);
-- [Load the configuration](load-the-configuration.md);
-- [Optionally define the dependency injection](dependency-injection.md));
+- [Setup the configuration files](setup);
+- [Load the configuration](load-the-configuration);
+- [Optionally define the dependency injection](dependency-injection));
 
 ## Install
 

@@ -1,6 +1,6 @@
 # Loading the configuration
 
-After [setup the configuration files](setup.md), you need to load them into the container.
+After [setup the configuration files](setup), you need to load them into the container.
 
 ## Create the environment definition
 

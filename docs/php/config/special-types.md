@@ -20,6 +20,8 @@ Where `!parser` is one of the pre-defined parsers:
 | !jsondecode | Parse to JSON and transform to an array | `PARAM=!jsondecode {"a":"b"}` |
 | !array      | Parse to array                          | `PARAM=!array 1,2,3,4`        |
 | !dict       | Parse to dictionary (associative array) | `PARAM=!dict a=1,b=2`         |
+| !unesc      | Unescape the value                      | `PARAM=!unesc a\nb`           |
+| !file       | Load the content of a file              | `PARAM=!file /path/to/file`   |
 
 
 ## Adding a new Parser
@@ -74,7 +76,7 @@ return [
 
 To solve this problem, we need to convert `EXAMPLE_ARRAY` into a closure. The clousure is lazy 
 and will be executed only when the value is requested allowing us to use container inside the array 
-(see [Good Practices](good-practices.md)).
+(see [Good Practices](good-practices)).
 
 ```php
 return [
