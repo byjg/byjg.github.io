@@ -31,7 +31,6 @@ See below the current implemented drivers:
 | Postgres            | psql://username:password@hostname:port/database   | getDbRelationalInstance() |
 | Sql Server (DbLib)  | dblib://username:password@hostname:port/database  | getDbRelationalInstance() |
 | Sql Server (Sqlsrv) | sqlsrv://username:password@hostname:port/database | getDbRelationalInstance() |
-| Oracle (OCI)        | oci://username:password@hostname:port/database    | getDbRelationalInstance() |
 | Oracle (OCI8)       | oci8://username:password@hostname:port/database   | getDbRelationalInstance() |
 | Generic PDO         | pdo://username:password@pdo_driver?PDO_PARAMETERS | getDbRelationalInstance() |
 
@@ -51,10 +50,14 @@ $conn = \ByJG\AnyDataset\Db\Factory::getDbRelationalInstance("mysql://root:passw
 ## Advanced Topics
 
 - [Passing Parameters to PDODriver](parameters)
-- [MySQL SSL Connection](mysql-ssl)
-- [FreeTDS/Dblib Date Issue](freetds)
 - [Generic PDO Driver](generic-pdo-driver)
 - [Running Tests](tests)
+
+## Database Specifics
+
+- [MySQL](mysql)
+- [Oracle](oracle)
+- [SQLServer](sqlserver)
 
 
 ## Install
