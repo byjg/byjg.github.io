@@ -19,7 +19,7 @@ $connector = ConnectorFactory::create(new Uri("mock://local"));
 
 ### Public & Consume
 
-It is the same as the other connectors. See the [README.md](../README.md) for more information.
+It is the same as the other connectors. See the [README.md](../README) for more information.
 
 Protocols:
 

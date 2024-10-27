@@ -43,7 +43,7 @@ This is a simple client to publish and consumes messages from a Message Queue se
 
 | Connector | URL / Documentation                                                                      | Composer Package        |
 |-----------|------------------------------------------------------------------------------------------|-------------------------|
-| Mock      | [docs/mock-connector.md](mock-connector.md)                                         | -                       |
+| Mock      | [docs/mock-connector.md](mock-connector)                                         | -                       |
 | RabbitMQ  | [https://github.com/byjg/rabbitmq-client](https://github.com/byjg/rabbitmq-client)       | byjg/rabbitmq-client    |
 | Redis     | [https://github.com/byjg/redis-queue-client](https://github.com/byjg/redis-queue-client) | byjg/redis-queue-client |
 
@@ -114,7 +114,7 @@ Possible return values from the callback function:
 
 ## Consumer Client
 
-You can simplify the consume method by using the ConsumerClientTrait. See more details in the [docs/consumer-client-trait.md](consumer-client-trait.md).
+You can simplify the consume method by using the ConsumerClientTrait. See more details in the [docs/consumer-client-trait.md](consumer-client-trait).
 
 ## Connectors
 
