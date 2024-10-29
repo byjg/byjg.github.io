@@ -36,11 +36,12 @@ See below the current implemented drivers:
 
 ```php
 <?php
-$conn = \ByJG\AnyDataset\Db\Factory::getDbRelationalInstance("mysql://root:password@10.0.1.10/myschema");
+$conn = \ByJG\AnyDataset\Db\Factory::getDbInstance("mysql://root:password@10.0.1.10/myschema");
 ```
 
 ## Examples
 
+- [Getting Started](getting-started)
 - [Basic Query and Update](basic-query)
 - [Cache results](cache)
 - [Database Transaction](transaction)
