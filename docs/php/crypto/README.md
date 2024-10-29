@@ -100,8 +100,8 @@ echo $object->decrypt($enc) . "\n";
 
 ## Additional Documentation
 
-- [Advanced uses of KeySet class](advanced-uses-keyset.md)
-- [Interoperability with JavaScript](interoperability.md)
+- [Advanced uses of KeySet class](advanced-uses-keyset)
+- [Interoperability with JavaScript](interoperability)
 
 
 
