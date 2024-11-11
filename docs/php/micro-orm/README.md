@@ -156,7 +156,9 @@ $result = $repository->getByQuery($query);
 
 ## Advanced Topics
 
+* [Active Record](active-record)
 * [The Literal Object](the-literal-object)
+* [Soft Delete](softdelete)
 * [Caching the Results](cache)
 * [Observing the Database](observers)
 * [Controlling the data queried/updated](controlling-the-data)
