@@ -157,6 +157,7 @@ $result = $repository->getByQuery($query);
 ## Advanced Topics
 
 * [The Literal Object](the-literal-object)
+* [Caching the Results](cache)
 * [Observing the Database](observers)
 * [Controlling the data queried/updated](controlling-the-data)
 * [Using FieldAlias](using-fieldalias)
