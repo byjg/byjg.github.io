@@ -24,6 +24,7 @@ EasyHAProxy can detect and configure HAProxy automatically on the following plat
 EasyHAProxy is part of some projects:
 - Dokku 
 - MicroK8s
+- DigitalOcean Marketplace
 
 See detailed instructions on how to install below.
 
@@ -70,6 +71,7 @@ Or you can install using tools:
 [![Helm](easyhaproxy_helm.png)](helm)
 [![MicroK8s](easyhaproxy_microk8s.png)](microk8s)
 [![Dokku](easyhaproxy_dokku.png)](dokku)
+[![DigitalOcean](easyhaproxy_digitalocean.png)](digitalocean)
 
 ## Special Topics
 
