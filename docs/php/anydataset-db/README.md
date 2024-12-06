@@ -43,22 +43,26 @@ $conn = \ByJG\AnyDataset\Db\Factory::getDbInstance("mysql://root:password@10.0.1
 
 - [Getting Started](getting-started)
 - [Basic Query and Update](basic-query)
+- [Sql Statement Object](sqlstatement)
 - [Cache results](cache)
 - [Database Transaction](transaction)
 - [Load Balance and Connection Pooling](load-balance)
 - [Database Helper](helper)
+- [Filtering the Query](iteratorfilter)
 
 ## Advanced Topics
 
 - [Passing Parameters to PDODriver](parameters)
 - [Generic PDO Driver](generic-pdo-driver)
 - [Running Tests](tests)
+- [Getting an Iterator from an existing PDO Statament](pdostatement)
 
 ## Database Specifics
 
 - [MySQL](mysql)
 - [Oracle](oracle)
 - [SQLServer](sqlserver)
+- [Literal PDO Connection String](literal-pdo-driver)
 
 
 ## Install
