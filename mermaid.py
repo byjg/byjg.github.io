@@ -50,7 +50,8 @@ def minimize_line_crossings_from_text(input_text):
     print("```mermaid")
     print("graph LR;")
     for node in sorted_nodes:
-        print(f"  {node};")
+        link = node.replace('byjg', 'https://opensource.byjg.com/docs/php')
+        print(f"  {node}[<a href='{link}' style='text-decoration:none;'>{node}</a>];")
     for source, target in connections:
         print(f"  {source} --> {target};")
     print("```")
