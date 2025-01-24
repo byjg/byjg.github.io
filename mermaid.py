@@ -23,7 +23,12 @@ def topological_sort(nodes, connections):
 
     return result
 
-def minimize_line_crossings_from_text(input_text):
+def get_connection_symbol(connection_count):
+    # Define the sequence of symbols
+    symbols = ["<-->", "o--o", "x--x", "<-.->", "o-.-o", "x-.-x"]
+    return symbols[connection_count % len(symbols)]
+
+def minimize_line_crossings_with_symbols(input_text):
     # Split the input text into lines
     lines = input_text.strip().split('\n')
 
@@ -41,19 +46,26 @@ def minimize_line_crossings_from_text(input_text):
             nodes.add(target.strip())
             connections.append((source.strip(), target.strip()))
 
+    # Count the connections for each node
+    connection_counts = defaultdict(int)
+    for source, target in connections:
+        connection_counts[source] += 1
+        connection_counts[target] += 0  # Ensure target node is included
+
     # Use topological sort for better node ordering
     sorted_nodes = topological_sort(nodes, connections)
 
-    # Print the Mermaid flowchart
+    # Print the Mermaid flowchart with symbols
     print("# PHP Components")
     print("## Class Dependency")
     print("```mermaid")
     print("graph LR;")
     for node in sorted_nodes:
         link = node.replace('byjg', 'https://opensource.byjg.com/docs/php')
-        print(f"  {node}[<a href='{link}' style='text-decoration:none;'>{node}</a>];")
+        print(f"  {node}[<a href='{link}' style='text-decoration:none'>{node}</a>];")
     for source, target in connections:
-        print(f"  {source} --> {target};")
+        symbol = get_connection_symbol(connection_counts[source])
+        print(f"  {source} {symbol} {target};")
     print("```")
 
 
@@ -63,7 +75,7 @@ def minimize_line_crossings_from_text_file(file_path):
         input_text = file.read()
 
     # Call the function with the input text
-    minimize_line_crossings_from_text(input_text)
+    minimize_line_crossings_with_symbols(input_text)
 
 # Example usage with an external file
 file_path = sys.argv[1]
