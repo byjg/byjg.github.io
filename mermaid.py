@@ -62,12 +62,17 @@ def minimize_line_crossings_with_symbols(input_text):
     print("graph LR;")
     for node in sorted_nodes:
         link = node.replace('byjg', 'https://opensource.byjg.com/docs/php')
-        print(f"  {node}[<a href='{link}' style='text-decoration:none'>{node}</a>];")
+        print(f"  {node}[<a href='{link}' style='text-decoration:none'>{node}🔗</a>];")
     for source, target in connections:
         symbol = get_connection_symbol(connection_counts[source])
         print(f"  {source} {symbol} {target};")
+    print("  classDef default fill:#ffffff,stroke:#333,stroke-width:1.5px,color:#000,font-size:14px;")
+    print("  classDef highlight fill:#ffef96,stroke:#ff9900,stroke-width:3px;")
+    print("  classDef deprecated fill:#f8f8f8,stroke:#cccccc,stroke-dasharray: 5 5,stroke-width:1px,color:#999;")
+    print("  classDef working-on fill:#fff3cd,stroke:#ffcc00,stroke-width:2px,color:#856404;")
+    print("  classDef finished fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724;")
+    print("  class byjg/anydataset-array deprecated;")
     print("```")
-
 
 def minimize_line_crossings_from_text_file(file_path):
     # Read the contents of the file
