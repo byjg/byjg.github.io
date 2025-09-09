@@ -6,60 +6,70 @@ tags: [php, serializer, objectcopy, dto, byjg, opensource]
 description: Highlighting how byjg/serializer and ObjectCopy turn everyday data transformations into one-liners—with arrays, YAML, PHP serialize, DTO mapping, case conversions, and value transformations.
 ---
 
-Open Source ByJG is a collection of small, focused PHP components—framework-agnostic by design—that you can mix and match to solve real problems without bringing an entire framework along for the ride.
+In this post I’ll showcase two tiny-but-mighty pieces: the byjg/serializer’s Serialize and ObjectCopy utilities. Together, they make it trivial to convert, reshape, and map data across formats and DTOs.
 
 <!-- truncate -->
 
-In this post I’ll showcase two tiny-but-mighty pieces: the byjg/serializer’s Serialize and ObjectCopy utilities. Together, they make it trivial to convert, reshape, and map data across formats and DTOs.
+## Introduction
 
-Links:
-- Docs home: https://opensource.byjg.com/docs/php/serializer
-- Serialize class: https://opensource.byjg.com/docs/php/serializer/serialize
-- ObjectCopy: https://opensource.byjg.com/docs/php/serializer/objectcopy
-- ObjectCopyInterface: https://opensource.byjg.com/docs/php/serializer/objectcopyinterface
-- GitHub: https://github.com/byjg/serializer
+OpenSource ByJG is a toolbox of small, framework-agnostic components you can mix and match as you like. 
+The project leans heavily into the KISS principle (“keep it simple”), prioritizing short, composable libraries over 
+heavyweight frameworks — you can see that spirit across its PHP component catalog and philosophy pages.
 
-Installation
+Among these, byjg/serializer shines as a pragmatic way to move data between objects, arrays and 
+wire formats (JSON, XML, YAML) — including handy copy/mapping helpers when shapes don’t match 1:1. 
+
+It installs with one line:
 
 ```bash
 composer require byjg/serialize
 ```
 
-Note: The serializer uses ext-json and can also leverage symfony/yaml and ext-simplexml for YAML and XML support.
+The library converts any object/array/stdClass to array, and then formats that to JSON, XML, YAML, or plain text. It also parses from JSON/YAML/PHP-serialized strings into arrays, and lets you filter/transform fields and even read PHP 8 attributes on the fly. Under the hood, it sticks to lean dependencies (json, symfony/yaml, simplexml).
+[Opensource ByJG](https://opensource.byjg.com/)
 
-1) Serialize: from object to array, JSON, YAML, XML, and more
+## Basic: from anything to anything
 
-The Serialize class converts any object, stdClass, or array into arrays or common text formats, with optional modifiers.
-
-Basic: class to array and YAML
+Let’s start with a tiny model and go through the everyday moves.
 
 ```php
 <?php
+
 use ByJG\Serializer\Serialize;
 
-class Customer
+final class User
 {
-    public function __construct(private string $name, private ?int $age)
-    {
-    }
+    public function __construct(
+        private int $id,
+        private string $name,
+        private ?string $email = null,
+    ) {}
+
+    public function getId(): int { return $this->id; }
     public function getName(): string { return $this->name; }
-    public function getAge(): ?int { return $this->age; }
+    public function getEmail(): ?string { return $this->email; }
 }
 
-$customer = new Customer('João', null);
+$user = new User(1, 'João', null);
 
-// To array
-$array = Serialize::from($customer)->toArray();
-// [ 'name' => 'João', 'age' => null ]
+// 1) Object → array
+$asArray = Serialize::from($user)->toArray();
 
-// To YAML
-$yaml = Serialize::from($customer)->toYaml();
-// e.g.
-// name: "João"
-// age: null
+// 2) Array → YAML (JSON/XML similar)
+$yaml = Serialize::from($asArray)->toYaml();
+
+// 3) PHP’s own serialized string (use PHP core for output)
+$phpSerialized = serialize($asArray);
+
+// 4) Back from a PHP-serialized string → array
+$backToArray = Serialize::fromPhpSerialize($phpSerialized)->toArray();
+
 ```
 
-Parsing existing serialized content
+The calls above mirror the documented API for converting “from anything to array”, formatting arrays and objects to JSON/XML/YAML, 
+and parsing from JSON/YAML/PHP serialized strings back to arrays.
+
+Another examples:
 
 ```php
 <?php
@@ -72,11 +82,13 @@ $parsed = Serialize::fromPhpSerialize($serialized)->toArray();
 
 // From JSON
 $json = '{"foo": "bar"}';
-$parsedJson = Serialize::fromJson($json)->toArray();
+$parsedJson = Serialize::fromJson($json)->toYaml();
+// foo: bar
 
 // From YAML
 $yaml = "foo: bar\nanswer: 42\n";
-$parsedYaml = Serialize::fromYaml($yaml)->toArray();
+$parsedYaml = Serialize::fromYaml($yaml)->toJson();
+// {"foo":"bar","answer":42}
 ```
 
 Useful modifiers at a glance
@@ -103,35 +115,54 @@ echo Serialize::from(['k' => 'v'])->toXml();
 echo Serialize::from(['k' => 'v'])->toPlainText();
 ```
 
-Advanced: parse attributes during serialization
+### Read PHP 8 Attributes and transform values
+
+You can parse attributes and transform each property as you go — a powerful hook for masking, formatting, or adding metadata.
+
 
 ```php
 <?php
+
 use ByJG\Serializer\Serialize;
 
-class Model
-{
-    public string $Id = '';
-    #[SampleAttribute("Message")]
-    public string $Name = '';
+#[Attribute]
+final class Label {
+    public function __construct(public string $text) {}
 }
 
-$model = new Model();
-$model->Id = '123';
-$model->Name = 'John';
+final class Product {
+    #[Label('SKU')]
+    public string $id = 'A-123';
 
-$result = Serialize::from($model)
-    ->parseAttributes(function ($attribute, $value, $keyName, $propertyName, $getterName) {
-        // Example: append attribute metadata if present
-        return $attribute ? ($value . ': ' . $attribute->getElementName()) : $value;
-    });
+    #[Label('Pretty name')]
+    public string $name = 'Fuzzy Panda';
+}
+
+$prod = new Product();
+
+$out = Serialize::from($prod)->parseAttributes(
+    // Callback receives ($attributeInstance, $value, $keyName, $propertyName, $getterName)
+    function ($attr, $value, $key, $prop, $getter) {
+        // If the attribute exists, append its label
+        return $attr ? "{$value} ({$attr->text})" : $value;
+    },
+    Label::class // Only parse this attribute type
+    // , $flags (optional)
+);
+
+print_r($out);
+// [ 'id' => 'A-123 (SKU)', 'name' => 'Fuzzy Panda (Pretty name)' ]
+
 ```
 
-2) ObjectCopy: copy arrays and objects, rename fields, change case, transform values
+This callback-based attribute parsing is part of the Serialize API.
 
-ObjectCopy moves data between arrays/objects, even when property names differ. You can rename properties, switch case styles, and alter values on the fly.
+## ObjectCopy: move data between arrays and objects
 
-Basic: copy an array into an object
+ObjectCopy moves data between arrays/objects, even when property names differ. 
+You can rename properties, switch case styles, and alter values on the fly.
+
+Here a basic example:
 
 ```php
 <?php
@@ -149,7 +180,7 @@ ObjectCopy::copy($payload, $dto);
 // $dto->id === 10; $dto->name === 'Ana'
 ```
 
-Basic: copy one DTO into another DTO
+And another copying from one DTO into another DTO
 
 ```php
 <?php
