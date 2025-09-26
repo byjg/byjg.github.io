@@ -184,12 +184,12 @@ const config = {
       },
       algolia: {
         // The application ID provided by Algolia
-        appId: '3179U56X0G',
+        appId: '0B3ANWGIAF',
 
         // Public API key: it is safe to commit it
-        apiKey: '6c880670243b77c456e56c2dd62df989',
+        apiKey: '2a19d51a8c5e298cc82369e4674ec8e1',
 
-        indexName: 'opensource_byjg',
+        indexName: 'Open Source ByJG Documentation',
 
         // Optional: see doc section below
         contextualSearch: true,
