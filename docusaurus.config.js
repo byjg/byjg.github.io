@@ -25,15 +25,12 @@ const config = {
   projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-
-  customFields:{
-    mendableAnonKey: "8fb2b87d-07d2-4765-9903-f4181fb8205f",
-  },
-
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownImages: 'warn'
+    },
   },
   themes: ['@docusaurus/theme-mermaid'],
 
@@ -43,7 +40,22 @@ const config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'pt'],
+    path: 'i18n',
+    localeConfigs: {
+      en: {
+        label: 'English',
+        htmlLang: 'en-US',
+        path: 'en',
+        baseUrl: '/',
+      },
+      pt: {
+        label: 'Português',
+        htmlLang: 'pt-BR',
+        path: 'pt',
+        baseUrl: '/pt',
+      },
+    }
   },
 
   presets: [
@@ -97,6 +109,10 @@ const config = {
             href: 'https://github.com/byjg',
             label: 'GitHub',
             position: 'right',
+          },
+          {
+             type: 'localeDropdown', // This creates the language selector
+             position: 'right', // Or 'left', depending on your preference
           },
         ],
       },
@@ -165,6 +181,33 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['php'],
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: '3179U56X0G',
+
+        // Public API key: it is safe to commit it
+        apiKey: '6c880670243b77c456e56c2dd62df989',
+
+        indexName: 'opensource_byjg',
+
+        // Optional: see doc section below
+        contextualSearch: true,
+
+        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        externalUrlRegex: 'opensource\\.byjg\\.com',
+
+        // Optional: Algolia search parameters
+        searchParameters: {},
+
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: 'search',
+
+        // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+        insights: false,
+
+        // Optional: whether you want to use the new Ask AI feature (undefined by default)
+        //askAi: 'YOUR_ALGOLIA_ASK_AI_ASSISTANT_ID',
       },
     }),
 };
