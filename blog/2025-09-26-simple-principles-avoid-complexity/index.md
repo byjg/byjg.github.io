@@ -57,6 +57,17 @@ Good tests let you sleep at night. They give you the freedom to refactor without
 legacy code with total confidence because I knew the test suite had my back. And trust me: there’s no greater freedom 
 for a developer than that.
 
+## The Problem Is a Coward
+
+A problem is a coward because it never shows up alone. It always brings friends. That bug in the application might be 
+tied to a slow query, which is linked to a missing index, which actually started because the log server was lagging 
+behind in processing events.
+When this happens, it’s not enough to look only at your piece of the code. You need to have a solid grasp of the whole 
+system: from code to infrastructure, from logs to monitoring dashboards. And even more importantly, you need a team 
+ready to act together — each one seeing their part, but with a shared vision of where the root cause really lies.
+Solving problems is not about being the lone hero. It’s about recognizing that the problem is a coward. And because of 
+that, you should be ready to fight it as a team.
+
 ## Wrapping It Up
 
 In the end, none of this is revolutionary. These are simple, almost trivial principles. But ignore them, and it’s only a 

@@ -58,6 +58,17 @@ Ter bons testes é dormir tranquilo. É poder refatorar sem medo. Eu já fiz mud
 total porque sabia que a bateria de testes estava lá para me proteger. E vou te dizer: não existe liberdade maior para um 
 programador do que essa.
 
+## Problema é Covarde
+
+O problema é covarde porque ele nunca aparece sozinho. Ele sempre vem em bando. O bug que estourou na aplicação pode estar 
+ligado a uma query lenta, que por sua vez está ligada a um índice mal configurado, que na verdade começou quando o 
+servidor de logs estava atrasado em processar eventos.
+Quando isso acontece, não basta olhar só para a sua parte do código. É preciso ter domínio do sistema como um todo: 
+do código à infraestrutura, dos logs aos gráficos de monitoramento. E mais do que isso, é preciso ter uma equipe preparada
+para atuar junto, cada um enxergando o pedaço que domina, mas com a visão coletiva de onde está a raiz.
+Resolver problemas não é sobre ser herói sozinho. É sobre ter consciência de que o problema é covarde. E por isso você 
+precisa estar preparado para enfrentá-lo em grupo.
+
 ## Fechando a conta
 
 No fundo, nada disso é revolucionário. São princípios simples, quase banais. Mas se você os ignora, é questão de tempo 
