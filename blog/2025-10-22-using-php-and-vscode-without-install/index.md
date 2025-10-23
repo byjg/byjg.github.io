@@ -198,6 +198,64 @@ Create or update `.vscode/launch.json` in your project root:
             "serverReadyAction": {
                 "action": "openExternally"
             }
+        },
+        {
+            "name": "PHPUnit All Tests",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceFolder}/vendor/bin/phpunit",
+            "cwd": "${workspaceFolder}",
+            "port": 9003,
+            "pathMappings": {
+                "/workdir": "${workspaceFolder}"
+            },
+            "env": {
+                "XDEBUG_MODE": "debug,develop",
+                "XDEBUG_CONFIG": "client_port=9003"
+            }
+        },
+        {
+            "name": "PHPUnit Current File",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceFolder}/vendor/bin/phpunit",
+            "args": [
+                "${file}"
+            ],
+            "cwd": "${workspaceFolder}",
+            "port": 9003,
+            "pathMappings": {
+                "/workdir": "${workspaceFolder}"
+            },
+            "env": {
+                "XDEBUG_MODE": "debug,develop",
+                "XDEBUG_CONFIG": "client_port=9003"
+            }
+        },
+        {
+            "name": "PHPUnit All Tests (no debug)",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceFolder}/vendor/bin/phpunit",
+            "cwd": "${workspaceFolder}",
+            "noDebug": true,
+            "pathMappings": {
+                "/workdir": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "PHPUnit Current File (no debug)",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceFolder}/vendor/bin/phpunit",
+            "args": [
+                "${file}"
+            ],
+            "cwd": "${workspaceFolder}",
+            "noDebug": true,
+            "pathMappings": {
+                "/workdir": "${workspaceFolder}"
+            }
         }
     ]
 }
