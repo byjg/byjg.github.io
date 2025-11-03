@@ -28,3 +28,13 @@
   --ifm-color-primary-lightest: #ffffff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Collapsible Sidebar - Show All Topics Button */
+#sidebar-show-all {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#sidebar-show-all:hover {
+  transform: translateX(-2px);
+}

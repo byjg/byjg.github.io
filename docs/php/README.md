@@ -1,3 +1,9 @@
+---
+id: php
+slug: /php
+sort: 1
+---
+
 # PHP Components
 ## Class Dependency
 ```mermaid
@@ -90,3 +96,7 @@ graph LR;
   classDef finished fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724;
   class byjg/anydataset-array deprecated;
 ```
+
+## Browse All PHP Components
+
+Use the sidebar on the left to explore all available PHP components.

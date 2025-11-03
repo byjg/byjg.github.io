@@ -1,4 +1,6 @@
 ---
+id: helm
+slug: /helm
 sort: 4
 ---
 
@@ -13,3 +15,7 @@ helm repo add byjg https://opensource.byjg.com/helm
 helm repo list
 helm search repo byjg
 ```
+
+## Available Charts
+
+Use the sidebar on the left to browse all available Helm charts.
