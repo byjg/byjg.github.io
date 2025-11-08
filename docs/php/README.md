@@ -1,47 +1,41 @@
----
-id: php
-slug: /php
-sort: 1
----
-
 # PHP Components
 ## Class Dependency
 ```mermaid
 graph LR;
-  byjg/anydataset-json[<a href='https://opensource.byjg.com/docs/php/anydataset-json' style='text-decoration:none'>byjg/anydataset-json🔗</a>];
-  byjg/shortid[<a href='https://opensource.byjg.com/docs/php/shortid' style='text-decoration:none'>byjg/shortid🔗</a>];
-  byjg/anydataset-nosql[<a href='https://opensource.byjg.com/docs/php/anydataset-nosql' style='text-decoration:none'>byjg/anydataset-nosql🔗</a>];
-  byjg/fonemabr[<a href='https://opensource.byjg.com/docs/php/fonemabr' style='text-decoration:none'>byjg/fonemabr🔗</a>];
-  byjg/anydataset-text[<a href='https://opensource.byjg.com/docs/php/anydataset-text' style='text-decoration:none'>byjg/anydataset-text🔗</a>];
-  byjg/statemachine[<a href='https://opensource.byjg.com/docs/php/statemachine' style='text-decoration:none'>byjg/statemachine🔗</a>];
-  byjg/imageutil[<a href='https://opensource.byjg.com/docs/php/imageutil' style='text-decoration:none'>byjg/imageutil🔗</a>];
-  byjg/jwt-session[<a href='https://opensource.byjg.com/docs/php/jwt-session' style='text-decoration:none'>byjg/jwt-session🔗</a>];
-  byjg/migration-cli[<a href='https://opensource.byjg.com/docs/php/migration-cli' style='text-decoration:none'>byjg/migration-cli🔗</a>];
-  byjg/mailwrapper[<a href='https://opensource.byjg.com/docs/php/mailwrapper' style='text-decoration:none'>byjg/mailwrapper🔗</a>];
-  byjg/anydataset-xml[<a href='https://opensource.byjg.com/docs/php/anydataset-xml' style='text-decoration:none'>byjg/anydataset-xml🔗</a>];
   byjg/phpthread[<a href='https://opensource.byjg.com/docs/php/phpthread' style='text-decoration:none'>byjg/phpthread🔗</a>];
+  byjg/sms-client[<a href='https://opensource.byjg.com/docs/php/sms-client' style='text-decoration:none'>byjg/sms-client🔗</a>];
+  byjg/anydataset-xml[<a href='https://opensource.byjg.com/docs/php/anydataset-xml' style='text-decoration:none'>byjg/anydataset-xml🔗</a>];
+  byjg/restserver[<a href='https://opensource.byjg.com/docs/php/restserver' style='text-decoration:none'>byjg/restserver🔗</a>];
+  byjg/imageutil[<a href='https://opensource.byjg.com/docs/php/imageutil' style='text-decoration:none'>byjg/imageutil🔗</a>];
+  byjg/anydataset-nosql[<a href='https://opensource.byjg.com/docs/php/anydataset-nosql' style='text-decoration:none'>byjg/anydataset-nosql🔗</a>];
+  byjg/featureflag[<a href='https://opensource.byjg.com/docs/php/featureflag' style='text-decoration:none'>byjg/featureflag🔗</a>];
+  byjg/soap-server[<a href='https://opensource.byjg.com/docs/php/soap-server' style='text-decoration:none'>byjg/soap-server🔗</a>];
+  byjg/rabbitmq-client[<a href='https://opensource.byjg.com/docs/php/rabbitmq-client' style='text-decoration:none'>byjg/rabbitmq-client🔗</a>];
   byjg/account-statements[<a href='https://opensource.byjg.com/docs/php/account-statements' style='text-decoration:none'>byjg/account-statements🔗</a>];
   byjg/wordnumber[<a href='https://opensource.byjg.com/docs/php/wordnumber' style='text-decoration:none'>byjg/wordnumber🔗</a>];
-  byjg/redis-queue-client[<a href='https://opensource.byjg.com/docs/php/redis-queue-client' style='text-decoration:none'>byjg/redis-queue-client🔗</a>];
-  byjg/daemonize[<a href='https://opensource.byjg.com/docs/php/daemonize' style='text-decoration:none'>byjg/daemonize🔗</a>];
-  byjg/config[<a href='https://opensource.byjg.com/docs/php/config' style='text-decoration:none'>byjg/config🔗</a>];
-  byjg/restserver[<a href='https://opensource.byjg.com/docs/php/restserver' style='text-decoration:none'>byjg/restserver🔗</a>];
-  byjg/rabbitmq-client[<a href='https://opensource.byjg.com/docs/php/rabbitmq-client' style='text-decoration:none'>byjg/rabbitmq-client🔗</a>];
+  byjg/anydataset-text[<a href='https://opensource.byjg.com/docs/php/anydataset-text' style='text-decoration:none'>byjg/anydataset-text🔗</a>];
+  byjg/statemachine[<a href='https://opensource.byjg.com/docs/php/statemachine' style='text-decoration:none'>byjg/statemachine🔗</a>];
+  byjg/anydataset-json[<a href='https://opensource.byjg.com/docs/php/anydataset-json' style='text-decoration:none'>byjg/anydataset-json🔗</a>];
   byjg/authuser[<a href='https://opensource.byjg.com/docs/php/authuser' style='text-decoration:none'>byjg/authuser🔗</a>];
-  byjg/sms-client[<a href='https://opensource.byjg.com/docs/php/sms-client' style='text-decoration:none'>byjg/sms-client🔗</a>];
-  byjg/soap-server[<a href='https://opensource.byjg.com/docs/php/soap-server' style='text-decoration:none'>byjg/soap-server🔗</a>];
-  byjg/crypto[<a href='https://opensource.byjg.com/docs/php/crypto' style='text-decoration:none'>byjg/crypto🔗</a>];
-  byjg/featureflag[<a href='https://opensource.byjg.com/docs/php/featureflag' style='text-decoration:none'>byjg/featureflag🔗</a>];
+  byjg/jwt-session[<a href='https://opensource.byjg.com/docs/php/jwt-session' style='text-decoration:none'>byjg/jwt-session🔗</a>];
+  byjg/daemonize[<a href='https://opensource.byjg.com/docs/php/daemonize' style='text-decoration:none'>byjg/daemonize🔗</a>];
+  byjg/mailwrapper[<a href='https://opensource.byjg.com/docs/php/mailwrapper' style='text-decoration:none'>byjg/mailwrapper🔗</a>];
+  byjg/redis-queue-client[<a href='https://opensource.byjg.com/docs/php/redis-queue-client' style='text-decoration:none'>byjg/redis-queue-client🔗</a>];
+  byjg/fonemabr[<a href='https://opensource.byjg.com/docs/php/fonemabr' style='text-decoration:none'>byjg/fonemabr🔗</a>];
+  byjg/shortid[<a href='https://opensource.byjg.com/docs/php/shortid' style='text-decoration:none'>byjg/shortid🔗</a>];
+  byjg/config[<a href='https://opensource.byjg.com/docs/php/config' style='text-decoration:none'>byjg/config🔗</a>];
   byjg/swagger-test[<a href='https://opensource.byjg.com/docs/php/swagger-test' style='text-decoration:none'>byjg/swagger-test🔗</a>];
-  byjg/migration[<a href='https://opensource.byjg.com/docs/php/migration' style='text-decoration:none'>byjg/migration🔗</a>];
-  byjg/convert[<a href='https://opensource.byjg.com/docs/php/convert' style='text-decoration:none'>byjg/convert🔗</a>];
+  byjg/migration-cli[<a href='https://opensource.byjg.com/docs/php/migration-cli' style='text-decoration:none'>byjg/migration-cli🔗</a>];
+  byjg/crypto[<a href='https://opensource.byjg.com/docs/php/crypto' style='text-decoration:none'>byjg/crypto🔗</a>];
   byjg/singleton-pattern[<a href='https://opensource.byjg.com/docs/php/singleton-pattern' style='text-decoration:none'>byjg/singleton-pattern🔗</a>];
-  byjg/message-queue-client[<a href='https://opensource.byjg.com/docs/php/message-queue-client' style='text-decoration:none'>byjg/message-queue-client🔗</a>];
-  byjg/micro-orm[<a href='https://opensource.byjg.com/docs/php/micro-orm' style='text-decoration:none'>byjg/micro-orm🔗</a>];
-  byjg/cache-engine[<a href='https://opensource.byjg.com/docs/php/cache-engine' style='text-decoration:none'>byjg/cache-engine🔗</a>];
-  byjg/jwt-wrapper[<a href='https://opensource.byjg.com/docs/php/jwt-wrapper' style='text-decoration:none'>byjg/jwt-wrapper🔗</a>];
   byjg/jinja-php[<a href='https://opensource.byjg.com/docs/php/jinja-php' style='text-decoration:none'>byjg/jinja-php🔗</a>];
+  byjg/micro-orm[<a href='https://opensource.byjg.com/docs/php/micro-orm' style='text-decoration:none'>byjg/micro-orm🔗</a>];
+  byjg/jwt-wrapper[<a href='https://opensource.byjg.com/docs/php/jwt-wrapper' style='text-decoration:none'>byjg/jwt-wrapper🔗</a>];
+  byjg/message-queue-client[<a href='https://opensource.byjg.com/docs/php/message-queue-client' style='text-decoration:none'>byjg/message-queue-client🔗</a>];
+  byjg/convert[<a href='https://opensource.byjg.com/docs/php/convert' style='text-decoration:none'>byjg/convert🔗</a>];
+  byjg/cache-engine[<a href='https://opensource.byjg.com/docs/php/cache-engine' style='text-decoration:none'>byjg/cache-engine🔗</a>];
   byjg/webrequest[<a href='https://opensource.byjg.com/docs/php/webrequest' style='text-decoration:none'>byjg/webrequest🔗</a>];
+  byjg/migration[<a href='https://opensource.byjg.com/docs/php/migration' style='text-decoration:none'>byjg/migration🔗</a>];
   byjg/anydataset-db[<a href='https://opensource.byjg.com/docs/php/anydataset-db' style='text-decoration:none'>byjg/anydataset-db🔗</a>];
   byjg/anydataset-array[<a href='https://opensource.byjg.com/docs/php/anydataset-array' style='text-decoration:none'>byjg/anydataset-array🔗</a>];
   byjg/uri[<a href='https://opensource.byjg.com/docs/php/uri' style='text-decoration:none'>byjg/uri🔗</a>];
@@ -64,6 +58,7 @@ graph LR;
   byjg/phpthread o--o byjg/cache-engine;
   byjg/migration-cli o--o byjg/migration;
   byjg/jwt-session o--o byjg/jwt-wrapper;
+  byjg/account-statements x--x byjg/micro-orm;
   byjg/anydataset x--x byjg/serializer;
   byjg/anydataset x--x byjg/xmlutil;
   byjg/redis-queue-client o--o byjg/message-queue-client;
@@ -84,7 +79,7 @@ graph LR;
   byjg/authuser <-.-> byjg/cache-engine;
   byjg/authuser <-.-> byjg/jwt-wrapper;
   byjg/sms-client o--o byjg/webrequest;
-  byjg/account-statements o--o byjg/micro-orm;
+  byjg/account-statements x--x byjg/micro-orm;
   byjg/micro-orm o--o byjg/anydataset-db;
   byjg/anydataset-xml o--o byjg/anydataset;
   byjg/fonemabr o--o byjg/convert;
@@ -96,7 +91,3 @@ graph LR;
   classDef finished fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724;
   class byjg/anydataset-array deprecated;
 ```
-
-## Browse All PHP Components
-
-Use the sidebar on the left to explore all available PHP components.
