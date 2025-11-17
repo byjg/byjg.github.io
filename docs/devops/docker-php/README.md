@@ -17,13 +17,14 @@ A complete, lightweight, and versatile PHP Docker image collection based on Alpi
 - **Pre-installed extensions**: 45+ PHP extensions included in all images
 - **Development tools**: Composer, PHPUnit, PHP Code Sniffer, and more in CLI images
 - **Production-ready**: Optimized for both development and production environments
-- **Security-hardened**: Runs as non-root user (`app`) for enhanced security
+- **Security-hardened**: Runs as non-root user (`app`), includes SBOM & build provenance
 
 ## Documentation Index
 
 - [Base Image](image-base) - Minimal image with 45+ extensions
 - [CLI Image](image-cli) - Command-line tools for development
 - [FPM Images](image-fpm) - PHP-FPM, Nginx, and Apache variants
+- [Security Features](security) - SBOM, Provenance, and Alpine version strategy
 - [Environment Variables](environment) - Configuration options
 - [Building Custom Images](building) - Create your own images
 - [IDE Integration](ide) - Using with your IDE
@@ -61,10 +62,10 @@ Five different images for each PHP Version:
 
 | Version | Latest Version | Monthly Builds | Alpine Version |
 |:-------:|:--------------:|:--------------:|:--------------:|
-| **8.5** |  **8.5.0RC2**  |    **yes**     |    **edge**    |
-| **8.4** |   **8.4.13**   |    **yes**     |   **3.22**     |
-| **8.3** |   **8.3.26**   |    **yes**     |   **3.22**     |
-| **8.2** |  **8.2.29r2**  |    **yes**     |   **3.22**     |
+| **8.5** |  **8.5.0RC5**  |    **yes**     |    **edge**    |
+| **8.4** |   **8.4.14**   |    **yes**     |    **edge**    |
+| **8.3** |   **8.3.27**   |    **yes**     |    **edge**    |
+| **8.2** |  **8.2.29r3**  |    **yes**     |    **edge**    |
 |   8.1   |     8.1.31     |       -        |      3.19      |
 |   8.0   |     8.0.30     |       -        |      3.16      |
 |   7.4   |     7.4.33     |       -        |      3.15      |
@@ -79,7 +80,14 @@ PHP versions with monthly builds receive regular updates. Legacy versions (witho
 :::
 
 :::warning
-Images using Alpine `edge` or specific versions like `3.22` are production-ready but may receive package updates. Pin to a specific YYYY.MM tag for guaranteed stability.
+**Why Alpine edge?** PHP 8.2-8.5 use Alpine edge to avoid critical unpatched vulnerabilities in Alpine 3.22, including CVE-2023-27482 (supervisor) and other security issues. Monthly tagged releases (YYYY.MM) provide stability checkpoints. See [Security Features](security) for details.
+:::
+
+:::tip
+**For Production**: Pin to specific monthly tags for guaranteed reproducibility:
+```bash
+docker pull byjg/php:8.4-base-2025.11
+```
 :::
 
 ## Use Cases
