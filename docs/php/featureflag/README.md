@@ -6,51 +6,78 @@
 [![GitHub license](https://img.shields.io/github/license/byjg/php-featureflag.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-featureflag.svg)](https://github.com/byjg/php-featureflag/releases/)
 
-A simple feature flag dispatcher.
+A simple feature flag dispatcher that allows conditional code execution based on enabled feature flags.
 
-It allows you to define a list of features and dispatch the request to the proper handler based on the enabled feature flag.
+Feature flags are a powerful technique for managing features in your application, enabling you to toggle functionality
+on/off without deploying new code. This library provides a clean, interface-based approach to dispatch handlers based on
+feature flag states.
 
 ## Basic Usage
 
 ```php
+use ByJG\FeatureFlag\FeatureFlags;
+use ByJG\FeatureFlag\FeatureFlagDispatcher;
+use ByJG\FeatureFlag\FeatureFlagSelector;
+use ByJG\FeatureFlag\FeatureFlagHandlerInterface;
+
 // Initialize the enabled features
 FeatureFlags::addFlag('flag1', 'value1');
 FeatureFlags::addFlag('flag2', 'value2');
 FeatureFlags::addFlag('flag3');
 
+// Create handler implementations
+class MyHandler implements FeatureFlagHandlerInterface
+{
+    public function execute(mixed ...$args): mixed
+    {
+        echo "Handler executed!\n";
+        return null;
+    }
+}
+
 // Create a Dispatcher
 $dispatcher = new FeatureFlagDispatcher();
 
-// Add a feature flag handler
-$dispatcher->add(FeatureFlagSelector::whenFlagIs('flag2', 'value1', function () {/** function1 */}));
-$dispatcher->add(FeatureFlagSelector::whenFlagIs('flag2', 'value2', function () {/** function2 */}));
-$dispatcher->add(FeatureFlagSelector::whenFlagIs('flag2', 'value3', [Someclass::class, 'method1']));
+// Add feature flag handlers
+$dispatcher->add(FeatureFlagSelector::whenFlagIs('flag2', 'value1', new MyHandler()));
+$dispatcher->add(FeatureFlagSelector::whenFlagIs('flag2', 'value2', new MyHandler()));
 
-// Dispatch the request    
+// Dispatch the request
 $dispatcher->dispatch();
 
-// Since there is a feature flag 'flag2' with value 'value2' the function2 will be executed
+// Since there is a feature flag 'flag2' with value 'value2', the corresponding handler will be executed
 ```
 
-**Note that if one or more feature flags matches the condition, all of them will be executed
-in the order they were added.**
+:::note
+If one or more feature flags match the condition, **all matching handlers will be executed** in the order they were
+added.
+:::
 
-## Adding Dispatchers
+## Handler Types
 
-- [Callables](callable-dispatchers)
-- [Attributes](attribute-dispatchers)
+- [Handler Interface](handler-interface) - Create custom handlers implementing `FeatureFlagHandlerInterface`
+- [Attributes](attribute-dispatchers) - Use PHP 8 attributes to mark methods as handlers
+
+## Selector Types
+
+- [FeatureFlagSelector](featureflag-selector) - Single condition selectors
+- [FeatureFlagSelectorSet](featureflag-selectorset) - Multiple condition selectors (ALL must match)
 
 ## Advanced Usage
 
-- [Search Order](search-order)
-- [Passing Arguments](passing-arguments)
-
+- [Search Order](search-order) - Control the order of handler execution
+- [Passing Arguments](passing-arguments) - Pass runtime arguments to handlers
 
 ## Install
 
 ```bash
 composer require "byjg/featureflag"
 ```
+
+## Requirements
+
+- PHP 8.1 or higher
+- PSR-11 Container (optional, for container integration)
 
 ## Unit tests
 
@@ -62,7 +89,8 @@ vendor/bin/phpunit
 
 ```mermaid
 flowchart TD
-    byjg/featureflag --> php
+    byjg/featureflag --> php8.1+
+    byjg/featureflag --> psr/container
 ```
 
 ----
