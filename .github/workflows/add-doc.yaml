@@ -68,10 +68,15 @@ jobs:
           if [ -d ${{ inputs.project }}/docs ]; then
             mkdir -p byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
             cp -r ${{ inputs.project }}/docs/* byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
-            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            # Add front matter with sidebar_key, then append the README content
+            echo "---" > byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            echo "sidebar_key: $PROJECT_WITHOUT_FOLDER" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            echo "---" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            echo "" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
             find byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
           else
-            cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md 
+            cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
           fi
 
       - name: Add Mermaid if "php" folder
