@@ -233,5 +233,5 @@ try {
 
 ## See Also
 
-- [Creating Tokens](03-creating-tokens) - Practical examples of using these API methods
-- [Validating Tokens](04-validating-tokens) - Examples of token validation using the API 
+- [Creating Tokens](creating-tokens) - Practical examples of using these API methods
+- [Validating Tokens](validating-tokens) - Examples of token validation using the API 
