@@ -1,3 +1,7 @@
+---
+sidebar_key: scriptify
+---
+
 # PHP Scriptify
 
 [![Build Status](https://github.com/byjg/php-scriptify/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-scriptify/actions/workflows/phpunit.yml)

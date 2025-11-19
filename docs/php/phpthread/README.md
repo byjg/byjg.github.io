@@ -1,3 +1,7 @@
+---
+sidebar_key: phpthread
+---
+
 # ByJG PHPThread: Simplified Threads and Non-Blocking Code in PHP
 
 [![Build Status](https://github.com/byjg/php-phpthread/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-phpthread/actions/workflows/phpunit.yml)

@@ -1,3 +1,7 @@
+---
+sidebar_key: restserver
+---
+
 # PHP Rest Server
 
 [![Build Status](https://github.com/byjg/php-restserver/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-restserver/actions/workflows/phpunit.yml)

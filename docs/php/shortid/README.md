@@ -1,3 +1,7 @@
+---
+sidebar_key: shortid
+---
+
 # ShortID
 
 [![Build Status](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-shortid/actions/workflows/phpunit.yml)

@@ -1,3 +1,7 @@
+---
+sidebar_key: soap-server
+---
+
 # Soap Server
 
 [![Build Status](https://github.com/byjg/php-soap-server/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-soap-server/actions/workflows/phpunit.yml)

@@ -1,3 +1,7 @@
+---
+sidebar_key: statemachine
+---
+
 # State Machine
 
 [![Build Status](https://github.com/byjg/php-statemachine/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-statemachine/actions/workflows/phpunit.yml)

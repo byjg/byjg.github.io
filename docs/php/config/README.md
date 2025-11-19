@@ -1,3 +1,7 @@
+---
+sidebar_key: config
+---
+
 # Config: PSR-11 Container and Dependency Injection
 
 [![Build Status](https://github.com/byjg/php-config/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-config/actions/workflows/phpunit.yml)

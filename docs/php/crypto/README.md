@@ -1,3 +1,7 @@
+---
+sidebar_key: crypto
+---
+
 # Crypto
 
 [![Build Status](https://github.com/byjg/php-crypto/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-crypto/actions/workflows/phpunit.yml)

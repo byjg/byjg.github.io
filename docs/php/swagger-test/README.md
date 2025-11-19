@@ -1,3 +1,7 @@
+---
+sidebar_key: swagger-test
+---
+
 # PHP Swagger Test
 
 [![Build Status](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml)

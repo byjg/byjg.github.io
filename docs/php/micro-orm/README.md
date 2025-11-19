@@ -1,3 +1,7 @@
+---
+sidebar_key: micro-orm
+---
+
 # MicroOrm for PHP
 
 [![Build Status](https://github.com/byjg/php-micro-orm/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-micro-orm/actions/workflows/phpunit.yml)

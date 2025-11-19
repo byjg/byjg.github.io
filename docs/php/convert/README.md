@@ -1,3 +1,7 @@
+---
+sidebar_key: convert
+---
+
 # Convert
 
 [![Build Status](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-convert/actions/workflows/phpunit.yml) 

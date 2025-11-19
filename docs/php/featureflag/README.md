@@ -1,3 +1,7 @@
+---
+sidebar_key: featureflag
+---
+
 # FeatureFlag Dispatcher
 
 [![Build Status](https://github.com/byjg/uri/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-featureflag/actions/workflows/phpunit.yml)

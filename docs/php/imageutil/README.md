@@ -1,3 +1,7 @@
+---
+sidebar_key: imageutil
+---
+
 # ImageUtil Library
 
 [![Build Status](https://github.com/byjg/php-imageutil/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-imageutil/actions/workflows/phpunit.yml)

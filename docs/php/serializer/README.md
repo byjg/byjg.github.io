@@ -1,3 +1,7 @@
+---
+sidebar_key: serializer
+---
+
 # PHP Serializer
 
 [![Build Status](https://github.com/byjg/php-serializer/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-serializer/actions/workflows/phpunit.yml)
