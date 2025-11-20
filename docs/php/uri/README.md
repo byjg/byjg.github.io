@@ -2,7 +2,7 @@
 sidebar_key: uri
 ---
 
-# Uri class
+# PSR-7 URI Implementation
 
 [![Build Status](https://github.com/byjg/php-uri/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-uri/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
