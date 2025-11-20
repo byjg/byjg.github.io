@@ -2,7 +2,7 @@
 sidebar_key: cache-engine
 ---
 
-# PHP Cache Engine
+# Cache Engine
 
 [![Build Status](https://github.com/byjg/php-cache-engine/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-cache-engine/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
