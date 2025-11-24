@@ -2,29 +2,33 @@
 sidebar_key: anydataset-nosql
 ---
 
-# AnyDataset-NoSql
+# NoSQL Database Abstraction
 
+[![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-anydataset-nosql/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-anydataset-nosql/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-anydataset-nosql/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-anydataset-nosql.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-anydataset-nosql.svg)](https://github.com/byjg/php-anydataset-nosql/releases/)
 
-Anydataset NoSQL standardize the access to non-relational databases/repositories and treat them as Key/Value.
-The implementation can work with:
+Anydataset NoSQL standardizes the access to non-relational databases/repositories and provides a consistent interface for both NoSQL document databases and Key/Value stores.
+The implementation supports:
 
-- S3-Like Storage
-- MongoDB
-- Cloudflare KV
-- DynamoDB
+- MongoDB (document-based)
+- AWS DynamoDB (key/value)
+- S3-Like Storage (key/value)
+- Cloudflare KV (key/value)
 
 Anydataset is an agnostic data source abstraction layer in PHP. See more about Anydataset [here](https://opensource.byjg.com/php/anydataset).
 
 ## Features
 
-- Access as Key/Value repositories different datasource
-- Allow put and get data
-- Simplified way to connect to the datasources
+- Access both document-based and key/value repositories with consistent interfaces
+- NoSQL document-based databases accessed through `NoSqlInterface`
+- Key/Value stores accessed through `KeyValueInterface`
+- Unified connection string format based on URIs
+- Built-in caching capabilities with PSR-16 compatibility
+- Type-safe DynamoDB attribute definitions using enums
 
 ## Connection Based on URI
 
@@ -39,15 +43,22 @@ See below the current implemented drivers:
 | [Cloudflare KV](CloudFlareKV)       | kv://username:password@accountid/namespaceid             |
 | [AWS DynamoDB](AwsDynamoDbKeyValue) | dynamodb://accesskey:secretkey@hostname/tablename?params |
 
+## Documentation
 
-## Topics
+### NoSQL Drivers
 
-- [S3-Like Storage](AwsS3KeyValue)
-- [MongoDB](MongoDB)
-- [Cloudflare KV](CloudFlareKV)
-- [AWS DynamoDB](AwsDynamoDbKeyValue)
-- [Cache Store](cache)
-- [Running Tests](tests)
+- [MongoDB](MongoDB) - Document-based NoSQL database
+
+### Key/Value Drivers
+
+- [AWS DynamoDB](AwsDynamoDbKeyValue) - Key/Value store with type-safe attribute definitions
+- [AWS S3](AwsS3KeyValue) - Object storage as Key/Value store
+- [Cloudflare KV](CloudFlareKV) - Cloudflare Workers KV storage
+
+### Additional Features
+
+- [Cache Store](cache) - PSR-16 compatible cache layer for Key/Value stores
+- [Running Tests](tests) - How to run the test suite
 
 ## Install
 
@@ -64,7 +75,6 @@ flowchart TD
    byjg/anydataset-nosql --> ext-curl
    byjg/anydataset-nosql --> aws/aws-sdk-php
    byjg/anydataset-nosql --> byjg/anydataset
-   byjg/anydataset-nosql --> byjg/anydataset-array
    byjg/anydataset-nosql --> byjg/serializer
    byjg/anydataset-nosql --> byjg/webrequest
    byjg/anydataset-nosql --> byjg/cache-engine
