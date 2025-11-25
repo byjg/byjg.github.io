@@ -52,7 +52,7 @@ foreach ($iterator as $row) {
 ## Documentation
 
 ### Core Concepts
-- [AnyDataset Overview](anydataset) - Core component overview and usage
+- [AnyDataset Overview](anydataset-overview) - Core component overview and usage
 - [The Row Object](row) - Working with data rows
 - [Iterators](iterators) - Different ways to iterate through data
 
