@@ -4,6 +4,7 @@ sidebar_key: micro-orm
 
 # MicroOrm for PHP
 
+[![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-micro-orm/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-micro-orm/actions/workflows/phpunit.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-micro-orm/)
@@ -18,9 +19,20 @@ Key Features:
 * Can be used with any DTO, Entity, Model or whatever class with public properties or with getter and setter
 * The repository support a variety of datasources: MySql, Sqlite, Postgres, MySQL, Oracle (see byjg/anydataset)
 * A class Mapper is used for mapping the Entity and the repository
+* Powerful mapper functions for automatic data transformation between models and database
 * Small and simple to use
 
 ## Architecture
+
+MicroORM implements **Martin Fowler's enterprise patterns**:
+
+- **[Repository](https://martinfowler.com/eaaCatalog/repository.html)**: Mediates between domain and data mapping layers
+- **[Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html)**: Separates domain objects from database tables
+- **[Active Record](https://martinfowler.com/eaaCatalog/activeRecord.html)**: Wraps database rows with domain logic (
+  alternative approach)
+
+You can choose the pattern that best fits your application: use Repository + Data Mapper for complex domains, or Active
+Record for simpler CRUD-focused applications.
 
 These are the key components:
 
@@ -39,26 +51,35 @@ These are the key components:
 │          ┌───────────────┴─────┐
 │          │        Query        │
 │          └───────────────┬─────┘
-│                          │
-│          ┌───────────────┴─────┐
-│          │  DbDriverInterface  │───────────────┐
-│          └───────────────┬─────┘               │
-│                          │                     │
-└──────────────────────────┘                .─────────.
-                                           │           │
-                                           │`─────────'│
-                                           │           │
-                                           │    DB     │
-                                           │           │
-                                           │           │
-                                            `─────────'
+│                     │    │
+│          ┌───────────────┴─────┐        ┌──────────────────────┐  
+│          │  DatabaseExecutor   │────────│   DbDriverInterface  │  
+│          └───────────────┬─────┘        └────────────┬─────────┘  
+│                          │                           │                
+└──────────────────────────┘                      .─────────.           
+                                                 │           │          
+                                                 │`─────────'│          
+                                                 │           │          
+                                                 │    DB     │          
+                                                 │           │          
+                                                 │           │          
+                                                  `─────────'           
 ```
 
-* Model is a get/set class to retrieve or save the data into the database
-* Mapper will create the definitions to map the Model into the Database.
-* Query will use the Mapper to prepare the query to the database based on DbDriverInterface
-* DbDriverIntarce is the implementation to the Database connection.
-* Repository put all this together
+* **Model** can be any class with public properties or with getter and setter. It is used to retrieve or save the data
+  into the database
+* **Mapper** defines the relationship between the Model properties and the database fields
+* **FieldMapping** defines individual field mappings within the Mapper (field names, transformations, relationships via
+  `parentTable`)
+* **Query** defines what to retrieve from/update in the database. It uses the Mapper to prepare the query to the
+  database converting the Model properties to database fields
+* **DatabaseExecutor** (external package) wraps the DbDriver and provides transaction management, query execution, and
+  access to database helpers
+* **DbDriverInterface** (external package) is the actual database driver implementation that connects to the database
+* **Repository** orchestrates all MicroORM components and uses DatabaseExecutor to interact with the database
+
+For a detailed explanation of the architecture and when to use each layer,
+see [Architecture Layers: Infrastructure vs Domain](architecture-layers).
 
 
 ## Getting Started
@@ -93,20 +114,21 @@ Let's look at an example:
 class MyModel
 {
     #[FieldAttribute(primaryKey: true)]
-    public ?int $id;
+    public ?int $id = null;
 
     #[FieldAttribute()]
-    public ?string $name;
+    public ?string $name = null;
 
     #[FieldAttribute(fieldName: 'company_id')
-    public ?int $companyId;
+    public ?int $companyId = null;
 }
 ```
 
 In this example, we have a class `MyModel` with three properties: `id`, `name`, and `companyId`.
 
-The `id` property is marked as a primary key. The `name` property is a simple field.
-The `companyId` property is a field with a different name in the database `company_id`.
+* The `id` property is marked as a primary key.
+* The `name` property is a simple field.
+* The `companyId` property is a field with a different name in the database `company_id`.
 
 The `TableAttribute` is used to define the table name in the database.
 
@@ -115,8 +137,7 @@ The `TableAttribute` is used to define the table name in the database.
 After defining the Model, you can connect the Model with the repository.
 
 ```php
-$dbDriver = \ByJG\AnyDataset\Db\Factory::getDbRelationalInstance('mysql://user:password@server/schema');
-
+$dbDriver = \ByJG\AnyDataset\Db\Factory::getDbInstance('mysql://user:password@server/schema');
 $repository = new \ByJG\MicroOrm\Repository($dbDriver, MyModel::class);
 ```
 
@@ -157,6 +178,11 @@ $result = $repository->getByQuery($query);
 * [Querying the Database](querying-the-database)
 * [Updating the database](updating-the-database)
 * [Using the Mapper Object](using-mapper-object)
+* [The Model Attributes](model-attribute)
+* [The Repository Class](repository)
+* [Common Traits for Timestamp Fields](common-traits)
+* [Architecture Layers: Infrastructure vs Domain](architecture-layers)
+* [Comparison with Other ORMs (Eloquent, Doctrine)](comparison-with-other-orms)
 
 ## Advanced Topics
 
@@ -167,10 +193,14 @@ $result = $repository->getByQuery($query);
 * [Caching the Results](cache)
 * [Observing the Database](observers)
 * [Controlling the data queried/updated](controlling-the-data)
+* [Mapper Functions](mapper-functions)
 * [Using FieldAlias](using-fieldalias)
 * [Tables without auto increments fields](tables-without-auto-increment-fields)
 * [Using With Recursive SQL Command](using-with-recursive-sql-command)
 * [QueryRaw (raw SQL)](query-raw)
+* [Update Constraints](update-constraints)
+* [Building SQL Queries](query-build)
+* [UUID Support](uuid-support)
 
 ## Install
 
