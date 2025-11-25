@@ -1,3 +1,7 @@
+---
+sidebar_key: jwt-session
+---
+
 # JWT Session Handler
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
@@ -8,6 +12,15 @@
 [![GitHub release](https://img.shields.io/github/release/byjg/jwt-session.svg)](https://github.com/byjg/jwt-session/releases/)
 
 A PHP session replacement that stores session data in JWT tokens instead of the filesystem. This implementation follows the SessionHandlerInterface standard, enabling stateless sessions without the need for dedicated session servers like Redis or Memcached. Perfect for distributed applications and microservices architectures.
+
+## Documentation
+
+- [Getting Started](getting-started) - Installation, basic usage, and motivation
+- [Configuration](configuration) - Session timeout, contexts, cookies, and all configuration options
+- [RSA Keys](rsa-keys) - Using RSA private/public keys for enhanced security
+- [How It Works](how-it-works) - Architecture and internal implementation details
+- [Security](security) - Security considerations and best practices
+- [API Reference](api-reference) - Complete API documentation for all classes and methods
 
 # How to use:
 
@@ -24,29 +37,9 @@ session_set_save_handler($handler, true);
 
 Now, all your `$_SESSION` variable will be saved directly to a JWT Token!!
 
-## Secret key
-Make sure that you are providing a base64url encoded key.
- 
-# Motivation
+**Note:** Make sure that you are providing a base64url encoded key.
 
-The default PHP Session does not work in different servers using round robin or other algorithms.
-This occurs because PHP Session are saved by default in the file system. 
-
-There are implementations can save the session to REDIS or MEMCACHED, for example. 
-But this requires to you create a new server to store this session and creates a single point of failure. 
-To avoid this you have to create REDIS/MEMCACHED clusters. 
-
-But if you save the session into JWT Token you do not need to create a new server.
-Just to use. 
-
-You can read more in this Codementor's article: 
-[Using JSON Web Token (JWT) as a PHP Session](https://www.codementor.io/byjg/using-json-web-token-jwt-as-a-php-session-axeuqbg1m)
-
-# Security Information
-
-The JWT Token cannot be changed, but it can be read. 
-This implementation save the JWT into a client cookie.  
-Because of this _**do not** store in the JWT Token sensible data like passwords_.
+For more details on motivation, security considerations, and best practices, see the [Documentation](#documentation) section above.
  
 # Install
 
@@ -54,8 +47,9 @@ Because of this _**do not** store in the JWT Token sensible data like passwords_
 composer require "byjg/jwt-session"
 ```
 
- 
-# Setting the validity of JWT Token
+# Configuration Examples
+
+## Setting the validity of JWT Token
 
 ```php
 <?php
@@ -67,7 +61,7 @@ $handler = new \ByJG\Session\JwtSession($sessionConfig);
 session_set_save_handler($handler, true);
 ```
 
-# Setting the different Session Contexts
+## Setting different Session Contexts
 
 ```php
 <?php
@@ -79,30 +73,9 @@ $handler = new \ByJG\Session\JwtSession($sessionConfig);
 session_set_save_handler($handler, true);
 ```
 
-# Create the handler and replace the session handler
+For complete configuration options including cookie domains and automatic session handler replacement, see [Configuration](configuration).
 
-```php
-<?php
-$sessionConfig = (new \ByJG\Session\SessionConfig('your.domain.com'))
-    ->withSecret('your super base64url encoded secret key')
-    ->replaceSessionHandler();
-
-$handler = new \ByJG\Session\JwtSession($sessionConfig);
-```
-
-# Specify cookie domain 
-
-```php
-<?php
-$sessionConfig = (new \ByJG\Session\SessionConfig('your.domain.com'))
-    ->withSecret('your super base64url encoded secret key')
-    ->withCookie('.mydomain.com', '/')
-    ->replaceSessionHandler();
-
-$handler = new \ByJG\Session\JwtSession($sessionConfig);
-```
-
-# Uses RSA Private/Public Keys
+## Using RSA Private/Public Keys
 
 ```php
 <?php
@@ -155,14 +128,7 @@ $sessionConfig = (new \ByJG\Session\SessionConfig('example.com'))
 $handler = new \ByJG\Session\JwtSession($sessionConfig);
 ```
 
-If you want to know more details about how to create RSA Public/Private Keys access:
-https://github.com/byjg/jwt-wrapper 
-
-
-# How it works
-
-We store a cookie named `AUTH_BEARER_` followed by the context name with the session name. The PHPSESSID cookie is still created because
-PHP create it by default but we do not use it;
+For more details about RSA keys and how to generate them, see [RSA Keys](rsa-keys) and https://github.com/byjg/jwt-wrapper
 
 
 ## Dependencies
