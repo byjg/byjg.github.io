@@ -6,6 +6,9 @@
 [![GitHub release](https://img.shields.io/github/release/byjg/anydataset-sparql.svg)](https://github.com/byjg/anydataset-sparql/releases/)
 [![Build Status](https://travis-ci.com/byjg/anydataset-sparql.svg?branch=master)](https://travis-ci.com/byjg/anydataset-sparql)
 
+:::warning
+This package is outdated. Update 1st half 2026
+:::
 
 SparQL abstraction dataset. Anydataset is an agnostic data source abstraction layer in PHP. 
 
