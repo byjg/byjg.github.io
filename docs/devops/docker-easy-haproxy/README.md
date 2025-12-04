@@ -92,6 +92,13 @@ Detailed configuration guides for advanced setups:
 - [Container Labels](container-labels) - Configure Docker/Swarm containers with labels
 - [Environment Variables](environment-variable) - Configure EasyHAProxy behavior
 - [Volumes](volumes) - Map volumes for certificates, config, and custom files
+- [Plugins](plugins) - Extend HAProxy with plugins ([Development Guide](plugin-development))
+  - [JWT Validator](Plugins/jwt-validator) - JWT authentication validation
+  - [FastCGI](Plugins/fastcgi) - PHP-FPM and FastCGI application support
+  - [Cloudflare](Plugins/cloudflare) - Restore visitor IP from Cloudflare CDN
+  - [IP Whitelist](Plugins/ip-whitelist) - Restrict access to IPs/CIDR ranges
+  - [Deny Pages](Plugins/deny-pages) - Block access to specific paths
+  - [Cleanup](Plugins/cleanup) - Automatic cleanup of temporary files
 - [Other Configurations](other) - Additional configurations (ports, custom errors, etc.)
 - [Limitations](limitations) - Important limitations and considerations
 
