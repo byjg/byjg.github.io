@@ -1,6 +1,6 @@
 ---
-slug: seventeen-teaching-dos
-title: Dezessete ensinando DOS - Transformando dúvida em confiança
+slug: earning-confidence-when-questioned
+title: Conquistando confiança quando ela é questionada
 authors: [byjg]
 date: 2025-12-16
 tags: [carreira, ensino, confiança, soft-skills, início-de-carreira, mindset]
@@ -8,7 +8,7 @@ description: Um instrutor de 17 anos entra no escritório de um diretor para ens
 image: ./image.png
 ---
 
-# Dezessete ensinando DOS - Transformando dúvida em confiança
+# Conquistando confiança quando ela é questionada
 
 ![Capa Seventeen Teaching DOS](./image.png)
 

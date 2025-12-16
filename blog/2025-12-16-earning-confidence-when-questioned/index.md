@@ -1,6 +1,6 @@
 ---
-slug: seventeen-teaching-dos
-title: Seventeen Teaching DOS - Turning Doubt Into Confidence
+slug: earning-confidence-when-questioned
+title: Earning Confidence When It's Questioned
 authors: [byjg]
 date: 2025-12-16
 tags: [career, teaching, confidence, soft-skills, early-career, mindset]
@@ -8,7 +8,7 @@ description: A 17-year-old instructor walks into a director's office to teach DO
 image: ./image.png
 ---
 
-# Seventeen Teaching DOS - Turning Doubt Into Confidence
+# Earning Confidence When It's Questioned
 
 ![Seventeen Teaching DOS cover](./image.png)
 
