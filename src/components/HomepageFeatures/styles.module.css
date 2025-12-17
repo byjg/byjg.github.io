@@ -1,11 +1,325 @@
+/* Highlighted Projects Carousel */
+.highlightedSection {
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+  width: 100%;
+  background-color: var(--ifm-background-surface-color);
+  overflow: hidden;
+}
+
+.carouselContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  min-height: 450px;
+}
+
+.carouselTrack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.carouselItemWrapper {
+  flex-shrink: 0;
+  transition: all 0.5s ease;
+}
+
+.carouselItem {
+  padding: 2rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  transition: all 0.5s ease;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Center item - full size and clickable */
+.carouselItem--center {
+  width: 400px;
+  transform: scale(1);
+  opacity: 1;
+  z-index: 3;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Side items - smaller and partially visible */
+.carouselItem--left,
+.carouselItem--right {
+  width: 300px;
+  transform: scale(0.85);
+  opacity: 0.5;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.carouselItem--left:hover,
+.carouselItem--right:hover {
+  opacity: 0.7;
+  transform: scale(0.9);
+}
+
+.carouselItem--left {
+  transform: scale(0.85) translateX(20px);
+}
+
+.carouselItem--left:hover {
+  transform: scale(0.9) translateX(20px);
+}
+
+.carouselItem--right {
+  transform: scale(0.85) translateX(-20px);
+}
+
+.carouselItem--right:hover {
+  transform: scale(0.9) translateX(-20px);
+}
+
+.carouselLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.carouselLink:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.carouselItem--center .carouselLink:hover {
+  opacity: 1;
+}
+
+.carouselItem--center:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+.carouselImage {
+  height: 120px;
+  width: 120px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.carouselItem--left .carouselImage,
+.carouselItem--right .carouselImage {
+  height: 100px;
+  width: 100px;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled .carouselImage {
+  filter: grayscale(100%);
+}
+
+/* Navigation Buttons */
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carouselButton:hover {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carouselButtonPrev {
+  left: 0;
+}
+
+.carouselButtonNext {
+  right: 0;
+}
+
+/* Carousel Indicators */
+.carouselIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carouselIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--ifm-color-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carouselIndicator:hover {
+  background: var(--ifm-color-primary-light);
+}
+
+.carouselIndicatorActive {
+  background: var(--ifm-color-primary);
+}
+
+/* Main Groups Section */
 .features {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem 0;
   width: 100%;
 }
 
 .featureSvg {
   height: 200px;
   width: 200px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 996px) {
+  .carouselContainer {
+    min-height: 400px;
+  }
+
+  .carouselItem {
+    min-height: 300px;
+  }
+
+  .carouselItem--center {
+    width: 300px;
+  }
+
+  .carouselItem--left,
+  .carouselItem--right {
+    width: 200px;
+    transform: scale(0.7);
+  }
+
+  .carouselItem--left:hover {
+    transform: scale(0.75) translateX(15px);
+  }
+
+  .carouselItem--left {
+    transform: scale(0.7) translateX(15px);
+  }
+
+  .carouselItem--right:hover {
+    transform: scale(0.75) translateX(-15px);
+  }
+
+  .carouselItem--right {
+    transform: scale(0.7) translateX(-15px);
+  }
+
+  .carouselImage {
+    height: 100px;
+    width: 100px;
+  }
+
+  .carouselItem--left .carouselImage,
+  .carouselItem--right .carouselImage {
+    height: 80px;
+    width: 80px;
+  }
+
+  .carouselButton {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .featureSvg {
+    height: 150px;
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .carouselContainer {
+    min-height: 350px;
+  }
+
+  .carouselItem {
+    min-height: 280px;
+  }
+
+  .carouselTrack {
+    gap: 1rem;
+  }
+
+  .carouselItem--center {
+    width: 250px;
+  }
+
+  .carouselItem--left,
+  .carouselItem--right {
+    width: 150px;
+    transform: scale(0.6);
+    opacity: 0.3;
+  }
+
+  .carouselItem--left:hover {
+    transform: scale(0.65) translateX(10px);
+    opacity: 0.5;
+  }
+
+  .carouselItem--left {
+    transform: scale(0.6) translateX(10px);
+  }
+
+  .carouselItem--right:hover {
+    transform: scale(0.65) translateX(-10px);
+    opacity: 0.5;
+  }
+
+  .carouselItem--right {
+    transform: scale(0.6) translateX(-10px);
+  }
+
+  .carouselButton {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .carouselButtonPrev {
+    left: -10px;
+  }
+
+  .carouselButtonNext {
+    right: -10px;
+  }
 }
