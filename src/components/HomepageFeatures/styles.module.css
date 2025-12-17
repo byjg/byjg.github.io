@@ -31,7 +31,7 @@
 
 .carouselItemWrapper {
   flex-shrink: 0;
-  transition: all 0.5s ease;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carouselItem {
@@ -39,7 +39,7 @@
   border-radius: 12px;
   border: 2px solid var(--ifm-color-emphasis-300);
   background: var(--ifm-background-color);
-  transition: all 0.5s ease;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 350px;
   display: flex;
   flex-direction: column;
@@ -53,6 +53,7 @@
   opacity: 1;
   z-index: 3;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Side items - smaller and partially visible */
@@ -63,12 +64,14 @@
   opacity: 0.5;
   z-index: 1;
   cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carouselItem--left:hover,
 .carouselItem--right:hover {
   opacity: 0.7;
   transform: scale(0.9);
+  transition: all 0.3s ease;
 }
 
 .carouselItem--left {
@@ -91,6 +94,7 @@
   display: block;
   text-decoration: none;
   color: inherit;
+  transition: all 0.3s ease;
 }
 
 .carouselLink:hover {
@@ -102,23 +106,30 @@
   opacity: 1;
 }
 
+.carouselItem h3,
+.carouselItem p {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .carouselItem--center:hover {
   border-color: var(--ifm-color-primary);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
   transform: translateY(-4px);
+  transition: all 0.3s ease;
 }
 
 .carouselImage {
   height: 120px;
   width: 120px;
   margin-bottom: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carouselItem--left .carouselImage,
 .carouselItem--right .carouselImage {
   height: 100px;
   width: 100px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .disabled {
