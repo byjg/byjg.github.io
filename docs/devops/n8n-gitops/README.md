@@ -25,6 +25,8 @@ A GitOps CLI tool for [n8n](https://n8n.io) Community Edition that brings versio
 - 🔌 **Active State Management**: Control workflow activation via API endpoints
 - 🧹 **Clean Deployments**: Replace workflows with clean state
 
+![Logo](n8n-gitops-256.png)
+
 ## Quick Start
 
 ```bash
@@ -54,8 +56,6 @@ git tag v1.0.0
 # Deploy
 n8n-gitops deploy --git-ref v1.0.0
 ```
-
-## Documentation
 
 ### Core Guides
 
