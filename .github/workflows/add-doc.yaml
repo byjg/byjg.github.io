@@ -13,7 +13,11 @@ on:
         required: true
       project:
         required: true
-        description: 'Project name. e.g. byjg/{....}'
+        description: 'Project name (without org). e.g. n8n-gitops'
+      owner:
+        required: false
+        description: 'Repository owner/org (defaults to byjg)'
+        default: byjg
   workflow_call:
     inputs:
       folder:
@@ -22,6 +26,10 @@ on:
       project:
         type: string
         required: true
+      owner:
+        type: string
+        required: false
+        default: byjg
     secrets:
       DOC_TOKEN:
         required: true
@@ -35,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPOSITORY: byjg/${{ inputs.project }}
+      REPOSITORY: ${{ inputs.owner }}/${{ inputs.project }}
 
     steps:
       - name: Checkout repository (byjg.github.io)
