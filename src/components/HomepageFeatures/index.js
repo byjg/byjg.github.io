@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 import Link from "@docusaurus/Link";
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 // Highlighted Projects - These are the featured/important projects
 const HighlightedProjects = [
@@ -18,14 +18,13 @@ const HighlightedProjects = [
   },
   {
     title: 'N8N-GitOps',
-    link: '#', // TBD - will be updated when documentation is ready
-    Svg: require('@site/static/img/docker_logo.svg').default,
+    link: '/docs/devops/n8n-gitops',
+    image: require('@site/docs/devops/n8n-gitops/n8n-gitops-256.png').default,
     description: (
       <>
-        GitOps workflow automation with N8N (Coming Soon).
+        GitOps CLI tool for n8n that brings version control and collaborative workflow development.
       </>
     ),
-    disabled: true,
   },
   {
     title: 'PHP Rest Reference',
