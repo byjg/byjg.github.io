@@ -104,6 +104,47 @@ Detailed configuration guides for advanced setups:
 - [Other Configurations](other) - Additional configurations (ports, custom errors, etc.)
 - [Limitations](limitations) - Important limitations and considerations
 
+## Development
+
+### Requirements
+
+- Python 3.11 or higher
+- [uv](https://github.com/astral-sh/uv) package manager
+
+### Installation for Development
+
+```bash
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone the repository
+git clone https://github.com/byjg/docker-easy-haproxy.git
+cd docker-easy-haproxy
+
+# Install dependencies (creates virtual environment automatically)
+uv sync --dev
+
+# Run tests
+make test
+# or directly: uv run pytest tests/ -vv
+
+# Run linting
+make lint
+
+# Format code
+make format
+```
+
+### Installing the Package
+
+```bash
+# Install with uv
+uv pip install easymapping
+
+# Or install from source
+uv pip install -e ".[dev]"
+```
+
 ## See EasyHAProxy in action
 
 Click on the image to see the videos (use HD for better visualization)
@@ -115,7 +156,7 @@ Click on the image to see the videos (use HD for better visualization)
 [![Static Configuration](video-static.png)](https://youtu.be/B_bYZnRTGJM)
 [![TCP Mode](video-tcp-mysql.png)](https://youtu.be/JHqcq9crbDI)
 
-[Here is the code](https://gist.github.com/byjg/e125e478a0562190176d69ea795fd3d4) applied in the examples above.
+[Here is the code](https://gist.github.com/byjg/e125e478a0562190176d69ea795fd3d4) applied in the test examples above.
 
 
 ----
