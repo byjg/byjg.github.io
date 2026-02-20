@@ -47,5 +47,5 @@ Pick the guide that matches your environment:
 After you have traffic flowing:
 
 - **[Guides](../guides/ssl)** — SSL certificates, ACME/Let's Encrypt, plugins
-- **[Concepts](../concepts/index)** — how service discovery and the config pipeline work
+- **[Concepts](../concepts/)** — how service discovery and the config pipeline work
 - **[Reference](../reference/environment-variables)** — full environment variable and label tables

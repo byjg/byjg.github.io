@@ -48,9 +48,9 @@ Install using tools:
 
 | Section | Description |
 |---------|-------------|
-| **[Getting Started](getting-started/index)** | Choose your runtime and discovery mode, minimal working setup |
+| **[Getting Started](getting-started/)** | Choose your runtime and discovery mode, minimal working setup |
 | **[Guides](guides/ssl)** | SSL, ACME, plugins, Helm, MicroK8s, Dokku, DigitalOcean |
-| **[Concepts](concepts/index)** | Service discovery, config pipeline, plugin model, TLS termination |
+| **[Concepts](concepts/)** | Service discovery, config pipeline, plugin model, TLS termination |
 | **[Reference](reference/environment-variables)** | Environment variables, container labels, CLI flags, volumes |
 
 ## Who is using?
