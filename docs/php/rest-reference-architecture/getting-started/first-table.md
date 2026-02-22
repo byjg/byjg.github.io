@@ -1,10 +1,11 @@
 ---
 sidebar_position: 20
+title: Create Your First Table
 ---
 
 # Add a New Table
 
-After [creating the project](getting_started), you're ready to create your own tables.
+After [creating the project](installation), you're ready to create your own tables.
 
 ## Create the Table
 
@@ -102,7 +103,7 @@ APP_ENV=dev composer run codegen -- --table example_crud --save activerecord
 ```
 
 This generates a simpler architecture with the model containing data access methods.
-See [Code Generator Documentation](code_generator) for details.
+See [Code Generator Documentation](../reference/code-generator) for details.
 :::
 
 ## Run the Tests
@@ -160,4 +161,4 @@ Your tests should now pass successfully!
 
 ## Next Steps
 
-Continue with [Adding a New Field](getting_started_02_add_new_field) to enhance your implementation.
+Continue with [Adding a New Field](add-field) to enhance your implementation.

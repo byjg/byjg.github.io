@@ -1,5 +1,6 @@
 ---
-sidebar_position: 250
+sidebar_position: 200
+title: JWT Advanced
 ---
 
 # JWT Authentication - Advanced Guide
@@ -573,11 +574,19 @@ try {
 
 ### 1. Store JWT Secret Securely
 
-Configure in `.env` or environment variables:
+`JWT_SECRET` must be a **base64-encoded** string whose decoded value is at least **64 bytes** (required by HS512).
+Generate one with `composer terminal`:
 
 ```bash
-# .env
-JWT_SECRET=your-super-secret-key-min-32-characters
+APP_ENV=dev composer terminal
+php> \ByJG\JwtWrapper\JwtWrapper::generateSecret(64)
+# => 'OFbOmC2VxlgQHNrBLa/wyj7/fFkgPnLpckbXMVuIU7Sqb3RTztNx3xzEYaoeA31JUpvBjkD7FRKBFGQ0+fnTig=='
+```
+
+Copy the output into the appropriate `config/<env>/credentials.env`:
+
+```ini
+JWT_SECRET=OFbOmC2VxlgQHNrBLa/wyj7/fFkgPnLpckbXMVuIU7Sqb3RTztNx3xzEYaoeA31JUpvBjkD7FRKBFGQ0+fnTig==
 ```
 
 Never commit secrets to version control.
@@ -805,8 +814,8 @@ public function verifyMfa(HttpResponse $response, HttpRequest $request)
 
 ## Related Documentation
 
-- [Attributes System](attributes) - RequireAuthenticated and RequireRole
-- [REST API Development](rest) - Protecting endpoints
+- [Attributes System](../reference/attributes) - RequireAuthenticated and RequireRole
+- [REST API Development](rest-controllers) - Protecting endpoints
 - [Error Handling](error-handling) - Authentication errors
-- [Testing Guide](testing-guide) - Testing authentication
-- [Configuration](configuration-advanced) - JWT configuration
+- [Testing Guide](testing) - Testing authentication
+- [Configuration](configuration) - JWT configuration

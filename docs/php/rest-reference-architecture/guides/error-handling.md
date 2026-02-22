@@ -1,5 +1,6 @@
 ---
-sidebar_position: 260
+sidebar_position: 210
+title: Error Handling
 ---
 
 # Error Handling Guide
@@ -791,7 +792,7 @@ try {
 
 ## Related Documentation
 
-- [Attributes System](attributes) - ValidateRequest error handling
-- [Service Patterns](service-patterns) - Service-level validation
-- [REST API Development](rest) - REST error responses
-- [Testing Guide](testing-guide) - Testing error scenarios
+- [Attributes System](../reference/attributes) - ValidateRequest error handling
+- [Service Patterns](services) - Service-level validation
+- [REST API Development](rest-controllers) - REST error responses
+- [Testing Guide](testing) - Testing error scenarios

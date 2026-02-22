@@ -15,15 +15,9 @@ sidebar_key: rest-reference-architecture
 
 ## Why Use This?
 
-Stop wasting time configuring infrastructure. This template provides everything you need to build professional REST APIs:
+Every new REST API needs the same boilerplate: authentication, migrations, an ORM, OpenAPI docs, a test harness, and a DI container. Setting all of that up correctly takes days — and it's not the work your users care about.
 
-- ✅ **Start coding in minutes** - Not hours or days
-- ✅ **Production-ready** - Security, authentication, and best practices built-in
-- ✅ **Code generator** - Automatically create CRUD operations from database tables
-- ✅ **Two architectural patterns** - Choose between Repository or ActiveRecord
-- ✅ **OpenAPI documentation** - Auto-generated, always in sync
-- ✅ **Fully tested** - Includes a functional test suite
-- ✅ **Docker-ready** - Containerized development and deployment
+This template does the wiring once, correctly, so you start on day one writing business logic instead of plumbing. And because it's a **template you own** — not a framework you depend on — you can change, remove, or replace any part of it without asking permission.
 
 ## Quick Start
 
@@ -33,7 +27,7 @@ composer -sdev create-project byjg/rest-reference-architecture my-api ^6.0
 
 # Start containers
 cd my-api
-docker compose -f docker-compose.yml up -d
+docker compose up -d
 
 # Run migrations
 composer migrate -- --env=dev reset
@@ -42,7 +36,7 @@ composer migrate -- --env=dev reset
 curl http://localhost:8080/sample/ping
 ```
 
-**📚 [Complete Getting Started Guide →](getting_started)**
+**📚 [Complete Getting Started Guide →](getting-started/installation)**
 
 ## Architecture Overview
 
@@ -58,8 +52,8 @@ mindmap
     ("Database")
       ("ORM Integration")
       ("Migration")
-      ("Routing")
     ("OpenAPI Integration")
+      ("Routing")
       ("Rest Methods")
       ("Contract Testing")
       ("Documentation")
@@ -68,150 +62,55 @@ mindmap
 
 ## Key Features
 
-### 🚀 Code Generation
-Automatically generate Models, Repositories, Services, REST Controllers, and Tests from your database schema.
+- 🚀 **Code generator** — one command scaffolds Model, Repository, Service, REST controller, and tests from any database table
+- 🏗️ **Two patterns** — choose Repository (DI + Service layer) or ActiveRecord per entity; mix them in the same project
+- 🔐 **Auth out of the box** — JWT login, token refresh, password reset, and role-based access control (RBAC) included
+- 📖 **OpenAPI-first** — routes are driven by `openapi.json`; Swagger UI, contract testing, and docs stay in sync automatically
+- 🗄️ **Database migrations** — versioned up/down SQL migrations with a one-command runner and ORM integration
+- 🧪 **In-process testing** — `FakeApiRequester` runs the full API stack inside PHPUnit, no web server needed
+- 🐳 **Docker ready** — MySQL, PHP-FPM, and Nginx pre-configured; `docker compose up -d` and you're running
+- ⚙️ **PSR standards** — PSR-7 (HTTP messages), PSR-11 (container), PSR-6/16 (cache)
 
 ```bash
-composer codegen -- --env=dev --table=users all --save
+# Generate a complete CRUD API from a single table
+composer codegen -- --env=dev --table=products all --save
 ```
-
-**📚 [Code Generator Documentation →](code_generator)**
-
-### 🏗️ Two Architectural Patterns
-
-**Repository Pattern** (default)
-- Clean separation of concerns
-- Service layer for business logic
-- Full dependency injection
-
-**ActiveRecord Pattern**
-- Rapid prototyping
-- Less boilerplate
-- Direct database access from models
-
-**📚 [Choose Your Pattern →](code_generator.md#what-it-generates)**
-
-### 🔐 Authentication & Authorization Built-in
-
-- JWT-based authentication
-- Role-based access control (RBAC)
-- Secure by default
-- Ready-to-use login endpoints
-
-**📚 [Authentication Guide →](login)**
-
-### 📖 OpenAPI Integration
-
-- Auto-generated documentation
-- Interactive API explorer (Swagger UI)
-- Always synchronized with your code
-- Contract testing support
-
-**📚 [REST API Documentation →](rest)**
-
-### 🗄️ Database Management
-
-**Migrations**
-- Version control your database schema
-- Up/down migration support
-- Zero-downtime deployments
-
-**📚 [Migration Guide →](migration)**
-
-**ORM Integration**
-- MicroORM for lightweight data access
-- Query builder
-- Relationship mapping
-
-**📚 [ORM Documentation →](orm)**
-
-### 🧪 Testing Built-in
-
-- Functional test suite included
-- Test helpers and fixtures
-- OpenAPI contract testing
-- Supports custom test scenarios
-
-**📚 [Testing Guide →](functional_test)**
-
-### 🐳 Docker Ready
-
-- Pre-configured Docker setup
-- Development and production configurations
-- MySQL, PHP-FPM, and Nginx
-- One command to start
-
-### 🔧 Scriptify - Interactive Development
-
-- **Interactive PHP Terminal**: REPL with your project's autoloader
-- **CLI Script Runner**: Execute any PHP method from command line
-- **Service Management**: Install PHP classes as system daemons
-- Quick prototyping and debugging
-
-```bash
-composer terminal  # Start interactive PHP shell
-```
-
-**📚 [Scriptify Guide →](scriptify)**
-
-### ⚙️ Modern PHP Standards
-
-Implements PSR standards:
-- PSR-7: HTTP Message Interface
-- PSR-11: Container Interface
-- PSR-6 & PSR-16: Cache Interface
-- And more...
-
-**📚 [PSR-11 Container →](psr11)** | **[Dependency Injection →](psr11_di)**
-
-## What's Included
-
-| Feature              | Description                        | Documentation                      |
-|----------------------|------------------------------------|------------------------------------|
-| **Code Generator**   | Generate CRUD from database tables | [→ Docs](code_generator)   |
-| **REST API**         | OpenAPI-documented endpoints       | [→ Docs](rest)             |
-| **Authentication**   | JWT with role-based access         | [→ Docs](login)            |
-| **Database**         | Migrations + ORM                   | [→ Docs](migration)        |
-| **Testing**          | Functional test suite              | [→ Docs](functional_test)  |
-| **Service Layer**    | Business logic separation          | [→ Docs](services)         |
-| **Scriptify**        | Interactive terminal & CLI scripts | [→ Docs](scriptify)        |
-| **Unattended Setup** | CI/CD friendly installation        | [→ Docs](unattended_setup) |
 
 ## Documentation
 
 ### Getting Started
-1. **[Installation & Setup](getting_started)** – Install the template, configure environments, and review prerequisites.
-2. **[Create Your First Table](getting_started_01_create_table)** – Define your first migration and schema.
-3. **[Add Fields](getting_started_02_add_new_field)** – Safely evolve existing tables.
-4. **[Create REST Endpoints](getting_started_03_create_rest_method)** – Generate REST handlers from your tables.
+1. **[Installation & Setup](getting-started/installation)** – Install the template, configure environments, and review prerequisites.
+2. **[Create Your First Table](getting-started/first-table)** – Define your first migration and schema.
+3. **[Add Fields](getting-started/add-field)** – Safely evolve existing tables.
+4. **[Create REST Endpoints](getting-started/first-endpoint)** – Generate REST handlers from your tables.
+5. **[Windows Setup](getting-started/windows)** – WSL/Windows-specific checklist.
+6. **[Unattended Setup](getting-started/unattended-setup)** – Automate installs for CI/CD pipelines.
 
-### Build Your API
-- **[Code Generator](code_generator)** – Automate models, repositories, services, controllers, and tests.
-- **[REST API](rest)** – Implement endpoints that stay in sync with OpenAPI contracts.
-- **[Authentication](login)** – Configure JWT login flows and RBAC enforcement.
-- **[Database Migration](migration)** – Version and run schema migrations in every environment.
-- **[ORM](orm)** – Use MicroORM for repository and ActiveRecord patterns.
-- **[Service Layer](services)** – Organize business logic and transaction boundaries.
-- **[Service Patterns](service-patterns)** – Adopt advanced orchestration, validation, and DTO patterns.
-- **[Repository Patterns](repository-advanced)** – Implement complex queries, UUID handling, and filtering helpers.
-- **[Attributes System](attributes)** – Apply RequireRole, ValidateRequest, and custom attributes to controllers.
-- **[Traits Reference](traits)** – Reuse timestamp and soft-delete helpers inside models.
-- **[Template Customization](templates)** – Tailor the generator templates to match your coding standards.
+### Guides
+- **[REST Controllers](guides/rest-controllers)** – Define routes with PHP attributes; keep controllers thin.
+- **[Authentication](guides/authentication)** – Configure JWT login flows and RBAC enforcement.
+- **[Database Migrations](guides/migrations)** – Version and run schema migrations in every environment.
+- **[ORM](guides/orm)** – Use MicroORM for repository and ActiveRecord patterns.
+- **[Service Layer](guides/services)** – Organize business logic, orchestration, and transaction boundaries.
+- **[Repository Patterns](guides/repository-advanced)** – Implement complex queries, UUID handling, and filtering helpers.
+- **[Template Customization](guides/templates)** – Tailor the generator templates to match your coding standards.
+- **[Testing](guides/testing)** – Unit, integration, and contract testing with `FakeApiRequester`.
+- **[JWT Authentication Advanced](guides/jwt-advanced)** – Extend tokens with custom claims and refresh logic.
+- **[Error Handling](guides/error-handling)** – Map exceptions to HTTP responses and logging patterns.
+- **[Configuration](guides/configuration)** – Layer configurations, secrets, and environment overrides.
 
-### Architecture & Operations
-- **[Configuration Deep Dive](configuration-advanced)** – Layer configurations, secrets, and environment overrides.
-- **[Architecture Decisions](architecture-decisions)** – Decide when to use Repository or ActiveRecord implementations.
-- **[PSR-11 Container](psr11)** – Understand the default container bindings that power `src/`.
-- **[Dependency Injection](psr11_di)** – Wire repositories, services, and factories through the container.
-- **[Scriptify](scriptify)** – Use the REPL, CLI runner, and service manager utilities.
-- **[Unattended Setup](unattended_setup)** – Automate installs for CI/CD pipelines.
-- **[Windows Setup](windows)** – Follow the WSL/Windows specific checklist.
+### Concepts
+- **[Architecture](concepts/architecture)** – Architectural decisions: when to use Repository vs ActiveRecord.
+- **[OpenAPI Integration](concepts/openapi-integration)** – How swagger-php, the spec file, and Swagger UI fit together.
+- **[Dependency Injection](concepts/dependency-injection)** – PSR-11 container, environment hierarchy, and DI binding patterns.
+- **[Request Lifecycle](concepts/request-lifecycle)** – Trace an HTTP request from entry point to JSON response.
 
-### Testing & Quality
-- **[Complete Testing Guide](testing-guide)** – Unit, integration, and contract testing reference.
-- **[Functional Tests](functional_test)** – Use `FakeApiRequester` and fixtures for end-to-end coverage.
-- **[JWT Authentication Advanced](jwt-advanced)** – Extend tokens with custom claims and refresh logic.
-- **[Error Handling](error-handling)** – Map exceptions to HTTP responses and logging patterns.
+### Reference
+- **[Code Generator](reference/code-generator)** – Automate models, repositories, services, controllers, and tests.
+- **[Attributes](reference/attributes)** – `RequireAuthenticated`, `RequireRole`, `ValidateRequest`, and custom attributes.
+- **[Traits](reference/traits)** – Timestamp and soft-delete helpers for models.
+- **[Scriptify](reference/scriptify)** – REPL, CLI runner, and service manager utilities.
+- **[Components](reference/components)** – Full PHP component dependency graph.
 
 ## Real-World Example
 
@@ -232,8 +131,17 @@ composer migrate -- --env=dev update
 # 3. Generate all code
 composer codegen -- --env=dev --table=products all --save
 
-# 4. Your CRUD API is ready!
-curl http://localhost:8080/products
+# 4. Generate the OpenAPI spec so routing is active
+composer run openapi
+
+# 5. Log in and capture the token
+TOKEN=$(curl -s -X POST http://localhost:8080/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin@example.com","password":"!P4ssw0rdstr!"}' \
+  | jq -r '.token')
+
+# 6. Call your new endpoint
+curl -s -H "Authorization: Bearer $TOKEN" http://localhost:8080/products | jq
 ```
 
 You just created a complete CRUD API with:
@@ -254,7 +162,7 @@ You just created a complete CRUD API with:
 
 ## Support & Community
 
-- 📖 **[Full Documentation](getting_started)**
+- 📖 **[Full Documentation](getting-started/installation)**
 - 🐛 **[Report Issues](https://github.com/byjg/php-rest-reference-architecture/issues)**
 - 💡 **[Request Features](https://github.com/byjg/php-rest-reference-architecture/issues)**
 - 🌐 **[ByJG Open Source](http://opensource.byjg.com)**
@@ -273,7 +181,7 @@ This project is open source. See [LICENSE](https://opensource.byjg.com/opensourc
 
 ## Dependencies
 
-**📚 [Complete Component Dependency Graph →](components-dependency)**
+**📚 [Complete Component Dependency Graph →](reference/components)**
 
 ---
 

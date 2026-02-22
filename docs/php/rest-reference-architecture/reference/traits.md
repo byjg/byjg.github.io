@@ -1,5 +1,6 @@
 ---
-sidebar_position: 140
+sidebar_position: 420
+title: Traits Reference
 ---
 
 # Traits Reference
@@ -646,7 +647,7 @@ SHOW COLUMNS FROM products LIKE '%_at';
 
 ## Related Documentation
 
-- [ORM Usage Guide](orm)
-- [Code Generator](code_generator)
-- [Advanced Repository Patterns](repository-advanced)
-- [Service Patterns](service-patterns)
+- [ORM Usage Guide](../guides/orm)
+- [Code Generator](code-generator)
+- [Advanced Repository Patterns](../guides/repository-advanced)
+- [Service Patterns](../guides/services)

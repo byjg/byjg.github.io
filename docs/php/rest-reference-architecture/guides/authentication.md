@@ -1,5 +1,6 @@
 ---
-sidebar_position: 70
+sidebar_position: 130
+title: Authentication
 ---
 
 # Login Integration with JWT
@@ -51,7 +52,7 @@ To customize fields, either modify these models or create your own classes and u
 
 `config/dev/02-security.php` wires the repositories and service:
 
-```php
+```php title="config/dev/02-security.php"
 use ByJG\Authenticate\Enum\LoginField;
 use ByJG\Authenticate\Repository\UserPropertiesRepository;
 use ByJG\Authenticate\Repository\UsersRepository;
@@ -87,7 +88,7 @@ return [
 
 The password policy also lives in `config/dev/02-security.php`:
 
-```php
+```php title="config/dev/02-security.php"
 use ByJG\Authenticate\Definition\PasswordDefinition;
 
 return [
@@ -114,12 +115,30 @@ AuthUser uses the mapper configured on `User::$password` to hash passwords (`Pas
 
 `JwtWrapper` bindings read the secret from each environment’s `credentials.env` file.
 
-```
-# config/dev/credentials.env
-JWT_SECRET=jwt_super_secret_key
+```ini title="config/dev/credentials.env"
+JWT_SECRET=ZGV2LS1qd3Qtc2VjcmV0LWtleS1mb3ItbG9jYWwtZGV2ZWxvcG1lbnQtb25seS1wYWQtQUJDREVGR0hJSktMTU5P
 ```
 
-```php
+:::info JWT_SECRET format
+`JWT_SECRET` must be a **base64-encoded** string whose decoded value is at least **64 bytes** (required by HS512).
+`composer create-project` generates a fresh secret for every environment automatically.
+
+To regenerate manually, use `composer terminal`:
+
+```bash
+APP_ENV=dev composer terminal
+php> \ByJG\JwtWrapper\JwtWrapper::generateSecret(64)
+# => 'OFbOmC2VxlgQHNrBLa/wyj7/fFkgPnLpckbXMVuIU7Sqb3RTztNx3xzEYaoeA31JUpvBjkD7FRKBFGQ0+fnTig=='
+```
+
+Copy the output and replace `JWT_SECRET` in the appropriate `credentials.env`.
+:::
+
+:::caution Never commit secrets
+Each environment gets its own `config/<env>/credentials.env` — keep this file out of version control (it is already listed in `.gitignore`).
+:::
+
+```php title="config/dev/02-security.php"
 use ByJG\Config\Param;
 use ByJG\JwtWrapper\JwtHashHmacSecret;
 use ByJG\JwtWrapper\JwtKeyInterface;
@@ -136,7 +155,7 @@ return [
 ];
 ```
 
-Never commit secrets—each environment gets its own `config/<env>/credentials.env`.
+See the caution above — never commit `credentials.env`.
 
 ### Available Endpoints
 
@@ -196,7 +215,7 @@ class MyProtectedRest
 ```php
 use RestReferenceArchitecture\Util\JwtContext;
 
-// JwtContext::parseJwt() runs inside the middleware pipeline
+// JwtContext::setRequest() is called by #[RequireAuthenticated] and #[RequireRole]
 $userId   = JwtContext::getUserId();
 $userName = JwtContext::getName();
 $userRole = JwtContext::getRole(); // e.g., "admin" or "user"

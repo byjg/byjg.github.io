@@ -1,5 +1,6 @@
 ---
-sidebar_position: 130
+sidebar_position: 410
+title: Attributes Reference
 ---
 
 # Attributes System
@@ -312,7 +313,7 @@ The JWT token must contain a `role` claim:
 }
 ```
 
-See [JWT Advanced Guide](jwt-advanced) for customizing JWT claims.
+See [JWT Advanced Guide](../guides/jwt-advanced) for customizing JWT claims.
 
 ### Error Responses
 
@@ -638,6 +639,6 @@ public function manageUsers(...) { }
 
 ## Related Documentation
 
-- [JWT Authentication Advanced Guide](jwt-advanced)
-- [REST API Development & OpenAPI Integration](rest)
-- [Testing Guide](testing-guide)
+- [JWT Authentication Advanced Guide](../guides/jwt-advanced)
+- [REST API Development & OpenAPI Integration](../guides/rest-controllers)
+- [Testing Guide](../guides/testing)

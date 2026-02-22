@@ -1,5 +1,6 @@
 ---
-sidebar_position: 160
+sidebar_position: 220
+title: Configuration
 ---
 
 # Configuration Deep Dive
@@ -105,9 +106,7 @@ Within each layer, files are loaded alphabetically.
 
 ### Development Environment
 
-**File**: `config/dev/01-infrastructure/01-database.php`
-
-```php
+```php title="config/dev/01-infrastructure/01-database.php"
 return [
     'DBDRIVER_CONNECTION' => fn() => 'mysql://root:password@localhost/myapp_dev'
 ];
@@ -115,9 +114,7 @@ return [
 
 ### Test Environment
 
-**File**: `config/test/01-infrastructure/01-database.php`
-
-```php
+```php title="config/test/01-infrastructure/01-database.php"
 return [
     // Override for test database
     'DBDRIVER_CONNECTION' => fn() => 'mysql://root:password@localhost/myapp_test'
@@ -126,9 +123,7 @@ return [
 
 ### Production Environment
 
-**File**: `config/prod/01-infrastructure/01-database.php`
-
-```php
+```php title="config/prod/01-infrastructure/01-database.php"
 return [
     // Use environment variable
     'DBDRIVER_CONNECTION' => fn() => getenv('DATABASE_URL')
@@ -160,12 +155,16 @@ return [
 
 **File**: `.env` (not committed to git)
 
-```bash
+:::caution Keep `.env` out of version control
+This file contains secrets — it is (and should remain) listed in `.gitignore`.
+:::
+
+```ini title=".env"
 # Database
 DATABASE_URL=mysql://user:pass@localhost/myapp
 
 # JWT
-JWT_SECRET=your-super-secret-key-min-32-characters
+JWT_SECRET=OFbOmC2VxlgQHNrBLa/wyj7/fFkgPnLpckbXMVuIU7Sqb3RTztNx3xzEYaoeA31JUpvBjkD7FRKBFGQ0+fnTig==
 
 # External APIs
 STRIPE_KEY=sk_live_xxxxxxxxxxxx
@@ -365,8 +364,8 @@ return [
             throw new \RuntimeException('JWT_SECRET environment variable is required');
         }
 
-        if (strlen($secret) < 32) {
-            throw new \RuntimeException('JWT_SECRET must be at least 32 characters');
+        if (strlen(base64_decode($secret)) < 64) {
+            throw new \RuntimeException('JWT_SECRET must be a base64-encoded string that decodes to at least 64 bytes.);
         }
 
         return $secret;
@@ -413,6 +412,6 @@ return [
 
 ## Related Documentation
 
-- [Getting Started Guide](getting_started)
-- [PSR-11 Dependency Injection](psr11_di)
+- [Getting Started Guide](../getting-started/installation)
+- [PSR-11 Dependency Injection](../concepts/dependency-injection)
 - [JWT Configuration](jwt-advanced)
