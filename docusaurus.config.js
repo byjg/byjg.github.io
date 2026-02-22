@@ -62,6 +62,25 @@ const config = {
     }
   },
 
+  // vscode-languageserver-types (pulled in transitively by @docusaurus/theme-mermaid → mermaid →
+  // @mermaid-js/parser → langium → vscode-languageserver) uses a UMD dynamic require() pattern
+  // that webpack cannot statically analyze. The warning is harmless — it works fine at runtime —
+  // so we suppress it here to keep the build output clean.
+  plugins: [
+    function() {
+      return {
+        name: 'suppress-vscode-languageserver-types-warning',
+        configureWebpack() {
+          return {
+            ignoreWarnings: [
+              { module: /vscode-languageserver-types/ }
+            ]
+          };
+        }
+      };
+    }
+  ],
+
   presets: [
     [
       'classic',
