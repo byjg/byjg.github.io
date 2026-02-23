@@ -27,7 +27,7 @@ EasyHAProxy dynamically creates `haproxy.cfg` based on metadata from your worklo
 - **Custom SSL certificates** — volume-mount or label-embed your own PEM files
 - **TCP mode** — proxy any TCP service, not just HTTP
 - **Plugin system** — JWT validation, IP whitelisting, Cloudflare IP restoration, FastCGI, path blocking, and custom plugins
-- **HAProxy stats dashboard** — optional, password-protected
+- **Real-time monitoring dashboard** — built-in, zero-dependency web UI with live traffic charts, frontend/backend health, and per-server stats (enabled with a single env var)
 - **Balance algorithms** — roundrobin, leastconn, source, uri, and more
 
 ## Supported platforms
@@ -59,6 +59,13 @@ EasyHAProxy is part of some projects:
 - [Dokku](guides/dokku)
 - [MicroK8s](guides/microk8s)
 - [DigitalOcean Marketplace](guides/digitalocean)
+
+## Monitoring Dashboard
+
+[![HAProxy Monitor](dashboard_thumbnail.png)](guides/dashboard)
+
+A real-time dashboard is available at `http://<host>:11936/` whenever `HAPROXY_PASSWORD` is set —
+no extra containers, no Prometheus, no Grafana. See the [dashboard guide](guides/dashboard).
 
 ## See EasyHAProxy in action
 
