@@ -1,8 +1,16 @@
 .breadcrumbsContainer {
-  /* Add any custom styles here if needed */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .breadcrumbHomeIcon {
   vertical-align: middle;
   display: inline-block;
+}
+
+.copyLLMButton {
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+  white-space: nowrap;
 }

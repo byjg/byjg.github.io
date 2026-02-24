@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
-import {useSidebarBreadcrumbs} from '@docusaurus/plugin-content-docs/client';
+import {useSidebarBreadcrumbs, useDoc} from '@docusaurus/plugin-content-docs/client';
 import Link from '@docusaurus/Link';
 import {useLocation} from '@docusaurus/router';
 import {translate} from '@docusaurus/Translate';
@@ -74,6 +74,57 @@ function BreadcrumbsItem({children, active, index, addMicrodata}) {
   );
 }
 
+function getRawGitHubUrl(editUrl) {
+  // editUrl: https://github.com/owner/repo/tree/branch/path/to/file.md
+  // raw URL: https://raw.githubusercontent.com/owner/repo/branch/path/to/file.md
+  return editUrl
+    .replace('https://github.com/', 'https://raw.githubusercontent.com/')
+    .replace('/tree/', '/');
+}
+
+function CopyToLLMButton() {
+  const [state, setState] = useState('idle'); // idle | loading | copied | error
+  const doc = useDoc();
+  const editUrl = doc?.metadata?.editUrl;
+
+  const handleCopy = useCallback(async () => {
+    if (!editUrl || state === 'loading') return;
+
+    setState('loading');
+    try {
+      const rawUrl = getRawGitHubUrl(editUrl);
+      const response = await fetch(rawUrl);
+      if (!response.ok) throw new Error('Failed to fetch');
+      const markdown = await response.text();
+      await navigator.clipboard.writeText(markdown);
+      setState('copied');
+      setTimeout(() => setState('idle'), 2000);
+    } catch {
+      setState('error');
+      setTimeout(() => setState('idle'), 2000);
+    }
+  }, [editUrl, state]);
+
+  if (!editUrl) return null;
+
+  const label = {
+    idle: 'Copy to LLM',
+    loading: 'Copying...',
+    copied: '✓ Copied!',
+    error: 'Error!',
+  }[state];
+
+  return (
+    <button
+      className={clsx('button button--sm button--secondary', styles.copyLLMButton)}
+      onClick={handleCopy}
+      disabled={state === 'loading'}
+      title="Copy raw markdown content for use with an LLM">
+      {label}
+    </button>
+  );
+}
+
 export default function DocBreadcrumbs() {
   const breadcrumbs = useSidebarBreadcrumbs();
   const location = useLocation();
@@ -129,6 +180,7 @@ export default function DocBreadcrumbs() {
           );
         })}
       </ul>
+      {!location.pathname.includes('/category/') && <CopyToLLMButton />}
     </nav>
   );
 }
