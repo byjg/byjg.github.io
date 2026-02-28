@@ -1,10 +1,10 @@
 ---
-slug: alem-do-vibe-coding
+slug: beyond-vibe-coding
 title: Além do Vibe Coding — IA como Par de Programação no Desenvolvimento Real
 authors: [byjg]
 date: 2026-02-28
 tags: [ia, vibe-coding, claude-code, lovable, emergent, desenvolvimento, produtividade]
-description: "Vibe Coding" é um termo que não faz jus ao trabalho real. Minha experiência usando Claude Code, Lovable e Emergent.sh para modernizar um projeto legado de 2010 — e por que estar no controle faz toda a diferença.
+description: O termo "Vibe Coding" não faz jus ao trabalho real. Minha experiência usando Claude Code, Lovable e Emergent.sh para modernizar um projeto legado de 2010 — e por que estar no controle faz toda a diferença.
 ---
 
 # Além do Vibe Coding — IA como Par de Programação no Desenvolvimento Real
