@@ -1,5 +1,6 @@
 ---
 sidebar_key: docker-php
+tags: [docker, php]
 ---
 
 # PHP Docker Images ByJG

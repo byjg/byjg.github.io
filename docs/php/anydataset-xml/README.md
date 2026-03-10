@@ -1,8 +1,11 @@
 ---
 sidebar_key: anydataset-xml
+tags: [php, anydataset, text-manipulation]
 ---
 
 # AnyDataset-Xml
+
+XML abstraction dataset for the AnyDataset library. AnyDataset is an agnostic data source abstraction layer in PHP.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-anydataset-xml/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-anydataset-xml/actions/workflows/phpunit.yml)
@@ -10,8 +13,6 @@ sidebar_key: anydataset-xml
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-anydataset-xml/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-anydataset-xml.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-anydataset-xml.svg)](https://github.com/byjg/php-anydataset-xml/releases/)
-
-XML abstraction dataset for the AnyDataset library. AnyDataset is an agnostic data source abstraction layer in PHP.
 
 ## Features
 

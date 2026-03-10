@@ -2,6 +2,7 @@
 id: js
 slug: /js
 sort: 3
+tags: [node.js, javascript]
 ---
 
 # Javascript / Node.JS

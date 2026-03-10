@@ -1,5 +1,6 @@
 ---
 sidebar_key: xmlutil
+tags: [php, text-manipulation]
 ---
 
 # XML Utility

@@ -2,6 +2,7 @@
 id: devops
 slug: /devops
 sort: 2
+tags: [docker, devops]
 ---
 
 # Docker Images and Automation

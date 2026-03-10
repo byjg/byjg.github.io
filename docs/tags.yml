@@ -1,0 +1,95 @@
+php:
+  label: PHP
+  description: PHP libraries and components
+
+python:
+  label: Python
+  description: Python tools and libraries
+
+node.js:
+  label: Node.js
+  description: Node.js and server-side JavaScript
+
+javascript:
+  label: JavaScript
+  description: Browser-side JavaScript libraries
+
+docker:
+  label: Docker
+  description: Docker images and container tooling
+
+devops:
+  label: DevOps
+  description: Infrastructure automation and DevOps tooling
+
+anydataset:
+  label: AnyDataset
+  description: AnyDataset data source abstraction components
+
+queue:
+  label: Message Queue
+  description: Message queue clients and abstractions
+
+cryptography:
+  label: Cryptography
+  description: Encryption, JWT, and security libraries
+
+ai:
+  label: AI / LLM
+  description: Artificial intelligence and LLM integrations
+
+databases:
+  label: Databases
+  description: Database drivers, ORM, and data access layers
+
+cli:
+  label: CLI
+  description: Command-line interface tools
+
+text-manipulation:
+  label: Text Manipulation
+  description: String conversion, serialization, and text processing
+
+text-classification:
+  label: Text Classification
+  description: Phonetic algorithms and text classification
+
+http:
+  label: HTTP
+  description: HTTP clients, REST and SOAP web services
+
+authentication:
+  label: Authentication
+  description: User authentication, sessions, and JWT
+
+orm:
+  label: ORM
+  description: Object-relational mapping
+
+cache:
+  label: Cache
+  description: Caching backends and PSR-6/PSR-16 implementations
+
+image:
+  label: Image
+  description: Image manipulation and processing
+
+email:
+  label: Email
+  description: Email sending libraries
+
+finance:
+  label: Finance
+  description: Digital wallets and financial tools
+
+concurrency:
+  label: Concurrency
+  description: Threads and asynchronous execution
+
+testing:
+  label: Testing
+  description: Testing utilities and test frameworks
+
+template:
+  label: Template
+  description: Templating engines

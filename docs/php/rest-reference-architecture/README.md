@@ -1,8 +1,11 @@
 ---
 sidebar_key: rest-reference-architecture
+tags: [php, docker, http]
 ---
 
 # PHP REST Reference Architecture
+
+**Production-ready PHP REST API boilerplate** that lets you focus on building your business logic, not the infrastructure.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-rest-reference-architecture/actions/workflows/build-app-image.yml/badge.svg?branch=master)](https://github.com/byjg/php-rest-reference-architecture/actions/workflows/build-app-image.yml)
@@ -10,8 +13,6 @@ sidebar_key: rest-reference-architecture
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-rest-reference-architecture)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-rest-reference-architecture.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-rest-reference-architecture.svg)](https://github.com/byjg/php-rest-reference-architecture/releases)
-
-**Production-ready PHP REST API boilerplate** that lets you focus on building your business logic, not the infrastructure.
 
 ## Why Use This?
 

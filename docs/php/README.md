@@ -1,3 +1,7 @@
+---
+tags: [php]
+---
+
 # PHP Components
 ## Class Dependency
 ```mermaid

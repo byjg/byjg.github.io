@@ -1,5 +1,6 @@
 ---
 sidebar_key: docker-easy-haproxy
+tags: [docker, devops]
 ---
 
 # EasyHAProxy

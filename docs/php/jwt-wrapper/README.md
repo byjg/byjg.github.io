@@ -1,5 +1,6 @@
 ---
 sidebar_key: jwt-wrapper
+tags: [php, cryptography, authentication]
 ---
 
 # JWT Wrapper

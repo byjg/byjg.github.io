@@ -2,6 +2,7 @@
 id: helm
 slug: /helm
 sort: 4
+tags: [docker]
 ---
 
 # Helm Repository

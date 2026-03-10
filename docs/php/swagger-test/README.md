@@ -1,8 +1,12 @@
 ---
 sidebar_key: swagger-test
+tags: [php, http, testing]
 ---
 
 # Swagger Test
+
+A set of tools for testing your REST calls based on the OpenApi specification using PHPUnit.
+Currently, this library supports the OpenApi specifications `2.0` (formerly swagger) and `3.0`.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml)
@@ -10,9 +14,6 @@ sidebar_key: swagger-test
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/php-swagger-test/)
 [![GitHub license](https://img.shields.io/github/license/byjg/php-swagger-test.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-swagger-test.svg)](https://github.com/byjg/php-swagger-test/releases/)
-
-A set of tools for testing your REST calls based on the OpenApi specification using PHPUnit.
-Currently, this library supports the OpenApi specifications `2.0` (formerly swagger) and `3.0`.
 
 Some features of the OpenAPI specification are not fully implemented:
 
