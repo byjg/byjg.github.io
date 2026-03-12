@@ -93,3 +93,23 @@ testing:
 template:
   label: Template
   description: Templating engines
+
+linux:
+  label: Linux
+  description: Linux packages and system tools
+
+packages:
+  label: Packages
+  description: Package repositories and distribution
+
+apt:
+  label: APT
+  description: Debian and Ubuntu APT packages
+
+rpm:
+  label: RPM
+  description: RPM packages for Fedora, RHEL, and CentOS
+
+deb:
+  label: DEB
+  description: Debian package format

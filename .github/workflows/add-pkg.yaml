@@ -1,0 +1,136 @@
+name: Add DEB/RPM package
+
+on:
+  workflow_call:
+    inputs:
+      org:
+        type: string
+        required: false
+        default: byjg
+      repo:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: true
+    secrets:
+      DOC_TOKEN:
+        required: true
+      GPG_PRIVATE_KEY:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  add_pkg:
+    runs-on: ubuntu-latest
+
+    env:
+      REPOSITORY: ${{ inputs.org }}/${{ inputs.repo }}
+
+    steps:
+      - name: Checkout repository (byjg.github.io)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DOC_TOKEN }}
+          repository: byjg/byjg.github.io
+          path: byjg.github.io
+
+      - name: Install packaging tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dpkg-dev createrepo-c
+
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          # Export public key for users to download
+          GPG_KEY_ID=$(gpg --list-keys --with-colons | awk -F: '/^pub/{found=1} found && /^fpr/{print $10; exit}')
+          gpg --armor --export "$GPG_KEY_ID" > byjg.github.io/packages/byjg.gpg
+
+      - name: Download release assets
+        env:
+          GH_TOKEN: ${{ secrets.DOC_TOKEN }}
+        run: |
+          mkdir -p assets
+          gh release download "${{ inputs.tag }}" \
+            --repo "${{ env.REPOSITORY }}" \
+            --pattern "*.deb" \
+            --dir assets || true
+          gh release download "${{ inputs.tag }}" \
+            --repo "${{ env.REPOSITORY }}" \
+            --pattern "*.rpm" \
+            --dir assets || true
+
+          echo "Downloaded assets:"
+          ls -la assets/
+
+      - name: Add DEB packages and reindex
+        run: |
+          # Copy .deb files to the apt pool
+          if ls assets/*.deb 1>/dev/null 2>&1; then
+            cp assets/*.deb byjg.github.io/packages/apt/
+
+            # Regenerate APT metadata
+            cd byjg.github.io/packages/apt
+            dpkg-scanpackages --multiversion . > Packages
+            gzip -k -f Packages
+
+            # Generate Release file
+            {
+              echo "Origin: ByJG Opensource"
+              echo "Label: ByJG"
+              echo "Suite: stable"
+              echo "Codename: stable"
+              echo "Architectures: amd64 arm64"
+              echo "Components: main"
+              echo "Date: $(date -Ru)"
+              echo "MD5Sum:"
+              for f in Packages Packages.gz; do
+                echo " $(md5sum "$f" | cut -d' ' -f1) $(wc -c < "$f") $f"
+              done
+              echo "SHA256:"
+              for f in Packages Packages.gz; do
+                echo " $(sha256sum "$f" | cut -d' ' -f1) $(wc -c < "$f") $f"
+              done
+            } > Release
+
+            # GPG sign the Release file
+            gpg --batch --yes --armor --detach-sign -o Release.gpg Release
+            gpg --batch --yes --armor --clearsign -o InRelease Release
+
+            echo "APT repo updated:"
+            ls -la
+          else
+            echo "No .deb files found, skipping APT"
+          fi
+
+      - name: Add RPM packages and reindex
+        run: |
+          # Copy .rpm files to the rpm pool
+          if ls assets/*.rpm 1>/dev/null 2>&1; then
+            cp assets/*.rpm byjg.github.io/packages/rpm/
+
+            # Regenerate RPM metadata
+            createrepo_c --update byjg.github.io/packages/rpm
+
+            # GPG sign the RPM repo metadata
+            gpg --batch --yes --armor --detach-sign \
+              -o byjg.github.io/packages/rpm/repodata/repomd.xml.asc \
+              byjg.github.io/packages/rpm/repodata/repomd.xml
+
+            echo "RPM repo updated:"
+            ls -la byjg.github.io/packages/rpm/
+          else
+            echo "No .rpm files found, skipping RPM"
+          fi
+
+      - name: Commit and push
+        run: |
+          cd byjg.github.io
+          git add "packages/*"
+          git config user.name "CI/CD"
+          git config user.email "info@byjg.com.br"
+          git diff-index --quiet HEAD || git commit -m "[skip ci] Add packages from ${{ env.REPOSITORY }} ${{ inputs.tag }}"
+          git push

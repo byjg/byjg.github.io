@@ -11,7 +11,7 @@ const config = {
   title: 'Opensource ByJG',
   tagline: 'A wide range of opensource projects ByJG',
   favicon: 'img/favicon.ico',
-  staticDirectories: ['helm-charts', 'static'],
+  staticDirectories: ['helm-charts', 'packages', 'static'],
 
   // Set the production url of your site here
   url: 'https://opensource.byjg.com',
@@ -127,6 +127,7 @@ const config = {
           {to: '/docs/devops', label: 'Docker & DevOps', position: 'left'},
           {to: '/docs/js', label: 'Node & JS', position: 'left'},
           {to: '/docs/helm', label: 'Helm Chart', position: 'left'},
+          {to: '/docs/packages', label: 'Linux Packages', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/byjg',
@@ -160,6 +161,10 @@ const config = {
               {
                 label: 'Helm Charts',
                 to: '/docs/helm',
+              },
+              {
+                label: 'Linux Packages',
+                to: '/docs/packages',
               },
               {
                 label: 'About Opensource',
