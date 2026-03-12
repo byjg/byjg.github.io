@@ -16,8 +16,6 @@ on:
     secrets:
       DOC_TOKEN:
         required: true
-      GPG_PRIVATE_KEY:
-        required: true
 
 permissions:
   contents: read
