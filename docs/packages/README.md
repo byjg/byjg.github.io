@@ -93,14 +93,14 @@ sudo yum install <package-name>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
 
 ```bash
-apt list --upgradable 2>/dev/null | grep opensource.byjg.com
+grep ^Package /var/lib/apt/lists/*opensource.byjg.com*Packages
 ```
 
 </TabItem>
 <TabItem value="rpm" label="Fedora / RHEL / CentOS (DNF/Yum)">
 
 ```bash
-dnf list available --repo=byjg
+dnf repoquery --repo=byjg --available
 ```
 
 </TabItem>
