@@ -47,7 +47,7 @@ jobs:
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d | gpg --batch --import
           # Export public key for users to download
           GPG_KEY_ID=$(gpg --list-keys --with-colons | awk -F: '/^pub/{found=1} found && /^fpr/{print $10; exit}')
-          gpg --armor --export "$GPG_KEY_ID" > byjg.github.io/packages/byjg.gpg
+          gpg --export "$GPG_KEY_ID" > byjg.github.io/packages/byjg.gpg
 
       - name: Download release assets
         env:
