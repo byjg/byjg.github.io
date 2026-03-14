@@ -1,0 +1,13 @@
+Origin: ByJG Opensource
+Label: ByJG
+Suite: stable
+Codename: stable
+Architectures: amd64 arm64
+Components: main
+Date: Sat, 14 Mar 2026 21:31:06 +0000
+MD5Sum:
+ c30146864d9f4e3e6808521e32687829 3038 Packages
+ 0ba85f6dfaa0b9b3dd7c3999ea7634e3 1019 Packages.gz
+SHA256:
+ 3c7062873f0e0c521f711e3943ddebea0f369c092fbb0a3d0fbd018a148a5a32 3038 Packages
+ 7e8e48e1d52f5da44ca445ff55e1fb2d3715e4af67c1fc0c1741e6bed9556809 1019 Packages.gz
