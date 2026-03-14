@@ -21,7 +21,7 @@ Download the GPG signing key and add the repository:
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
-sudo curl -fsSL https://opensource.byjg.com/packages/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
+sudo curl -fsSL https://opensource.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
 sudo tee /etc/apt/sources.list.d/byjg.sources <<EOF
 Types: deb
 URIs: https://opensource.byjg.com/apt
@@ -36,7 +36,7 @@ sudo apt update
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
-sudo curl -fsSL https://opensource.byjg.com/packages/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
+sudo curl -fsSL https://opensource.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
 echo "deb [signed-by=/etc/apt/keyrings/byjg.gpg] https://opensource.byjg.com/apt /" | sudo tee /etc/apt/sources.list.d/byjg.list
 sudo apt update
 ```
@@ -49,7 +49,7 @@ sudo apt update
 Import the GPG signing key and add the repository:
 
 ```bash
-sudo rpm --import https://opensource.byjg.com/packages/byjg.gpg
+sudo rpm --import https://opensource.byjg.com/byjg.gpg
 sudo tee /etc/yum.repos.d/byjg.repo <<EOF
 [byjg]
 name=ByJG Packages
@@ -57,7 +57,7 @@ baseurl=https://opensource.byjg.com/rpm
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://opensource.byjg.com/packages/byjg.gpg
+gpgkey=https://opensource.byjg.com/byjg.gpg
 EOF
 ```
 
