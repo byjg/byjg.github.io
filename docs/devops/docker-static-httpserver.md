@@ -6,38 +6,80 @@
 [![GitHub license](https://img.shields.io/github/license/byjg/docker-static-httpserver.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/docker-static-httpserver.svg)](https://github.com/byjg/docker-static-httpserver/releases/)
 
-A really minimal HTTP Server image for static files written in GO
+A really minimal HTTP/HTTPS Server image for static files written in Go.
 
 ## Why?
 
-* Create a simple HTML website;
-* HTTP to serve few files
-* Really small - less than 15MB !!
+* Create a simple HTML website
+* Serve static files with HTTP and HTTPS (self-signed certificate by default)
+* SPA (Single Page Application) support for frontend frameworks like React, Angular, Vue
+* In-memory LRU file cache with configurable limits
+* Health check endpoint for Kubernetes probes
+* Really small footprint
 
-## Tags
+## How to use the "Parking page"?
 
-* latest - The latest image with a coming soon template
-* tiny - A really minimalist image. You need to replace the volume ot build your own on top of this one.  
+The image includes a self-contained parking page (single HTML file, no external dependencies) that can be
+customized by setting the environment variables:
 
-## How to use the "Coming soon template"?
-
-![Coming soon page](https://raw.github.com/byjg/docker-static-httpserver/master/preview.png)
-
-The image has the coming soon template and can be customized by setting the environment variables:
-
-* HTML_TITLE
-* TITLE
-* MESSAGE
-* BG_IMAGE
-* FACEBOOK
-* TWITTER
-* YOUTUBE
+* `HTML_TITLE` - Page title (default: "Coming soon")
+* `TITLE` - Main heading (default: "soon")
+* `MESSAGE` - Body message
+* `BG_IMAGE` - Background image URL
+* `FACEBOOK` - Facebook page URL
+* `TWITTER` - Twitter page URL
+* `YOUTUBE` - YouTube page URL
 
 e.g.
 
 ```bash
 docker run -p 8080:8080 -e TITLE=soon -e "MESSAGE=Keep In Touch" byjg/static-httpserver
 ```
+
+## Environment Variables
+
+### Server
+
+| Variable | Default | Description |
+|---|---|---|
+| `PORT` | `8080` | HTTP listening port |
+| `TLS_PORT` | `8443` | HTTPS listening port |
+| `TLS_CERT_DIR` | `/certs` | Directory to look for `cert.pem` and `key.pem` |
+| `SPA_MODE` | `false` | Enable SPA routing (`true`, `1`, or `yes` to enable) |
+| `SHOW_HEADERS` | `false` | Display received HTTP request headers on the parking page |
+| `CACHE_MAX_SIZE` | `50000000` | Max total cache size in bytes (0 to disable caching) |
+| `CACHE_MAX_FILE_SIZE` | `5000000` | Max individual file size to cache in bytes |
+
+### HTTPS / TLS
+
+The server always starts both HTTP and HTTPS listeners. By default, a **self-signed certificate** is
+generated in memory at startup.
+
+To use your own certificates, mount them into the container:
+
+```bash
+docker run -p 8080:8080 -p 8443:8443 \
+    -v /path/to/certs:/certs:ro \
+    byjg/static-httpserver
+```
+
+The directory must contain `cert.pem` and `key.pem` files.
+
+### SPA Mode
+
+When `SPA_MODE` is enabled, any request that doesn't match an existing file **and** has no file extension
+is served the `index.html` page. This supports client-side routing in frameworks like React, Angular, and Vue.
+
+Requests for missing static assets (e.g., `/missing.css`) still return 404.
+
+```bash
+docker run -p 8080:8080 -e SPA_MODE=true byjg/static-httpserver
+```
+
+### Health Check
+
+The server exposes a `/health` endpoint that returns `{"status":"ok"}` with HTTP 200.
+This is used by the Helm chart for Kubernetes liveness and readiness probes.
 
 ## Using with Helm 3
 
@@ -67,6 +109,13 @@ parameters:
   facebook: ""
   twitter: ""
   youtube: ""
+  spaMode: ""
+  showHeaders: ""
+  port: ""
+  tlsPort: ""
+  tlsCertDir: ""
+  cacheMaxSize: ""
+  cacheMaxFileSize: ""
 ```
 
 ```tip
@@ -97,19 +146,48 @@ Follow this discussion: [https://discuss.kubernetes.io/t/addon-parking/23186](ht
 
 ## Use your own static pages
 
-```
-docker run -p 8080:8080 -v /path/to/local/html:/static byjg/static-httpserver:tiny
-```
+Mount your own HTML directory to replace the default parking page:
 
+```bash
+docker run -p 8080:8080 -v /path/to/local/html:/static byjg/static-httpserver
+```
 
 ## Create your own image
 
-Dockerfile
-
-```
-FROM byjg/static-httpserver:tiny
+```dockerfile
+FROM byjg/static-httpserver
 
 COPY /path/to/html /static
+```
+
+## Using with React / Vue / Angular (SPA)
+
+Use a multi-stage Dockerfile to build your frontend app and serve it with SPA routing:
+
+```dockerfile
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM byjg/static-httpserver
+ENV SPA_MODE=true
+COPY --from=builder /app/build /static
+```
+
+Note: adjust the build output folder depending on your framework:
+- **React (CRA)**: `build`
+- **Vite**: `dist`
+- **Next.js (static export)**: `out`
+- **Angular**: `dist/<project-name>/browser`
+
+Then build and run:
+
+```bash
+docker build -t myapp .
+docker run -p 8080:8080 myapp
 ```
 
 ----
