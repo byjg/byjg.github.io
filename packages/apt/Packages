@@ -93,3 +93,34 @@ Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
 License: MIT
 
+Package: static-httpserver
+Version: 0.2.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7232
+Filename: ./static-httpserver_0.2.0_linux_arm64.deb
+Size: 2988092
+MD5sum: cda829cea76c0c6b60b6ed6fa4eec04b
+SHA1: 5a541843eb9d5427682e3c8ed93d2e5aab37f91d
+SHA256: 9e288f2d0ec0165d0902c943d8fe89b65548dac012c2e096365ab7004c1a312f
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+License: MIT
+
+Package: static-httpserver
+Version: 0.2.0
+Architecture: amd64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7768
+Filename: ./static-httpserver_0.2.0_linux_amd64.deb
+Size: 3297998
+MD5sum: 35c1f61930728ced7a6a2eb8fb0a18a5
+SHA1: 300de1b4ff5a402d174fb79d8926ee9f5644b9b5
+SHA256: 4da5e859a4100c981dc1782bf4081af8d56723b78b4de0ba280fd4a8ca6cfc75
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+Architecture-Variant: amd64v1
+License: MIT
+
