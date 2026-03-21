@@ -1,5 +1,9 @@
 ---
 sidebar_key: n8n-gitops
+---
+
+---
+sidebar_key: n8n-gitops
 tags: [docker, devops, cli]
 ---
 
