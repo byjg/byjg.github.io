@@ -29,7 +29,7 @@ User --> nimbus CLI (HMAC/JWT) --> nimbus-api (control plane, TLS)
 
 ## Communication
 
-### API <-> Agent (mTLS)
+### API ↔ Agent (mTLS)
 
 Each agent gets a unique client certificate signed by the API's CA during the node join process. The agent's node ID is embedded in the certificate's CommonName. All agent-to-API traffic uses mutual TLS over WireGuard.
 
@@ -38,11 +38,11 @@ The agent communicates through three endpoints:
 - **GET /v1/internal/tasks/{nodeId}** — poll for pending tasks to execute
 - **POST /v1/internal/tasks/{taskId}/result** — report task completion or failure
 
-### CLI <-> API (HMAC / JWT)
+### CLI ↔ API (HMAC / JWT)
 
 The CLI signs each request with HMAC using the secret key from `nimbus configure`. Alternatively, users can authenticate with username/password via `nimbus iam login` to get a JWT token.
 
-### Node <-> Node (WireGuard)
+### Node ↔ Node (WireGuard)
 
 All inter-node traffic (Docker Swarm gossip, K3s API, NFS mounts, S3) flows through a full-mesh WireGuard VPN. The API server assigns overlay IPs from a configurable subnet (default: `10.106.103.0/24`) and distributes peer configurations to all nodes.
 

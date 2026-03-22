@@ -8,7 +8,7 @@ title: "Security Model"
 
 DockNimbus uses layered security to protect control plane communication, inter-node traffic, and user authentication.
 
-## mTLS (Agent <-> API)
+## mTLS (Agent ↔ API)
 
 Every agent authenticates to the API server using mutual TLS with per-node client certificates.
 
@@ -21,7 +21,7 @@ During node join:
 
 Certificate revocation is supported via `nimbus node delete`, which revokes the node's certificate.
 
-## HMAC Authentication (CLI <-> API)
+## HMAC Authentication (CLI ↔ API)
 
 CLI requests are signed using HMAC-SHA256. Each request includes:
 - An `X-Access-Key` header identifying the key pair
@@ -48,7 +48,7 @@ nimbus node list
 
 JWT tokens are short-lived (1 hour) and include the user ID, username, and admin flag.
 
-## WireGuard Encryption (Node <-> Node)
+## WireGuard Encryption (Node ↔ Node)
 
 All inter-node traffic is encrypted via a full-mesh WireGuard VPN:
 
