@@ -1,0 +1,91 @@
+# DockNimbus Manifest Example — External Resources
+#
+# This manifest references existing nodes, volumes, swarms, and K8s clusters
+# instead of creating them. Only compute instances and S3 are managed by this manifest.
+#
+# Apply:  nimbus manifest apply --file manifest-external-example.yaml --env S3_PASSWORD=secret
+# Remove: nimbus manifest remove --file manifest-external-example.yaml
+#
+# Variable substitution: ${VAR} is replaced from --env flags and OS environment.
+
+name: my-infrastructure
+
+nodes:
+  web1:
+    external: true
+
+  web2:
+    external: true
+
+volumes:
+  vol1:
+    external: true
+
+  vol2:
+    node: web1
+    folder: /srv/nimbus/vol2
+
+swarms:
+  prod:
+    external: true
+
+s3:
+  store1:
+    swarm: prod
+    volume: vol1
+    password: ${S3_PASSWORD}
+    # license: /path/to/license
+    # certs: /path/to/certs.pem
+
+kubernetes:
+  cluster1:
+    external: true
+    # manifests:
+    #   - apiVersion: apps/v1
+    #     kind: Deployment
+    #     metadata:
+    #       name: my-app
+    #     spec:
+    #       replicas: 1
+    #       selector:
+    #         matchLabels:
+    #           app: my-app
+    #       template:
+    #         metadata:
+    #           labels:
+    #             app: my-app
+    #         spec:
+    #           containers:
+    #             - name: app
+    #               image: nginx:latest
+
+compute:
+  web-app:
+    swarm: prod
+    image: byjg/static-httpserver
+    type: small
+    replicas: 1
+    # domain: app.example.com
+    ports:
+      - "80:8080"
+    volumes:
+      - vol2:/data
+    env:
+      - TITLE=soon
+      - "MESSAGE=Keep In Touch"
+    # command: ["nginx", "-g", "daemon off;"]
+
+# services:
+#   my-stack:
+#     swarm: prod
+#     compose:
+#       services:
+#         web:
+#           image: nginx:latest
+#           ports:
+#             - "80:80"
+#     env:
+#       - KEY=value
+#     volume-mappings:
+#       - compose-name: data
+#         volume: vol1

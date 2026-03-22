@@ -1,0 +1,101 @@
+# DockNimbus Manifest Example
+#
+# Apply:  nimbus manifest apply --file manifest-example.yaml --env S3_PASSWORD=secret
+# Remove: nimbus manifest remove --file manifest-example.yaml
+#
+# Variable substitution: ${VAR} is replaced from --env flags and OS environment.
+
+name: my-infrastructure
+
+nodes:
+  web1:
+    ip: 192.168.1.10
+    name: web-server-1
+    ssh:
+      user: root
+      # key: ~/.ssh/id_rsa
+      # password: ${NODE1_PASS}
+      # port: 22
+
+  web2:
+    ip: 192.168.1.11
+    ssh:
+      user: root
+
+volumes:
+  vol1:
+    node: web1
+    folder: /srv/nimbus/vol1
+
+  vol2:
+    node: web1
+    folder: /srv/nimbus/vol2
+
+swarms:
+  prod:
+    nodes: [web1, web2]
+    lb: true
+    # cloudflare:
+    #   token: ${CF_TOKEN}
+    #   domain: example.com
+
+s3:
+  store1:
+    swarm: prod
+    volume: vol1
+    password: ${S3_PASSWORD}
+    # license: /path/to/license
+    # certs: /path/to/certs.pem
+
+kubernetes:
+  cluster1:
+    nodes: [web1, web2]
+    # manifests:
+    #   - apiVersion: apps/v1
+    #     kind: Deployment
+    #     metadata:
+    #       name: my-app
+    #     spec:
+    #       replicas: 1
+    #       selector:
+    #         matchLabels:
+    #           app: my-app
+    #       template:
+    #         metadata:
+    #           labels:
+    #             app: my-app
+    #         spec:
+    #           containers:
+    #             - name: app
+    #               image: nginx:latest
+
+compute:
+  web-app:
+    swarm: prod
+    image: byjg/static-httpserver
+    type: small
+    replicas: 1
+    # domain: app.example.com
+    ports:
+      - "80:8080"
+    volumes:
+      - vol2:/data
+    env:
+      - TITLE=soon
+      - "MESSAGE=Keep In Touch"
+    # command: ["nginx", "-g", "daemon off;"]
+
+# services:
+#   my-stack:
+#     swarm: prod
+#     compose:
+#       services:
+#         web:
+#           image: nginx:latest
+#           ports:
+#             - "80:80"
+#     env:
+#       - KEY=value
+#     volume-mappings:
+#       - compose-name: data
+#         volume: vol1
