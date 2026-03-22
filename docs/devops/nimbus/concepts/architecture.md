@@ -35,8 +35,8 @@ Each agent gets a unique client certificate signed by the API's CA during the no
 
 The agent communicates through three endpoints:
 - **POST /v1/internal/heartbeat** — periodic health reports with hardware metrics
-- **GET /v1/internal/tasks/{nodeId}** — poll for pending tasks to execute
-- **POST /v1/internal/tasks/{taskId}/result** — report task completion or failure
+- **GET /v1/internal/tasks/`{nodeId}`** — poll for pending tasks to execute
+- **POST /v1/internal/tasks/`{taskId}`/result** — report task completion or failure
 
 ### CLI ↔ API (HMAC / JWT)
 
