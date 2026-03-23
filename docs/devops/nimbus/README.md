@@ -80,3 +80,7 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 - **EasyHAProxy** — Docker-native and K8s load balancing
 - **WireGuard** — Encrypted mesh networking
 - **SQLite (WAL)** — Embedded state store
+
+## Current Release
+
+v0.4.1
