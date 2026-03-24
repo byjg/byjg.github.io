@@ -409,3 +409,34 @@ Description: Minimal HTTP/HTTPS server for static files with SPA support
 Architecture-Variant: amd64v1
 License: MIT
 
+Package: static-httpserver
+Version: 0.3.0
+Architecture: amd64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 8264
+Filename: ./static-httpserver_0.3.0_linux_amd64.deb
+Size: 3510644
+MD5sum: 15eef945c6badb9c555cd18b94378a9e
+SHA1: d46cd856c7aae91d0cb48a8d0d654d7718528e68
+SHA256: 3c66cfa3e533e3ce17071eee5140e1fae08db7dc719c420b471cdec77d7ac488
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+Architecture-Variant: amd64v1
+License: MIT
+
+Package: static-httpserver
+Version: 0.3.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7744
+Filename: ./static-httpserver_0.3.0_linux_arm64.deb
+Size: 3184742
+MD5sum: e31e0ef6dc94fb0654d3576fcbf53618
+SHA1: 69253684e4faf45f10ea57cda6b02553c937643a
+SHA256: 0ec0efda5ee5c853788f6fa9e92f2ea8d6afcc82f6afcad757f0fdd50e3423fb
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+License: MIT
+
