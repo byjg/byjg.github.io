@@ -15,6 +15,7 @@ DockNimbus turns heterogeneous bare metal machines (Raspberry Pi 4/5, x86 server
 - **Infrastructure as Code** — Declare your entire infrastructure in a [single YAML manifest](guides/manifest/overview): nodes, volumes, swarms, Kubernetes clusters, compute instances, and services. Idempotent apply, drift detection, and pruning of orphaned resources.
 - **Zero-trust networking** — All inter-node traffic is encrypted via a WireGuard mesh VPN. Agents authenticate to the control plane using mTLS with auto-issued per-node certificates.
 - **Heterogeneous hardware** — Mix ARM64 (Raspberry Pi) and x86 servers in the same cluster. Platform constraints route workloads to the right architecture.
+- **GPU compute** — NVIDIA GPU support with automatic driver installation, per-device inventory, and time-slicing. Request GPUs with `--gpu N` on any instance type.
 
 ## Architecture
 
@@ -83,4 +84,4 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 
 ## Current Release
 
-v0.4.1
+v0.5.0

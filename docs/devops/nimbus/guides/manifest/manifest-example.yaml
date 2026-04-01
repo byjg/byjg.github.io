@@ -7,12 +7,17 @@
 
 name: my-infrastructure
 
+## SSH profile setup (run once before applying):
+#   nimbus ssh-profile create --name my-servers --user root --key ~/.ssh/id_ed25519
+
 nodes:
   web1:
     ip: 192.168.1.10
     name: web-server-1
     ssh:
-      user: root
+      profile: my-servers      # Use stored SSH credentials
+      # Or inline credentials:
+      # user: root
       # key: ~/.ssh/id_rsa
       # password: ${NODE1_PASS}
       # port: 22
@@ -20,7 +25,7 @@ nodes:
   web2:
     ip: 192.168.1.11
     ssh:
-      user: root
+      profile: my-servers
 
 volumes:
   vol1:

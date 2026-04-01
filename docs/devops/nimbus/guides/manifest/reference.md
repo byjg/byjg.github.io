@@ -61,18 +61,40 @@ nodes:
     ip: 192.168.1.10
     name: web-server-1        # Optional display name
     ssh:
-      user: root
-      # key: ~/.ssh/id_rsa    # SSH private key (default: ~/.ssh/id_rsa)
+      profile: prod-servers   # Use a stored SSH profile (recommended)
+      # user: root            # SSH user (default: root)
+      # key: ~/.ssh/id_rsa    # SSH private key path (default: auto-detect)
       # password: ${PASS}     # Password auth (alternative to key)
       # port: 22              # SSH port (default: 22)
 
   web2:
     ip: 192.168.1.11
     ssh:
-      user: root
+      profile: prod-servers
 ```
 
 The alias (e.g. `web1`, `web2`) is used to reference this node in other sections. On re-apply, existing nodes matching the IP are skipped.
+
+#### SSH Profiles
+
+SSH profiles are named credential sets stored encrypted in the database. They solve the problem of the API server not having access to your local SSH keys when processing manifests server-side.
+
+Create a profile once:
+
+```bash
+nimbus ssh-profile create --name prod-servers --user deploy --key ~/.ssh/id_ed25519
+```
+
+Then reference it in any manifest:
+
+```yaml
+ssh:
+  profile: prod-servers
+```
+
+Inline SSH fields (`user`, `port`, `key`, `password`) override profile values when both are set. If only `profile` is specified, all credentials come from the stored profile.
+
+See the [CLI Reference](/reference/cli#nimbus-ssh-profile) for full details.
 
 ### `volumes`
 
@@ -125,6 +147,7 @@ K3s Kubernetes clusters. The first node becomes the control plane; additional no
 kubernetes:
   dev-k8s:
     nodes: [web1, web2]
+    ha: true                   # Enable HA with embedded etcd (required for promote/demote)
     volumes:                   # NFS volumes to attach as PV + PVC
       data-vol: 1Gi
     manifests:                 # Inline K8s resources applied after the cluster is ready
@@ -152,6 +175,7 @@ kubernetes:
 | Field | Description |
 |-------|-------------|
 | `nodes` | Node aliases — first is control plane, rest are workers |
+| `ha` | Enable HA mode with embedded etcd (default: `false`). Required for promoting workers to control-plane. Uses more resources than single-server (SQLite) mode |
 | `volumes` | Map of volume alias to PVC size — creates NFS-backed PersistentVolume and PersistentVolumeClaim |
 | `manifests` | Inline Kubernetes resources applied via `kubectl apply` after cluster creation |
 
@@ -199,6 +223,7 @@ compute:
 | `env` | Environment variables in `KEY=VALUE` format |
 | `command` | Container command as an array (e.g. `["sh", "-c", "echo hello"]`) |
 | `platform` | Target platform constraint (e.g. `arm64`) |
+| `gpu` | Number of NVIDIA GPUs to request (default: 0) |
 
 On re-apply, changes to `image`, `type`, `domain`, `ports`, `env`, `command`, or `volumes` are detected and the instance is recreated. Replica count changes are applied in-place via scaling.
 
@@ -290,15 +315,22 @@ nodes:
   web1:
     ip: ${NODE1_IP}
     ssh:
-      user: ${SSH_USER}
-      password: ${NODE1_PASS}
+      profile: prod-servers   # SSH credentials from stored profile
 ```
 
 ```bash
-nimbus manifest apply --file infra.yaml \
-  --env NODE1_IP=10.0.0.1 \
-  --env SSH_USER=deploy \
-  --env NODE1_PASS=secret
+nimbus manifest apply --file infra.yaml --env NODE1_IP=10.0.0.1
+```
+
+Variables can also be used with inline SSH credentials (without profiles):
+
+```yaml
+nodes:
+  web1:
+    ip: ${NODE1_IP}
+    ssh:
+      user: ${SSH_USER}
+      password: ${NODE1_PASS}
 ```
 
 Unresolved variables are left as-is (not treated as an error), so optional fields can reference variables that may not be set.

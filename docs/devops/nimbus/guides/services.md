@@ -42,6 +42,20 @@ nimbus service deploy \
 
 Where `data` is the volume name in your `docker-compose.yml` and `VOL_ID` is the DockNimbus volume.
 
+## Stop and start
+
+Stop a service (removes the stack from Docker, preserves config in DockNimbus):
+
+```bash
+nimbus service stop SERVICE_ID
+```
+
+Start a stopped service (redeploys from the stored compose file):
+
+```bash
+nimbus service start SERVICE_ID
+```
+
 ## List, describe, and remove
 
 ```bash
