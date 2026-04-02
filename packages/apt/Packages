@@ -529,3 +529,32 @@ Homepage: https://github.com/byjg/docker-static-httpserver
 Description: Minimal HTTP/HTTPS server for static files with SPA support
 License: MIT
 
+Package: static-httpserver
+Version: 0.4.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7744
+Filename: ./static-httpserver_0.4.0_linux_arm64.deb
+Size: 3175190
+MD5sum: 59f3ce7ede26b3c4354430926e6f940c
+SHA1: 851e5b8687253956b914aaebc0fd222b8f88a1e3
+SHA256: 7a0c24a2615b9e502447f36736cc34ab53abdf32c0afc6962ad4189b60cecb7e
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+
+Package: static-httpserver
+Version: 0.4.0
+Architecture: amd64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 8264
+Filename: ./static-httpserver_0.4.0_linux_amd64.deb
+Size: 3502028
+MD5sum: ff142ad0c9b81b452be9c98f5e6bcaab
+SHA1: 7ec52292435c594c5b6b573715eb4dc1c23153bf
+SHA256: d4b20e00b8bf4adb33501b237ccf7801024ef62899c482ce98b03c645fb87a70
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+Architecture-Variant: amd64v1
+
