@@ -94,7 +94,7 @@ ssh:
 
 Inline SSH fields (`user`, `port`, `key`, `password`) override profile values when both are set. If only `profile` is specified, all credentials come from the stored profile.
 
-See the [CLI Reference](/reference/cli#nimbus-ssh-profile) for full details.
+See the [CLI Reference](../../reference/cli) for full details.
 
 ### `volumes`
 
