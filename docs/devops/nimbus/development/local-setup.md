@@ -109,5 +109,5 @@ With your node ready, try the workflows in the [Guides](../guides/compute) secti
 
 ```bash
 GOOS=linux GOARCH=arm64 make build    # ARM64
-make build-all                         # All platforms
+make build-cross                         # All platforms
 ```

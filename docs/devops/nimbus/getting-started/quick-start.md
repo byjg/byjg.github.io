@@ -45,18 +45,21 @@ The configuration is saved to `~/.nimbus/config.json` with the API URL, credenti
 
 ## 2. Add nodes
 
+:::note Network requirements
+Before adding nodes, make sure the following ports are open:
+- **API server:** TCP `8443` (control plane) and UDP `51820` (WireGuard)
+- **Each node:** UDP `51820` (WireGuard)
+:::
+
 Register remote machines via SSH. This generates a join token, deploys the agent, configures WireGuard, and registers the node over the encrypted tunnel:
 
 ```bash
-nimbus node add --ip 192.168.1.10 --user root
-nimbus node add --ip 192.168.1.11 --user root
+nimbus node add --ip 192.168.1.10 --user root --key ~/.ssh/id_rsa
+nimbus node add --ip 192.168.1.11 --user root --key ~/.ssh/id_rsa
 ```
 
-If the API server itself should also be a node:
-
-```bash
-sudo nimbus node add --local --ip <API_HOST_IP>
-```
+> For repeated use or shared SSH settings, create a reusable profile first:
+> `nimbus ssh-profile add` and then use `--profile <name>` instead of `--user`/`--key`.
 
 For nodes where SSH is not available (multi-cloud, NAT), generate a join token and run the agent manually:
 
@@ -66,6 +69,13 @@ nimbus node add --get-token --ip <NODE_PUBLIC_IP>
 
 # On the target node (copy the token from above): 
 nimbus-agent --join --token <TOKEN>
+```
+
+If the node cannot be reached via SSH but can reach the API's public IP (e.g. behind NAT), run this command **directly on the node**. WireGuard will establish the tunnel back to the API once the agent connects:
+
+```bash
+# Run on the node itself:
+sudo nimbus node add --local --ip <API_PUBLIC_IP>
 ```
 
 ## 3. Verify

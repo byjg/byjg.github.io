@@ -4,6 +4,9 @@ sidebar_label: "Installation"
 title: "Installation"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Installation
 
 ## From packages
@@ -16,10 +19,18 @@ Follow the instructions at [opensource.byjg.com/docs/packages](https://opensourc
 
 On the control plane machine:
 
-```bash
-sudo apt install nimbus-api    # Debian/Ubuntu
-sudo dnf install nimbus-api    # Fedora/RHEL
-```
+<Tabs>
+  <TabItem value="apt" label="APT (Debian/Ubuntu)" default>
+    ```bash
+    sudo apt install nimbus-api
+    ```
+  </TabItem>
+  <TabItem value="dnf" label="DNF (Fedora/RHEL)">
+    ```bash
+    sudo dnf install nimbus-api
+    ```
+  </TabItem>
+</Tabs>
 
 The API server starts automatically on `:8443` with auto-generated TLS certificates.
 
@@ -27,21 +38,30 @@ The API server starts automatically on `:8443` with auto-generated TLS certifica
 
 On your workstation (or the same machine):
 
-```bash
-sudo apt install nimbus         # Debian/Ubuntu
-sudo dnf install nimbus         # Fedora/RHEL
-```
+<Tabs>
+  <TabItem value="apt" label="APT (Debian/Ubuntu)" default>
+    ```bash
+    sudo apt install nimbus
+    ```
+  </TabItem>
+  <TabItem value="dnf" label="DNF (Fedora/RHEL)">
+    ```bash
+    sudo dnf install nimbus
+    ```
+  </TabItem>
+</Tabs>
 
 ## From source
 
 ```bash
 make build        # Build for current platform
-make build-all    # Cross-compile for linux/amd64, linux/arm64, darwin/*
+make build-cross    # Cross-compile for linux/amd64, linux/arm64, darwin/*
 ```
 
-This produces three binaries in `bin/`:
+This produces four binaries in `bin/`:
 - `nimbus-api` — the control plane server
 - `nimbus-agent` — the node agent
 - `nimbus` — the CLI
+- `nimbus-gui` — the GUI server (with embedded UI)
 
 See [Local Development Setup](../development/local-setup) for a complete development walkthrough.

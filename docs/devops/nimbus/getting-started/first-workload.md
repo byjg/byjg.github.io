@@ -54,7 +54,7 @@ nimbus s3 create --name main-store --swarm SWARM_ID --volume VOL_ID
 ## Docker Compose stack
 
 ```bash
-nimbus service deploy --name my-stack --swarm SWARM_ID --compose-file docker-compose.yml
+nimbus service deploy --name my-stack --swarm SWARM_ID --file docker-compose.yml
 ```
 
 ## Infrastructure as Code

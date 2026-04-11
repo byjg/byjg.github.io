@@ -1,3 +1,9 @@
+---
+sidebar_position: 3
+sidebar_label: "OIDC / OAuth2"
+title: "Nimbus OIDC Provider"
+---
+
 # Nimbus OIDC Provider
 
 Nimbus acts as a full OpenID Connect (OIDC) identity provider, enabling single sign-on across K3s clusters, MinIO S3 instances, and any OIDC-compatible service.

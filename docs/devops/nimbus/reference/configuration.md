@@ -41,6 +41,37 @@ local_domain: "nimbus"
 | `tls_key` | | Path to TLS private key |
 | `cors` | auto-detect | List of allowed CORS origins. If not set, allows any origin in the same /24 subnet as the server's local IPs |
 
+### OIDC issuer URL
+
+The OIDC provider is always enabled. The issuer URL is derived automatically from the WireGuard `.1` address — the API server's overlay IP, always reachable from all nodes and covered by the auto-generated TLS cert:
+
+| `wireguard_subnet`           | Issuer URL                   |
+|------------------------------|------------------------------|
+| `10.106.103.0/24` (default)  | `https://10.106.103.1:8443`  |
+
+The issuer URL is **dynamic**: when a request arrives with a `Host` header matching a certificate stored in the database, nimbus automatically uses that domain as the OIDC issuer. This means browser-based SSO works for any domain you register with `nimbus certificate add` — no configuration file changes or restarts required.
+
+For example, after adding a certificate for `nimbus.example.com`:
+
+```bash
+nimbus certificate add \
+  --domain nimbus.example.com \
+  --cert /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
+  --key  /etc/letsencrypt/live/nimbus.example.com/privkey.pem
+```
+
+Requests to `https://nimbus.example.com/.well-known/openid-configuration` return an OIDC discovery document with `issuer: https://nimbus.example.com`. K3s and agents continue using the WireGuard IP unaffected.
+
+To enable MinIO SSO via a custom domain, pass the certificate ID at creation time:
+
+```bash
+nimbus s3 create --name mystore --swarm my-swarm --volume my-vol \
+  --oidc-cert cert-abc123
+```
+
+See [Exposing OIDC/OAuth2 Publicly](../guides/oidc-public-proxy) for full setup guides including the hardened proxy approach.
+See [OIDC / OAuth2](../concepts/oidc) for the full provider documentation.
+
 ## Agent (`agent.yaml`)
 
 ```yaml

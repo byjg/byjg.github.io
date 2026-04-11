@@ -14,6 +14,12 @@ DockNimbus deploys lightweight Kubernetes clusters using K3s. The first node bec
 nimbus k8s create-cluster --name dev-k8s --nodes NODE1_ID,NODE2_ID
 ```
 
+For a highly available control plane (embedded etcd, required for promote/demote):
+
+```bash
+nimbus k8s create-cluster --name dev-k8s --nodes NODE1_ID,NODE2_ID --ha
+```
+
 ## Get kubeconfig
 
 ```bash
@@ -35,6 +41,15 @@ nimbus k8s remove-node --cluster CLUSTER_ID --node NODE_ID
 ```
 
 The control plane node cannot be removed.
+
+## Promote and demote nodes
+
+In HA clusters (created with `--ha`), worker nodes can be promoted to control plane and demoted back:
+
+```bash
+nimbus k8s promote-node --cluster CLUSTER_ID --node NODE_ID
+nimbus k8s demote-node --cluster CLUSTER_ID --node NODE_ID
+```
 
 ## Attach NFS volumes
 
@@ -66,3 +81,62 @@ nimbus k8s delete-cluster CLUSTER_ID
 ## Load balancing
 
 K3s clusters automatically deploy EasyHAProxy as an ingress controller. Compute instances deployed to K8s get an Ingress resource with a domain in the format `<name>.<cluster-name>.nimbus`.
+
+## Access control (OIDC)
+
+Nimbus acts as an OIDC provider for K3s. When a cluster is created, two `ClusterRoleBindings` are automatically created:
+
+| OIDC group                      | Kubernetes role |
+|---------------------------------|-----------------|
+| `nimbus:k8s:<cluster-id>:admin` | `cluster-admin` |
+| `nimbus:k8s:<cluster-id>:read`  | `view`          |
+
+Users and groups in Nimbus IAM are granted access by assigning the corresponding ARN scope. Wildcard scopes (`nimbus:k8s:*:admin`) are expanded at token issuance time to all live clusters.
+
+See [Users & Access Management](./iam.md#kubernetes-access) for how to assign scopes.
+
+### Custom roles
+
+You can use any permission word beyond `admin` and `read` — for example `devops`, `ci`, `readonly-ops`. The scope format `nimbus:k8s:<cluster-id>:<permission>` is validated by Nimbus as: type must be `k8s`, cluster ID must exist, permission is free-form. The binding between that permission word and a Kubernetes role is created with `kubectl`:
+
+```bash
+# 1. Create a group in Nimbus with the custom scope
+nimbus iam group create \
+  --name devops \
+  --scope "nimbus:k8s:cls-abc123:devops"
+
+# 2. Create the ClusterRoleBinding in K3s
+export KUBECONFIG=~/.kube/cls-abc123.yaml
+
+kubectl create clusterrolebinding nimbus-k8s-cls-abc123-devops \
+  --clusterrole=edit \
+  --group="nimbus:k8s:cls-abc123:devops"
+
+# 3. Add a user to the group
+nimbus iam user-group add --user USER_ID --group GROUP_ID
+```
+
+The token issued to that user will contain `nimbus:k8s:cls-abc123:devops` in the `groups` claim. K3s matches it to the binding and grants `edit` access.
+
+You can also use a custom `ClusterRole` instead of a built-in one:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deploy-only
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "create", "update", "patch"]
+EOF
+
+kubectl create clusterrolebinding nimbus-k8s-cls-abc123-devops \
+  --clusterrole=deploy-only \
+  --group="nimbus:k8s:cls-abc123:devops"
+```
+
+:::note
+Nimbus does not manage custom K3s bindings. Create and maintain them with `kubectl`. If the cluster is deleted, the bindings are removed with it automatically by K3s.
+:::

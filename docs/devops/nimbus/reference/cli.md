@@ -126,11 +126,11 @@ Show client and server versions.
 
 Manage SSH profiles — named, reusable SSH credential sets stored encrypted in the database. Sensitive data (private keys, passwords) is encrypted using the control plane's CA key.
 
-| Subcommand  | Description           | Key Flags                                              |
-|-------------|-----------------------|--------------------------------------------------------|
+| Subcommand  | Description           | Key Flags                                                      |
+|-------------|-----------------------|----------------------------------------------------------------|
 | `create`    | Create an SSH profile | `--name` (required), `--user`, `--port`, `--key`, `--password` |
-| `list`      | List SSH profiles     |                                                        |
-| `delete`    | Delete an SSH profile | `[id]`                                                 |
+| `list`      | List SSH profiles     |                                                                |
+| `delete`    | Delete an SSH profile | `[id]`                                                         |
 
 At least one of `--key` (path to private key file) or `--password` is required. The `--key` flag reads the file and stores its content encrypted — the original file is not needed afterward.
 
@@ -158,6 +158,41 @@ nodes:
       profile: prod-servers
 ```
 
+## nimbus certificate
+
+Manage TLS certificates for SNI-based multi-domain serving. Certificates are stored in the
+database and served immediately — no restart required. The default WireGuard IP cert
+(`10.106.103.1`) is built-in and cannot be deleted.
+
+| Subcommand | Description              | Key Flags                                                      |
+|------------|--------------------------|----------------------------------------------------------------|
+| `list`     | List certificates        |                                                                |
+| `add`      | Add a TLS certificate    | `--domain` (required), `--cert` (required), `--key` (required), `--ca` |
+| `delete`   | Delete a certificate     | `[id]`                                                         |
+
+```bash
+# Add a Let's Encrypt certificate for a public domain
+nimbus certificate add \
+  --domain nimbus.example.com \
+  --cert /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
+  --key  /etc/letsencrypt/live/nimbus.example.com/privkey.pem
+
+# Add a certificate with a custom CA (for internal PKI)
+nimbus certificate add \
+  --domain internal.example.com \
+  --cert /path/to/cert.pem \
+  --key  /path/to/key.pem \
+  --ca   /path/to/ca.pem
+
+# List all certificates
+nimbus certificate list
+
+# Delete a certificate
+nimbus certificate delete cert-a1b2c3d4
+```
+
+See [Exposing OIDC/OAuth2 Publicly](../guides/oidc-public-proxy) for a full setup guide.
+
 ## nimbus dns
 
 | Subcommand  | Description                    | Key Flags    |
@@ -173,13 +208,70 @@ nodes:
 
 ## nimbus iam
 
-| Subcommand     | Description               | Key Flags                                        |
-|----------------|---------------------------|--------------------------------------------------|
-| `create-user`  | Create a user             | `--username` (required), `--admin`               |
-| `create-key`   | Generate API key pair     | `--user-id` (required)                           |
-| `get-token`    | Get JWT token (HMAC auth) |                                                  |
-| `set-password` | Set user password         | `--user-id` (required), `--password` (required)  |
-| `login`        | Login with password       | `--username` (required), `--password` (required) |
+| Subcommand       | Description               | Key Flags                                        |
+|------------------|---------------------------|--------------------------------------------------|
+| `create-user`    | Create a user             | `--email` (required), `--name`, `--admin`        |
+| `delete-user`    | Delete a user             | `<user-id>` (arg)                                |
+| `create-key`     | Generate API key pair     | `--user-id` (required)                           |
+| `get-token`      | Get JWT token (HMAC auth) |                                                  |
+| `set-password`   | Set user password         | `--user-id` (required), `--password` (required)  |
+| `login`          | Login with password       | `--email` (required), `--password` (required)    |
+
+### nimbus iam group
+
+| Subcommand   | Description                   | Key Flags                                              |
+|--------------|-------------------------------|--------------------------------------------------------|
+| `list`       | List all groups               |                                                        |
+| `create`     | Create a group                | `--name` (required), `--description`, `--scope` (repeatable) |
+| `delete`     | Delete a custom group         | `<group-id>` (arg)                                     |
+| `set-scopes` | Replace a group's scope list  | `--group` (required), `--scope` (repeatable)           |
+
+### nimbus iam scope
+
+| Subcommand   | Description                        | Key Flags                              |
+|--------------|------------------------------------|----------------------------------------|
+| `list`       | List all registered ARN scopes     |                                        |
+| `register`   | Register a new scope               | `--scope` (required), `--description`  |
+| `unregister` | Remove a registered scope          | `<scope>` (arg)                        |
+
+### nimbus iam client
+
+Manage OAuth2 clients used by external services (Grafana, ArgoCD, Nextcloud, etc.) to authenticate via Nimbus SSO.
+
+| Subcommand | Description               | Key Flags                                                      |
+|------------|---------------------------|----------------------------------------------------------------|
+| `list`     | List all OAuth2 clients   |                                                                |
+| `create`   | Create an OAuth2 client   | `--name` (required), `--redirect-uri` (required, repeatable)  |
+| `delete`   | Delete an OAuth2 client   | `<id>` (arg — use the `ID` column from `list`, not Client ID) |
+
+The `create` command prints the **Client ID** and **Client Secret**. The secret is shown only once — save it immediately.
+
+```bash
+# Register a client for Grafana
+nimbus iam client create \
+  --name grafana \
+  --redirect-uri "https://grafana.example.com/login/generic_oauth"
+
+# Register a client with multiple redirect URIs
+nimbus iam client create \
+  --name argocd \
+  --redirect-uri "https://argocd.example.com/auth/callback" \
+  --redirect-uri "https://argocd-staging.example.com/auth/callback"
+
+# List all clients
+nimbus iam client list
+
+# Delete a client (use the ID column, not the client_id)
+nimbus iam client delete oac-abc123
+```
+
+### nimbus iam user-group
+
+| Subcommand | Description                   | Key Flags                                |
+|------------|-------------------------------|------------------------------------------|
+| `list`     | List a user's groups          | `--user` (required)                      |
+| `add`      | Add user to a group           | `--user` (required), `--group` (required)|
+| `remove`   | Remove user from a group      | `--user` (required), `--group` (required)|
 
 ## nimbus cleanup
 
