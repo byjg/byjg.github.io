@@ -4,7 +4,7 @@ sidebar_position: 13
 
 # Cloudflare Access SSO with Nimbus
 
-This guide connects Cloudflare Access (Zero Trust) to Nimbus as a Generic OIDC identity provider. After completing it, users authenticate to any Cloudflare-protected application using their Nimbus credentials, and access policies can be written against Nimbus IAM groups.
+This guide connects Cloudflare Access (Zero Trust) to Nimbus as an OpenID Connect identity provider. After completing it, users authenticate to any Cloudflare-protected application using their Nimbus credentials, and access policies can be written against Nimbus IAM groups.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ Assign these to the appropriate Nimbus IAM groups. For example, add `external:cl
 
 ## 4. Configure Cloudflare Access
 
-In the Cloudflare Zero Trust dashboard, navigate to **Settings → Authentication → Add new** and select **OpenID Connect**.
+In the Cloudflare Zero Trust dashboard, navigate to **Settings → Authentication → Add new** and select **OpenID Connect** (listed as "OpenID Connect" in the identity provider list).
 
 Fill in the following:
 
@@ -71,12 +71,17 @@ Fill in the following:
 | Client secret | `<client-secret>` from step 2 |
 | Auth URL | `https://nimbus.example.com:8443/authorize` |
 | Token URL | `https://nimbus.example.com:8443/oauth/token` |
-| Certificate URL | `https://nimbus.example.com:8443/jwks` |
+| Certificate URL | `https://nimbus.example.com:8443/keys` |
+| PKCE | **On** — Nimbus supports S256 |
+| Email claim | leave blank — Nimbus uses the standard `email` claim |
+| OIDC Scopes | `openid`, `email`, `profile`, `groups` |
 | OIDC Claims | `groups` |
 
 :::tip Discovery URL
 Cloudflare may also accept a discovery URL directly: `https://nimbus.example.com:8443/.well-known/openid-configuration`
 :::
+
+The `groups` scope tells Nimbus to include the groups claim in the token. The `groups` OIDC claim tells Cloudflare to extract it from the token and make it available for Access policies.
 
 Save the configuration and click **Test** to verify Cloudflare can reach Nimbus and complete the OIDC handshake.
 

@@ -51,16 +51,30 @@ On your workstation (or the same machine):
   </TabItem>
 </Tabs>
 
+## Supported platforms
+
+| Binary         | amd64 | arm64 | armhf (ARMv7) | macOS amd64 | macOS arm64 |
+|----------------|-------|-------|---------------|-------------|-------------|
+| `nimbus-api`   | ✅     | ✅     | ✅             | —           | —           |
+| `nimbus-agent` | ✅     | ✅     | ✅             | —           | —           |
+| `nimbus` (CLI) | ✅     | ✅     | ✅             | ✅           | ✅           |
+| `nimbus-gui`   | ✅     | ✅     | ✅             | —           | —           |
+
+:::note armhf
+`armhf` targets ARMv7 hard-float (e.g. Tinker Board S, Raspberry Pi 2/3 running 32-bit OS).
+Building `nimbus-api` for armhf requires `gcc-arm-linux-gnueabihf` for CGO/SQLite.
+:::
+
 ## From source
 
 ```bash
 make build        # Build for current platform
-make build-cross    # Cross-compile for linux/amd64, linux/arm64, darwin/*
+make build-cross  # Cross-compile for all platforms (linux/amd64, arm64, armhf, darwin/*)
 ```
 
 This produces four binaries in `bin/`:
 - `nimbus-api` — the control plane server
-- `nimbus-agent` — the node agent
+- `nimbus-agent` — the node agent (also built into `bin/dist/` for all arches)
 - `nimbus` — the CLI
 - `nimbus-gui` — the GUI server (with embedded UI)
 
