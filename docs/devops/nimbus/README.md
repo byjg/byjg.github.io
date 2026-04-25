@@ -84,4 +84,4 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 
 ## Current Release
 
-v0.6.1
+v0.7.0
