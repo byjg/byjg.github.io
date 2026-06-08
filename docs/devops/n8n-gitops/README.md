@@ -18,7 +18,7 @@ A GitOps CLI tool for [n8n](https://n8n.io) Community Edition that brings versio
 [![GitHub license](https://img.shields.io/github/license/n8n-gitops/n8n-gitops.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/n8n-gitops/n8n-gitops.svg)](https://github.com/n8n-gitops/n8n-gitops/releases/)
 
-**n8n** is a fair-code workflow automation platform (like Zapier/Make.com but self-hosted) that connects 400+ services and apps. n8n-gitops adds the Git integration that's missing from the Community Edition.
+**n8n** is a fair-code workflow automation platform (like Zapier/Make.com but self-hosted) that connects 400+ services and apps. n8n-gitops adds the GitOps deployment pipeline that is missing from both the Community Edition and the official [n8n-cli](https://docs.n8n.io/api/n8n-cli/) lightweight API client.
 
 ## Features
 
@@ -35,11 +35,11 @@ A GitOps CLI tool for [n8n](https://n8n.io) Community Edition that brings versio
 ## Quick Start
 
 ```bash
-# Install from PyPI
-pip install n8n-gitops
+# Install with uv (recommended — isolated, no sudo)
+uv tool install n8n-gitops
 
-# Or install with uv (faster)
-uv pip install n8n-gitops
+# Or with pip (user install, no sudo)
+pip install --user n8n-gitops
 
 # Create project
 n8n-gitops create-project my-n8n-project
@@ -69,8 +69,10 @@ n8n-gitops deploy --git-ref v1.0.0
 - **[Authentication](authentication)** - Configure API credentials
 - **[Export](export)** - Mirror workflows from n8n
 - **[Deployment](deployment)** - Deploy workflows to n8n
+- **[Git Hooks](commands.md#install-hooks)** - Automate export and deploy via git hooks
 - **[Code Externalization](code-externalization)** - Store code in separate files
 - **[Manifest File](manifest)** - Workflow configuration format
+- **[n8n-cli Comparison](vs-n8n-cli)** - Differences between n8n-gitops and the official n8n-cli
 - **[n8n Enterprise Git Comparison](vs-n8n-enterprise-git)** - Decide between n8n-gitops and Enterprise Git
 - **[Commands Reference](commands)** - All CLI commands
 - **[GitOps Principles](gitops)** - How n8n-gitops aligns with GitOps principles
@@ -132,6 +134,9 @@ n8n-gitops deploy --git-ref abc123
 # Create project structure
 n8n-gitops create-project <path>
 
+# Install git hooks (export on commit, deploy on pull)
+n8n-gitops install-hooks [--config NAME] [--api-url URL] [--api-key KEY]
+
 # Export workflows (mirror mode)
 n8n-gitops export
 
@@ -139,7 +144,7 @@ n8n-gitops export
 n8n-gitops validate [--strict]
 
 # Deploy workflows
-n8n-gitops deploy [--git-ref REF] [--dry-run] [--backup] [--prune]
+n8n-gitops deploy [--git-ref REF] [--dry-run] [--prune]
 
 # Rollback to previous version
 n8n-gitops rollback --git-ref <ref>
