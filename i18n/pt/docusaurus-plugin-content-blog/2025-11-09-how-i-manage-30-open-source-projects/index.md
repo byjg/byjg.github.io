@@ -89,7 +89,12 @@ Meus componentes PHP seguem rigorosamente os padrões **PSR**, usam **Composer**
 Cada projeto possui exemplos, testes e instruções de uso.  
 
 Com o tempo, percebi que a soma desses componentes formava uma base sólida para algo maior.  
-Assim nasceu o **[PHP Rest Reference Architecture](https://github.com/byjg/php-rest-reference-architecture)** — um projeto que combina os principais componentes do ecossistema em uma estrutura pronta para uso:
+Assim nasceu o **[PHP Rest Reference Architecture](https://github.com/byjg/php-gluo)** — um projeto que combina os principais componentes do ecossistema em uma estrutura pronta para uso:
+
+:::info Atualização (julho de 2026)
+A PHP REST Reference Architecture evoluiu para o **[Gluo](https://github.com/byjg/php-gluo)**: um iniciador de projetos (`composer create-project byjg/gluo`) apoiado por um núcleo de framework atualizável ([byjg/gluo-core](https://github.com/byjg/php-gluo-core)) — a mesma arquitetura, mas as melhorias do framework agora chegam via `composer update` em vez de copiar e colar.
+:::
+
 
 - CI/CD configurado  
 - Suporte completo a OpenAPI  

@@ -158,7 +158,12 @@ E [muitos mais componentes](https://opensource.byjg.com/docs/php) cobrindo vári
 
 ## Construindo uma Aplicação Completa do Zero
 
-Embora você possa usar componentes individuais com qualquer framework, e se você quiser criar uma aplicação API completa do zero e manter alta velocidade? É aqui que entra a **[Arquitetura de Referência PHP REST](https://github.com/byjg/php-rest-reference-architecture)**. Intencionalmente não é outro framework—é um conjunto de opiniões capturadas como código para que você possa fazer fork, adaptá-lo e ainda reconhecer cada parte móvel.
+Embora você possa usar componentes individuais com qualquer framework, e se você quiser criar uma aplicação API completa do zero e manter alta velocidade? É aqui que entra a **[Arquitetura de Referência PHP REST](https://github.com/byjg/php-gluo)**. Intencionalmente não é outro framework—é um conjunto de opiniões capturadas como código para que você possa fazer fork, adaptá-lo e ainda reconhecer cada parte móvel.
+
+:::info Atualização (julho de 2026)
+A PHP REST Reference Architecture evoluiu para o **[Gluo](https://github.com/byjg/php-gluo)**: um iniciador de projetos (`composer create-project byjg/gluo`) apoiado por um núcleo de framework atualizável ([byjg/gluo-core](https://github.com/byjg/php-gluo-core)) — a mesma arquitetura, mas as melhorias do framework agora chegam via `composer update` em vez de copiar e colar.
+:::
+
 
 ### O Que é a Arquitetura de Referência PHP REST?
 
@@ -454,7 +459,7 @@ Se você só puder lembrar de cinco links, faça-os serem estes:
 |-----------|-----------|---------------------|
 | [shellscript.download](https://shellscript.download) | Configuração de Ambiente | Instalação de Docker, PHP, Node com um comando |
 | [Componentes ByJG](https://opensource.byjg.com/docs/php) | Bibliotecas Reutilizáveis | Mais de 30 componentes PHP testados em produção |
-| [Arquitetura de Referência PHP REST](https://github.com/byjg/php-rest-reference-architecture) | Template de Aplicação | Scaffold completo de API com auth, docs, CI/CD |
+| [Arquitetura de Referência PHP REST](https://github.com/byjg/php-gluo) | Template de Aplicação | Scaffold completo de API com auth, docs, CI/CD |
 | [Imagens Docker PHP](https://opensource.byjg.com/docs/devops/docker-php) | Runtime de Container | Imagens fortalecidas, multi-arch PHP 5.6-8.5 |
 | [EasyHAProxy](https://opensource.byjg.com/docs/devops/docker-easy-haproxy) | Controlador de Ingress | Balanceamento de carga auto-configurado & SSL |
 
@@ -464,7 +469,7 @@ Pronto para construir sua próxima aplicação PHP com este ecossistema? Veja co
 
 1. **Para Projetos Existentes**: Navegue pela [biblioteca de componentes](https://opensource.byjg.com/docs/php) e adicione componentes individuais via Composer
 
-2. **Para Novas APIs**: Use o template [Arquitetura de Referência PHP REST](https://github.com/byjg/php-rest-reference-architecture)
+2. **Para Novas APIs**: Use o template [Arquitetura de Referência PHP REST](https://github.com/byjg/php-gluo)
 
 3. **Para Configuração de Ambiente**: Visite [shellscript.download](https://shellscript.download) para scripts de instalação
 

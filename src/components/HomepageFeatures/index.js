@@ -27,12 +27,12 @@ const HighlightedProjects = [
     ),
   },
   {
-    title: 'PHP Rest Reference',
-    link: '/docs/php/rest-reference-architecture',
+    title: 'Gluo — PHP REST API Starter',
+    link: '/docs/php/gluo',
     Svg: require('@site/static/img/php_logo.svg').default,
     description: (
       <>
-        Complete reference architecture for building REST APIs in PHP.
+        Production-ready PHP REST API starter with an updatable framework core (Gluo).
       </>
     ),
   },

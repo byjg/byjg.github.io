@@ -48,7 +48,7 @@ The ApiTestCase's assertion process is based on throwing exceptions if some vali
 
 ## Who is using this library?
 
-- [ByJG PHP Rest Reference Architecture](https://github.com/byjg/php-rest-reference-architecture)
+- [ByJG Gluo — PHP REST API starter](https://github.com/byjg/php-gluo)
 - [Laravel Swagger Test](https://github.com/pionl/laravel-swagger-test)
 
 ## Install
