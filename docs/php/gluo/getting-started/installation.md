@@ -40,11 +40,11 @@ Choose one of the following installation methods:
 ```shell script
 # Standard installation
 mkdir ~/tutorial
-composer -sdev create-project byjg/gluo ~/tutorial ^6.1
+composer create-project byjg/gluo ~/tutorial ^7.0
 
 # OR Latest development version
 mkdir ~/tutorial
-composer -sdev create-project byjg/gluo ~/tutorial master
+composer create-project byjg/gluo ~/tutorial dev-master
 ```
 
 ### Alternative: `shellscript.download`
@@ -59,15 +59,15 @@ After the loader is installed, run the dedicated script:
 
 ```bash
 # Minimal install
-load.sh php-rest-api -- my-api --namespace=MyApp --name=mycompany/my-api
+load.sh byjg-gluo -- my-api --namespace=MyApp --name=mycompany/my-api
 
 # Fully customised
-load.sh php-rest-api -- my-api \
+load.sh byjg-gluo -- my-api \
   --namespace=MyApp \
   --name=mycompany/my-api \
   --mysql-uri=mysql://root:secret@mysql-container/mydb \
   --install-examples=n \
-  --version="^6.1" \
+  --version="^7.0" \
   --php-version=8.4 \
   --timezone=America/New_York
 ```
@@ -75,7 +75,7 @@ load.sh php-rest-api -- my-api \
 The script:
 - Generates a temporary `setup.json` (one directory above the target folder) with all answers.
 - Runs `composer create-project byjg/gluo ...` using those values.
-- Cleans up `setup.json` after success and is safe to re-run (it recreates the project folder).
+- Cleans up `setup.json` after success. If the target folder already exists, the script refuses to run (safety measure) — remove the folder first to re-run.
 
 Required flags: the target folder, `--namespace`, and `--name`. Everything else is optional (defaults match the interactive installer). 
 Ensure Composer exists locally or combine it with `load.sh php-docker` first.
@@ -92,6 +92,8 @@ The installation will prompt you for configuration details:
 ========================================================
 
 Project Directory: ~/tutorial
+Git user name [Your Name]:
+Git user email [your.email@example.com]:
 PHP Version [8.4]: 8.4
 Project namespace [MyRest]: Tutorial
 Composer name [me/myrest]:
@@ -151,9 +153,11 @@ APP_ENV=dev composer run migrate -- reset --yes
 Expected output:
 ```text
 > Builder\Scripts::migrate
-> Command: reset
-Doing reset, 0
-Doing migrate, 1
+> Environment: dev
+> Database: mysql://root:****@mysql-container/localdev
+
+Resetting database...
+Database reset successfully.
 ```
 
 ## Verify Installation

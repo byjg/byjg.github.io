@@ -84,7 +84,7 @@ This defines the expected output using `OA\Response`.
 )]
 ```
 
-Place these attributes at the beginning of your method. Following our pattern, we'll add this method at the end of the `ExampleCrudRest` class:
+Place these attributes at the beginning of your method. Following our pattern, we'll add this method at the end of the `ExampleCrudController` class:
 
 ```php
 #[OA\Put()]                 // complete with the attributes above
