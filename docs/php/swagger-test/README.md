@@ -1,12 +1,16 @@
 ---
 sidebar_key: swagger-test
+---
+
+---
+sidebar_key: swagger-test
 tags: [php, http, testing]
 ---
 
 # Swagger Test
 
 A set of tools for testing your REST calls based on the OpenApi specification using PHPUnit.
-Currently, this library supports the OpenApi specifications `2.0` (formerly swagger) and `3.0`.
+Currently, this library supports the OpenApi specifications `2.0` (formerly swagger), `3.0.x`, and **`3.1.x`**.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
 [![Build Status](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/byjg/php-swagger-test/actions/workflows/phpunit.yml)
@@ -15,12 +19,33 @@ Currently, this library supports the OpenApi specifications `2.0` (formerly swag
 [![GitHub license](https://img.shields.io/github/license/byjg/php-swagger-test.svg)](https://opensource.byjg.com/opensource/licensing.html)
 [![GitHub release](https://img.shields.io/github/release/byjg/php-swagger-test.svg)](https://github.com/byjg/php-swagger-test/releases/)
 
+## OpenAPI Version Support
+
+- **Swagger 2.0** - Full support
+- **OpenAPI 3.0.x** - Full support (3.0.0, 3.0.1, 3.0.2, 3.0.3)
+- **OpenAPI 3.1.x** - Full support with JSON Schema 2020-12 features ✨
+
+### OpenAPI 3.1 Features
+
+OpenAPI 3.1 brings full JSON Schema 2020-12 compatibility. Key features supported:
+
+- **Nullable Types**: Use JSON Schema union types `["string", "null"]` instead of the deprecated `nullable` keyword
+- **Webhooks**: Describe and validate incoming HTTP requests your API will receive
+- **`const` Keyword**: Validate constant values
+- **Conditional Schemas**: Use `if/then/else` for conditional validation
+- **Tuple Validation**: Validate arrays with specific types at specific positions using `prefixItems`
+- **`$ref` with Sibling Keywords**: References can have additional properties alongside them
+
+For detailed documentation on OpenAPI 3.1 features, see [OpenAPI 3.1 Features Guide](openapi-3.1-features).
+
+### Limitations
+
 Some features of the OpenAPI specification are not fully implemented:
 
-- Callbacks (OpenAPI 3.0)
-- Links (OpenAPI 3.0)
+- Callbacks (OpenAPI 3.0/3.1)
+- Links (OpenAPI 3.0/3.1)
 - References to external documents/objects
-- Complex schema validations
+- Some advanced JSON Schema 2020-12 keywords (e.g., `unevaluatedProperties`, `dependentSchemas`)
 
 For details on the schema classes and their specific features, see [Schema Classes](schema-classes).
 
@@ -39,16 +64,19 @@ The ApiTestCase's assertion process is based on throwing exceptions if some vali
 - [Contract test cases](contract-tests) - Testing without HTTP using custom requesters
 - [Runtime parameters validator](runtime-parameters-validator) - Validating requests in production
 - [Mocking Requests](mock-requests) - Testing with mocked responses
-- [Schema classes](schema-classes) - Working with OpenAPI 2.0 and 3.0 schemas
+- [Schema classes](schema-classes) - Working with OpenAPI 2.0, 3.0, and 3.1 schemas
+- [OpenAPI 3.1 features](openapi-3.1-features) - Webhooks, const, if/then/else, tuple validation, and more
 - [Using the OpenApiValidation trait](trait-usage) - Flexible validation without extending ApiTestCase
 - [Advanced usage](advanced-usage) - File uploads, custom clients, authentication, and more
 - [Exception handling](exceptions) - Understanding and handling validation exceptions
 - [Migration guide](migration-guide) - Upgrading from older versions
 - [Troubleshooting](troubleshooting) - Common issues and solutions
+- [Version comparison](version-comparison) - Feature support matrix across OpenAPI versions
 
 ## Who is using this library?
 
 - [ByJG Gluo — PHP REST API starter](https://github.com/byjg/php-gluo)
+- [ByJG Gluo for Laravel — contract testing and runtime validation inside a Laravel app](https://github.com/byjg/php-gluo-laravel)
 - [Laravel Swagger Test](https://github.com/pionl/laravel-swagger-test)
 
 ## Install
