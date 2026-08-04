@@ -207,8 +207,12 @@ const config = {
                 href: 'https://profile.codersrank.io/user/byjg',
               },
               {
-                // rel="me" is required for the Mastodon profile link verification
-                html: '<a class="footer__link-item" rel="me" href="https://phpc.social/@byjg">Mastodon</a>',
+                label: 'Mastodon',
+                href: 'https://phpc.social/@byjg',
+                // rel="me" is required for the Mastodon profile link verification.
+                // Docusaurus sets rel="noopener noreferrer" on external links before
+                // spreading item props, so we repeat those tokens to avoid dropping them.
+                rel: 'me noopener noreferrer',
               },
               // {
               //   label: 'Twitter',
