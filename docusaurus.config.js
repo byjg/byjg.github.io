@@ -33,6 +33,7 @@ const config = {
   // `removeLegacyPostBuildHeadAttribute` is a hard requirement of `ssgWorkerThreads`.
   // `mdx1CompatDisabledByDefault` turns off the MDX v1 back-compat pre-processing
   // (comments / admonitions / headingIds) that otherwise runs over every .md and .mdx file.
+  // See `markdown.mdx1Compat` below: we keep the admonition pass, our content needs it.
   future: {
     faster: true,
     v4: {
@@ -43,6 +44,13 @@ const config = {
 
   markdown: {
     mermaid: true,
+    // `mdx1CompatDisabledByDefault` above turns all of these off. We opt `admonitions` back
+    // in: 174 admonitions across 87 files use the MDX v1 title form (`:::info Some title`),
+    // and without this pass MDX v3 drops the title *silently* instead of failing the build.
+    // `comments` and `headingIds` stay off — the content has no uses of either.
+    mdx1Compat: {
+      admonitions: true,
+    },
     hooks: {
       onBrokenMarkdownImages: 'warn'
     },
