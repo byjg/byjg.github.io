@@ -26,8 +26,31 @@ const config = {
 
   onBrokenLinks: 'throw',
 
+  // Build performance + v4 readiness.
+  // `faster: true` turns on the whole Rust toolchain (Rspack bundler + persistent cache,
+  // SWC js/html loaders and minifiers, Lightning CSS minifier, the MDX cross-compiler cache
+  // that compiles each doc once instead of twice, SSG worker threads and eager git VCS).
+  // `removeLegacyPostBuildHeadAttribute` is a hard requirement of `ssgWorkerThreads`.
+  // `mdx1CompatDisabledByDefault` turns off the MDX v1 back-compat pre-processing
+  // (comments / admonitions / headingIds) that otherwise runs over every .md and .mdx file.
+  // See `markdown.mdx1Compat` below: we keep the admonition pass, our content needs it.
+  future: {
+    faster: true,
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      mdx1CompatDisabledByDefault: true,
+    },
+  },
+
   markdown: {
     mermaid: true,
+    // `mdx1CompatDisabledByDefault` above turns all of these off. We opt `admonitions` back
+    // in: 174 admonitions across 87 files use the MDX v1 title form (`:::info Some title`),
+    // and without this pass MDX v3 drops the title *silently* instead of failing the build.
+    // `comments` and `headingIds` stay off — the content has no uses of either.
+    mdx1Compat: {
+      admonitions: true,
+    },
     hooks: {
       onBrokenMarkdownImages: 'warn'
     },
@@ -184,8 +207,12 @@ const config = {
                 href: 'https://profile.codersrank.io/user/byjg',
               },
               {
-                // rel="me" is required for the Mastodon profile link verification
-                html: '<a class="footer__link-item" rel="me" href="https://phpc.social/@byjg">Mastodon</a>',
+                label: 'Mastodon',
+                href: 'https://phpc.social/@byjg',
+                // rel="me" is required for the Mastodon profile link verification.
+                // Docusaurus sets rel="noopener noreferrer" on external links before
+                // spreading item props, so we repeat those tokens to avoid dropping them.
+                rel: 'me noopener noreferrer',
               },
               // {
               //   label: 'Twitter',

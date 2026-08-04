@@ -17,7 +17,7 @@ When you have an ecosystem of 30+ interconnected packages, keeping track of whic
 That's why I completely redesigned the versioning strategy for all ByJG PHP components.
 This post explains the evolution of the versioning system, how it works today, and how you can use it effectively in your projects.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## The Problem: Before PHP 7.4
 

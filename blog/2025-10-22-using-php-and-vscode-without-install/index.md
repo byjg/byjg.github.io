@@ -12,7 +12,7 @@ Setting up a PHP development environment can be challenging, especially when you
 your system with local installations. In this guide, I'll show you how to create a complete PHP development environment using only Docker and VSCode.
 No local PHP installation required!
 
-<!-- truncate --> 
+{/* truncate */} 
 
 ## What You'll Get
 

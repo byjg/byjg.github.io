@@ -16,7 +16,7 @@ Quando a gente fala de sistemas complexos, a tentação de criar soluções aind
 repetir muitas vezes: começa com um problema simples, e em pouco tempo você tem um Frankenstein de código cheio de puxadinhos. 
 Por isso eu gosto de pregar alguns princípios que parecem óbvios, mas que a maioria esquece.
 
-<!-- truncate --> 
+{/* truncate */} 
 
 ## Elime tudo o que é desnecessário - EASY 
 

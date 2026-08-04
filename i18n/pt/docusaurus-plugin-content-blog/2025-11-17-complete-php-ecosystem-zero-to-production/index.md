@@ -20,7 +20,7 @@ Seja você trabalhando com Laravel, Symfony, ou construindo do zero, esses compo
 - Selecionar imagens Docker fortalecidas para cargas de trabalho de produção
 - Operar um fluxo de trabalho realista do dia zero à manutenção contínua
 
-<!-- truncate -->
+{/* truncate */}
 
 ## A Jornada: De uma Máquina Vazia à Produção
 

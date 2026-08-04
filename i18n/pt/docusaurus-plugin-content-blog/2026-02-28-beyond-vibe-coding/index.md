@@ -15,7 +15,7 @@ seguindo a onda dos outros — como se você não estivesse realmente no control
 procuro ser pragmático, e "codar na onda" não me parece algo que vai produzir resultados 
 duradouros. Mas antes que você tire conclusões apressadas, deixa eu explicar alguns pontos.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Produtividade com IA: o que realmente funciona
 

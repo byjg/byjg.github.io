@@ -17,7 +17,7 @@ Eu faço isso praticamente **sozinho**.
 
 Parece impossível? Vamos entender como esse ecossistema funciona, e como a automação, padronização e um bom uso de Inteligência Artificial tornam isso não apenas viável, mas prazeroso.  
 
-<!-- truncate --> 
+{/* truncate */} 
 
 ## O Que Eu Mantenho
 

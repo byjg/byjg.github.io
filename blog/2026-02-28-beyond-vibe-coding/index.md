@@ -11,7 +11,7 @@ description: The "Vibe Coding" label doesn't do justice to real work. My experie
 
 I'm writing this article to explain my journey with what people call Vibe Coding. That's a terrible term, by the way. It always makes me think of doing something by "feel," just following the crowd — as if you're not really in control. In my work, I try to be pragmatic, and "coding by vibes" doesn't sound like something that produces lasting results. But before you jump to conclusions, let me explain a few things first.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## AI Productivity: What Actually Works
 

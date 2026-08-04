@@ -10,7 +10,7 @@ tags: [PHP, Docker, VSCode, Desenvolvimento, Xdebug]
 
 Configurar um ambiente de desenvolvimento PHP pode ser desafiador, especialmente quando você precisa gerenciar múltiplas versões do PHP ou evitar poluir seu sistema com instalações locais. Neste guia, vou mostrar como criar um ambiente completo de desenvolvimento PHP usando apenas Docker e VSCode. Nenhuma instalação local de PHP necessária!
 
-<!-- truncate --> 
+{/* truncate */} 
 
 ## O Que Você Vai Conseguir
 

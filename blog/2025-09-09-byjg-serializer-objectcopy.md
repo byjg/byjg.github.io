@@ -8,7 +8,7 @@ description: Highlighting how byjg/serializer and ObjectCopy turn everyday data 
 
 In this post I’ll showcase two tiny-but-mighty pieces: the byjg/serializer’s Serialize and ObjectCopy utilities. Together, they make it trivial to convert, reshape, and map data across formats and DTOs.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Introduction
 

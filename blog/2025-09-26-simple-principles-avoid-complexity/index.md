@@ -16,7 +16,7 @@ When we talk about complex systems, the temptation to create even more complex s
 it starts with a simple problem, and before you realize it, you’re staring at a Frankenstein of code full of patches and workarounds. 
 That’s why I like to preach a few principles that might sound obvious, but most people tend to forget.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## Eliminate All Stupid Yields - EASY
 

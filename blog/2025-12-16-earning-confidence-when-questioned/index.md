@@ -16,7 +16,7 @@ My first professional job was as an instructor in a small computer school, teach
 One day I was sent to train a company director. He looked at me - a 17-year-old kid - 
 and asked: "You're here to train me? Don't you think you're too young?"
 
-<!-- truncate -->
+{/* truncate */}
 
 I took a breath and answered: "They sent me because they believe I'm capable. Let's do this: 
 I'm already here and you blocked the time. I'll teach today's lesson. 
