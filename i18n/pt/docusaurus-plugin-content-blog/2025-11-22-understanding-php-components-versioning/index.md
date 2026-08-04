@@ -17,7 +17,7 @@ Quando você tem um ecossistema de mais de 30 pacotes interconectados, manter o 
 Foi por isso que redesenhei completamente a estratégia de versionamento para todos os componentes PHP ByJG.
 Este post explica a evolução do sistema de versionamento, como ele funciona hoje e como você pode usá-lo efetivamente em seus projetos.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## O Problema: Antes do PHP 7.4
 

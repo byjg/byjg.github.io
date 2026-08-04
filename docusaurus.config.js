@@ -26,6 +26,21 @@ const config = {
 
   onBrokenLinks: 'throw',
 
+  // Build performance + v4 readiness.
+  // `faster: true` turns on the whole Rust toolchain (Rspack bundler + persistent cache,
+  // SWC js/html loaders and minifiers, Lightning CSS minifier, the MDX cross-compiler cache
+  // that compiles each doc once instead of twice, SSG worker threads and eager git VCS).
+  // `removeLegacyPostBuildHeadAttribute` is a hard requirement of `ssgWorkerThreads`.
+  // `mdx1CompatDisabledByDefault` turns off the MDX v1 back-compat pre-processing
+  // (comments / admonitions / headingIds) that otherwise runs over every .md and .mdx file.
+  future: {
+    faster: true,
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      mdx1CompatDisabledByDefault: true,
+    },
+  },
+
   markdown: {
     mermaid: true,
     hooks: {

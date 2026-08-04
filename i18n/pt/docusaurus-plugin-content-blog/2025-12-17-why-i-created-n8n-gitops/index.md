@@ -15,7 +15,7 @@ abordagem quebra princípios fundamentais de engenharia em torno de controle de 
 gerenciados através do Git e deployados através de automação. Permite que equipes mantenham a produtividade visual do n8n
 enquanto aplicam os mesmos padrões de entrega usados para qualquer outro sistema em produção.
 
-<!-- truncate -->
+{/* truncate */}
 
 n8n é uma ferramenta genuinamente forte. Como IDE visual para construção de workflows, ela atinge um raro equilíbrio entre
 acessibilidade e poder: você pode modelar fluxos complexos orientados a eventos, reagir a webhooks e agendamentos, integrar

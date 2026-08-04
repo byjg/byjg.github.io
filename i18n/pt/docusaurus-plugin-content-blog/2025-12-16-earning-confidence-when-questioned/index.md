@@ -16,7 +16,7 @@ Meu primeiro emprego profissional foi como instrutor em uma pequena escola de in
 
 Eu respirei fundo e respondi: "Eles me mandaram porque acreditam que sou capaz. Vamos fazer assim: já estou aqui e você reservou o tempo. Vou dar a aula de hoje. Se você não gostar, não paga e outra pessoa vem na próxima semana. Se gostar, eu volto." Ele ficou surpreso, deu um meio sorriso e disse: "Fechado!" No final perguntei: "Posso voltar semana que vem?" A resposta dele: "Sim."
 
-<!-- truncate -->
+{/* truncate */}
 
 Naquele dia aprendi a transformar um momento difícil em uma oportunidade para provar meu valor. Eu poderia ter aceitado a dúvida dele como derrota; em vez disso, usei para mostrar do que era capaz.
 

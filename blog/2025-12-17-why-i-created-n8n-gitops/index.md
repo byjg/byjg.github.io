@@ -15,7 +15,7 @@ approach breaks fundamental engineering principles around change control, audita
 managed through Git and deployed through automation. It allows teams to keep n8n's visual productivity while enforcing
 the same delivery standards used for any other production system.
 
-<!-- truncate -->
+{/* truncate */}
 
 n8n is a genuinely strong tool. As a visual IDE for building workflows, it strikes a rare balance between accessibility
 and power: you can model complex event-driven flows, react to webhooks and schedules, integrate with APIs, SaaS

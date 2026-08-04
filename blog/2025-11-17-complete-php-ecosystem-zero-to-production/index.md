@@ -20,7 +20,7 @@ Whether you're working with Laravel, Symfony, or building from scratch, these co
 - Selecting hardened Docker images for production workloads
 - Operating a realistic workflow from day zero to ongoing maintenance
 
-<!-- truncate -->
+{/* truncate */}
 
 ## The Journey: From Blank Machine to Production
 

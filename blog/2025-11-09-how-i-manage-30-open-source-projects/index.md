@@ -20,7 +20,7 @@ I do this **mostly by myself**.
 It sounds impossible, but it isn’t.  
 Let’s walk through how this ecosystem works — and how automation, standardization, and good use of Artificial Intelligence make it not only viable, but actually enjoyable.
 
-<!-- truncate -->
+{/* truncate */}
 
 ## What I Maintain
 
