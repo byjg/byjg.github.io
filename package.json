@@ -32,8 +32,15 @@
     "@docusaurus/types": "3.10.2",
     "baseline-browser-mapping": "^2.9.19"
   },
+  "overridesReason": {
+    "serialize-javascript": "Docusaurus pins copy-webpack-plugin ^11 and css-minimizer-webpack-plugin ^5, which require serialize-javascript ^6 (RCE via RegExp.flags, no fix below 7.0.5). copy-webpack-plugin@14 and css-minimizer-webpack-plugin@8 already require ^7.0.3 upstream. REMOVE this override once Docusaurus bumps either plugin.",
+    "sockjs.uuid": "Docusaurus pins webpack-dev-server ^5, whose sockjs dependency requires the deprecated uuid ^8. webpack-dev-server@6 drops sockjs entirely. REMOVE this override once Docusaurus moves to webpack-dev-server 6."
+  },
   "overrides": {
-    "serialize-javascript": "^7.0.7"
+    "serialize-javascript": "^7.0.7",
+    "sockjs": {
+      "uuid": "^11.1.1"
+    }
   },
   "browserslist": {
     "production": [
