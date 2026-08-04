@@ -183,6 +183,10 @@ const config = {
                 label: 'CodersRank',
                 href: 'https://profile.codersrank.io/user/byjg',
               },
+              {
+                // rel="me" is required for the Mastodon profile link verification
+                html: '<a class="footer__link-item" rel="me" href="https://phpc.social/@byjg">Mastodon</a>',
+              },
               // {
               //   label: 'Twitter',
               //   href: 'https://twitter.com/docusaurus',
