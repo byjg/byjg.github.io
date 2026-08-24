@@ -1,9 +1,5 @@
 ---
 sidebar_key: docker-php
----
-
----
-sidebar_key: docker-php
 tags: [docker, php]
 ---
 
