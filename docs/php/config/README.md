@@ -1,9 +1,5 @@
 ---
 sidebar_key: config
----
-
----
-sidebar_key: config
 tags: [php]
 ---
 

@@ -1,9 +1,5 @@
 ---
 sidebar_key: swagger-test
----
-
----
-sidebar_key: swagger-test
 tags: [php, http, testing]
 ---
 

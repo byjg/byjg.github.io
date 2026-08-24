@@ -1,9 +1,5 @@
 ---
 sidebar_key: serializer
----
-
----
-sidebar_key: serializer
 tags: [php, text-manipulation]
 ---
 

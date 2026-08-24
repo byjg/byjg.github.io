@@ -1,9 +1,5 @@
 ---
 sidebar_key: authuser
----
-
----
-sidebar_key: authuser
 tags: [php, authentication]
 ---
 

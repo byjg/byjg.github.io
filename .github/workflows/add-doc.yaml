@@ -75,12 +75,16 @@ jobs:
           if [ -d ${{ inputs.project }}/docs ]; then
             mkdir -p byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
             cp -r ${{ inputs.project }}/docs/* byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
-            # Add front matter with sidebar_key, then append the README content
-            echo "---" > byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
-            echo "sidebar_key: $PROJECT_WITHOUT_FOLDER" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
-            echo "---" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
-            echo "" >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
-            sed "s~(docs/~(~g" ${{ inputs.project }}/README.md >> byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            # The project README's own front matter is authoritative. Only generate
+            # one when it has none - otherwise Docusaurus parses the first block and
+            # renders the second as page content, and any tags: are discarded.
+            DEST=byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            if head -1 ${{ inputs.project }}/README.md | grep -q '^---$'; then
+              sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > "$DEST"
+            else
+              printf -- '---\nsidebar_key: %s\n---\n\n' "$PROJECT_WITHOUT_FOLDER" > "$DEST"
+              sed "s~(docs/~(~g" ${{ inputs.project }}/README.md >> "$DEST"
+            fi
             find byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
           else
             cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
