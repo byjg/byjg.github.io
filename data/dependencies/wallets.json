@@ -1,0 +1,11 @@
+{
+  "deps": {
+    "require": {
+      "byjg/micro-orm": "^6.0"
+    },
+    "require-dev": {
+      "byjg/migration": "^6.0"
+    }
+  },
+  "name": "byjg/wallets"
+}

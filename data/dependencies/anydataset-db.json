@@ -1,0 +1,15 @@
+{
+  "deps": {
+    "require": {
+      "byjg/anydataset": "^6.0",
+      "byjg/uri": "^6.0"
+    },
+    "require-dev": {
+      "byjg/cache-engine": "^6.0"
+    },
+    "suggest": {
+      "byjg/cache-engine": ""
+    }
+  },
+  "name": "byjg/anydataset-db"
+}

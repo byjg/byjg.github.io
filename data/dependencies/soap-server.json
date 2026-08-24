@@ -1,0 +1,10 @@
+{
+  "deps": {
+    "require": {
+      "byjg/jinja-php": "^6.0",
+      "byjg/serializer": "^6.0",
+      "byjg/webrequest": "^6.0"
+    }
+  },
+  "name": "byjg/soap-server"
+}

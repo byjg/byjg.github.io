@@ -1,0 +1,12 @@
+{
+  "deps": {
+    "require": {
+      "byjg/cache-engine": "^6.0",
+      "byjg/jwt-wrapper": "^6.0",
+      "byjg/serializer": "^6.0",
+      "byjg/singleton-pattern": "^6.0",
+      "byjg/webrequest": "^6.0"
+    }
+  },
+  "name": "byjg/restserver"
+}

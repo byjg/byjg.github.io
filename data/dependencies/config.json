@@ -1,0 +1,8 @@
+{
+  "deps": {
+    "require-dev": {
+      "byjg/cache-engine": "^6.0"
+    }
+  },
+  "name": "byjg/config"
+}

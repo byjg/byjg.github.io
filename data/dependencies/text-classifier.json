@@ -1,0 +1,10 @@
+{
+  "deps": {
+    "require": {
+      "byjg/llm-api-objects": "^6.0",
+      "byjg/micro-orm": "^6.0",
+      "byjg/migration": "^6.0"
+    }
+  },
+  "name": "byjg/text-classifier"
+}

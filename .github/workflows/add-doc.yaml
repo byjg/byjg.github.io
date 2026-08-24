@@ -60,6 +60,7 @@ jobs:
           path: ${{ inputs.project }}
           sparse-checkout: |
             README.md
+            composer.json
             docs
 
       - name: Copy Doc files
@@ -90,19 +91,24 @@ jobs:
             cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
           fi
 
+      - name: Record dependencies if "php" folder
+        if: ${{ inputs.folder == 'php' }}
+        run: |
+          # The dependency graph is built from composer.json, not from a hand
+          # written block in the README. Each project records its own edges here
+          # when it publishes; the next step aggregates whatever is on record.
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
+          mkdir -p byjg.github.io/data/dependencies
+          python3 byjg.github.io/collect-deps.py \
+            "${{ inputs.project }}/composer.json" \
+            "byjg.github.io/data/dependencies/$PROJECT_WITHOUT_FOLDER.json"
+
       - name: Add Mermaid if "php" folder
         if: ${{ inputs.folder == 'php' }}
         run: |
-          cd byjg.github.io/docs/php
-
-          rm "README.md"
-          
-          find . -maxdepth 2 -name '*.md' -exec grep -A 12 "## Dependencies" {} \; | sed -n '/flowchart TD/,/```/ {/flowchart TD/b;/```/b;p}' | tr -s ' ' > /tmp/mermaid-all.txt
-          grep '\-\-> byjg' /tmp/mermaid-all.txt > /tmp/mermaid.txt
-          grep ' byjg' /tmp/mermaid-all.txt | sed 's/ -->.*//g' | sort | uniq >> /tmp/mermaid.txt
-          
-          cd ../..
-          python3 mermaid.py /tmp/mermaid.txt > "docs/php/README.md"
+          cd byjg.github.io
+          rm -f docs/php/README.md
+          python3 mermaid.py data/dependencies > docs/php/README.md
 
 #      - name: Create sitemap
 #        run: |

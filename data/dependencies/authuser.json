@@ -1,0 +1,10 @@
+{
+  "deps": {
+    "require": {
+      "byjg/cache-engine": "^6.0",
+      "byjg/jwt-wrapper": "^6.0",
+      "byjg/micro-orm": "^6.0"
+    }
+  },
+  "name": "byjg/authuser"
+}

@@ -1,0 +1,8 @@
+{
+  "deps": {
+    "require": {
+      "byjg/anydataset-xml": "^6.0"
+    }
+  },
+  "name": "byjg/llm-api-objects"
+}

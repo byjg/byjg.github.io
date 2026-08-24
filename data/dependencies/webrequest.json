@@ -1,0 +1,8 @@
+{
+  "deps": {
+    "require": {
+      "byjg/uri": "^6.0"
+    }
+  },
+  "name": "byjg/webrequest"
+}

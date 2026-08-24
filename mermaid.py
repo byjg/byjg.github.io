@@ -1,17 +1,70 @@
+"""Render the PHP component dependency graph.
+
+Reads the per-project files written by collect-deps.py, one per project, each
+holding that project's byjg dependencies as declared in its composer.json.
+
+Usage: mermaid.py <directory of dependency json files>
+"""
 from collections import defaultdict, deque
+import json
+import os
 import sys
+
+# Strongest wins when a package appears in more than one section: a real
+# dependency is not also drawn as a suggestion.
+SECTION_ORDER = ("require", "require-dev", "suggest")
+
+EDGE = {
+    "require": "-->",
+    "require-dev": "-.->|dev|",
+    "suggest": "-.->|suggest|",
+}
+
+DEPRECATED = ("byjg/anydataset-array",)
+
+
+def load(directory):
+    """Return (nodes, edges) where edges is {(source, target): section}."""
+    nodes = set()
+    edges = {}
+    for entry in sorted(os.listdir(directory)):
+        if not entry.endswith(".json"):
+            continue
+        with open(os.path.join(directory, entry), encoding="utf-8") as fh:
+            data = json.load(fh)
+        source = data["name"]
+        nodes.add(source)
+        for section in SECTION_ORDER:
+            for target in data.get("deps", {}).get(section, {}):
+                nodes.add(target)
+                # first section wins, per SECTION_ORDER
+                edges.setdefault((source, target), section)
+    return nodes, edges
+
+
+def doc_link(package):
+    """URL of a package's documentation page.
+
+    The docs folder is the repository name without its "php-" prefix, so
+    byjg/anydataset-db lives at /docs/php/anydataset-db. One package declares
+    itself as byjg/php-resilience, keeping the prefix the others drop; strip it
+    so the link still resolves.
+    """
+    slug = package.split("/")[-1]
+    if slug.startswith("php-"):
+        slug = slug[len("php-"):]
+    return f"https://opensource.byjg.com/docs/php/{slug}"
+
 
 def topological_sort(nodes, connections):
     in_degree = {node: 0 for node in nodes}
     adjacency_list = defaultdict(list)
 
-    # Build the in-degree and adjacency list
     for source, target in connections:
         in_degree[target] += 1
         adjacency_list[source].append(target)
 
-    # Perform topological sort
-    queue = deque([node for node in nodes if in_degree[node] == 0])
+    queue = deque(sorted(node for node in nodes if in_degree[node] == 0))
     result = []
     while queue:
         current_node = queue.popleft()
@@ -21,67 +74,39 @@ def topological_sort(nodes, connections):
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
 
+    # Anything left sits in a cycle; emit it so no node is silently dropped.
+    result.extend(sorted(set(nodes) - set(result)))
     return result
 
-def get_connection_symbol(connection_count):
-    # Define the sequence of symbols
-    symbols = ["<-->", "o--o", "x--x", "<-.->", "o-.-o", "x-.-x"]
-    return symbols[connection_count % len(symbols)]
 
-def minimize_line_crossings_with_symbols(input_text):
-    # Split the input text into lines
-    lines = input_text.strip().split('\n')
+def render(directory):
+    nodes, edges = load(directory)
+    sorted_nodes = topological_sort(nodes, list(edges))
 
-    # Extract nodes and connections from the lines
-    nodes = set()
-    connections = []
-    for line in lines:
-        parts = line.strip().split('-->')
-        if len(parts) == 1:
-            nodes.add(line.strip())
-
-        if len(parts) == 2:
-            source, target = parts
-            nodes.add(source.strip())
-            nodes.add(target.strip())
-            connections.append((source.strip(), target.strip()))
-
-    # Count the connections for each node
-    connection_counts = defaultdict(int)
-    for source, target in connections:
-        connection_counts[source] += 1
-        connection_counts[target] += 0  # Ensure target node is included
-
-    # Use topological sort for better node ordering
-    sorted_nodes = topological_sort(nodes, connections)
-
-    # Print the Mermaid flowchart with symbols
     print("# PHP Components")
     print("## Class Dependency")
+    print()
+    print("Generated from each component's `composer.json`.")
+    print("Solid is `require`, `dev` is `require-dev`, `suggest` is optional.")
+    print()
     print("```mermaid")
     print("graph LR;")
     for node in sorted_nodes:
-        link = node.replace('byjg', 'https://opensource.byjg.com/docs/php')
-        print(f"  {node}[<a href='{link}' style='text-decoration:none'>{node}🔗</a>];")
-    for source, target in connections:
-        symbol = get_connection_symbol(connection_counts[source])
-        print(f"  {source} {symbol} {target};")
+        print(f"  {node}[<a href='{doc_link(node)}' style='text-decoration:none'>{node}🔗</a>];")
+    for (source, target), section in edges.items():
+        print(f"  {source} {EDGE[section]} {target};")
     print("  classDef default fill:#ffffff,stroke:#333,stroke-width:1.5px,color:#000,font-size:14px;")
     print("  classDef highlight fill:#ffef96,stroke:#ff9900,stroke-width:3px;")
     print("  classDef deprecated fill:#f8f8f8,stroke:#cccccc,stroke-dasharray: 5 5,stroke-width:1px,color:#999;")
     print("  classDef working-on fill:#fff3cd,stroke:#ffcc00,stroke-width:2px,color:#856404;")
     print("  classDef finished fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724;")
-    print("  class byjg/anydataset-array deprecated;")
+    for name in DEPRECATED:
+        if name in nodes:
+            print(f"  class {name} deprecated;")
     print("```")
 
-def minimize_line_crossings_from_text_file(file_path):
-    # Read the contents of the file
-    with open(file_path, 'r') as file:
-        input_text = file.read()
 
-    # Call the function with the input text
-    minimize_line_crossings_with_symbols(input_text)
-
-# Example usage with an external file
-file_path = sys.argv[1]
-minimize_line_crossings_from_text_file(file_path)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        raise SystemExit(__doc__)
+    render(sys.argv[1])

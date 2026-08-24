@@ -1,0 +1,11 @@
+{
+  "deps": {
+    "require": {
+      "byjg/webrequest": "^6.0"
+    },
+    "require-dev": {
+      "byjg/restserver": "^6.0"
+    }
+  },
+  "name": "byjg/swagger-test"
+}

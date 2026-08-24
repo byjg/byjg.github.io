@@ -1,0 +1,8 @@
+{
+  "deps": {
+    "require": {
+      "byjg/message-queue-client": "^6.0"
+    }
+  },
+  "name": "byjg/redis-queue-client"
+}
