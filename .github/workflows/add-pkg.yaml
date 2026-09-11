@@ -40,14 +40,17 @@ jobs:
       - name: Install packaging tools
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq dpkg-dev createrepo-c
+          sudo apt-get install -y -qq dpkg-dev createrepo-c rpm gnupg2
 
       - name: Import GPG key
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d | gpg --batch --import
           # Export public key for users to download
+          # (binary for APT signed-by, armored for rpm --import)
           GPG_KEY_ID=$(gpg --list-keys --with-colons | awk -F: '/^pub/{found=1} found && /^fpr/{print $10; exit}')
           gpg --export "$GPG_KEY_ID" > byjg.github.io/packages/byjg.gpg
+          gpg --export --armor "$GPG_KEY_ID" > byjg.github.io/packages/byjg.asc
+          echo "GPG_KEY_ID=$GPG_KEY_ID" >> "$GITHUB_ENV"
 
       - name: Download release assets
         env:
@@ -111,6 +114,12 @@ jobs:
           # Copy .rpm files to the rpm pool
           if ls assets/*.rpm 1>/dev/null 2>&1; then
             cp assets/*.rpm byjg.github.io/packages/rpm/
+
+            # Sign the RPMs (dnf gpgcheck=1 refuses unsigned packages). rpmsign
+            # skips files already signed by this key and re-signs the others,
+            # so older packages are covered too, even after a key rotation.
+            echo "%_gpg_name $GPG_KEY_ID" > ~/.rpmmacros
+            rpmsign --addsign byjg.github.io/packages/rpm/*.rpm
 
             # Regenerate RPM metadata
             createrepo_c --update byjg.github.io/packages/rpm

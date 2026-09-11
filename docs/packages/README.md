@@ -49,7 +49,7 @@ sudo apt update
 Import the GPG signing key and add the repository:
 
 ```bash
-sudo rpm --import https://opensource.byjg.com/byjg.gpg
+sudo rpm --import https://opensource.byjg.com/byjg.asc
 sudo tee /etc/yum.repos.d/byjg.repo <<EOF
 [byjg]
 name=ByJG Packages
@@ -57,7 +57,7 @@ baseurl=https://opensource.byjg.com/rpm
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://opensource.byjg.com/byjg.gpg
+gpgkey=https://opensource.byjg.com/byjg.asc
 EOF
 ```
 

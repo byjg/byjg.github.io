@@ -5,9 +5,11 @@ sidebar_position: 4
 # Publishing Linux packages
 
 ByJG hosts an APT repository at `https://opensource.byjg.com/apt` and an RPM
-repository at `https://opensource.byjg.com/rpm`. Their metadata is signed with
-the key at `https://opensource.byjg.com/byjg.gpg`. Both are stored in
-`packages/` of this site's repository.
+repository at `https://opensource.byjg.com/rpm`. Their metadata and the RPM
+packages are signed with the ByJG Opensource key, published as
+`https://opensource.byjg.com/byjg.gpg` (binary, for APT) and
+`https://opensource.byjg.com/byjg.asc` (armored, for RPM). Both repositories
+are stored in `packages/` of this site's repository.
 
 How users install from them: [Linux Package Repository](/docs/packages).
 
@@ -16,7 +18,7 @@ How users install from them: [Linux Package Repository](/docs/packages).
 ```mermaid
 flowchart LR
     tag["git tag v1.2.3"] --> build["GoReleaser builds .deb/.rpm<br/>and attaches them to the GitHub release"]
-    build --> addpkg["add-pkg.yaml downloads the assets,<br/>adds them to the repositories<br/>and signs the metadata"]
+    build --> addpkg["add-pkg.yaml downloads the assets,<br/>adds them to the repositories<br/>and signs the RPMs and the metadata"]
     addpkg --> site["commit to byjg.github.io"]
 ```
 
@@ -120,13 +122,16 @@ they can be downloaded.
 ## What the workflow does
 
 1. Imports `GPG_PRIVATE_KEY` and re-exports the public key to
-   `packages/byjg.gpg`.
+   `packages/byjg.gpg` (binary) and `packages/byjg.asc` (armored).
 2. Downloads the release's `*.deb` and `*.rpm` assets.
 3. **APT:** copies the `.deb` files into `packages/apt/`, regenerates
    `Packages`, `Packages.gz` and `Release`, and signs them into `Release.gpg`
    and `InRelease`.
-4. **RPM:** copies the `.rpm` files into `packages/rpm/`, runs
-   `createrepo_c --update`, and signs `repodata/repomd.xml`.
+4. **RPM:** copies the `.rpm` files into `packages/rpm/`, signs every `.rpm`
+   there with `rpmsign --addsign` (files already signed by the key are
+   skipped), runs `createrepo_c --update`, and signs `repodata/repomd.xml`.
+   The RPMs in the repository are signed; the ones attached to the GitHub
+   release are not.
 5. Commits `[skip ci] Add packages from <org>/<repo> <tag>` and pushes.
 
 ## Rules
@@ -142,7 +147,10 @@ they can be downloaded.
 ## The signing key
 
 The repository metadata -- APT `Release`/`InRelease` and RPM
-`repodata/repomd.xml` -- is signed with the ByJG Opensource key:
+`repodata/repomd.xml` -- and every RPM package are signed with the ByJG
+Opensource key. The RPM setup uses `gpgcheck=1` (package signature) and
+`repo_gpgcheck=1` (metadata signature), so `dnf install` refuses an unsigned
+RPM.
 
 | | |
 |---|---|
@@ -160,5 +168,6 @@ The private key is held by the maintainers. It reaches a repository as the
 repository -- never set by hand. A new repository that needs to publish
 packages must be registered by a maintainer.
 
-If the key is ever rotated, `byjg.gpg` changes and every user must download it
-again, or `apt update` rejects the repository.
+If the key is ever rotated, `byjg.gpg` and `byjg.asc` change and every user
+must download them again, or `apt update` and `dnf` reject the repository. The
+next workflow run re-signs every RPM in the repository with the new key.
