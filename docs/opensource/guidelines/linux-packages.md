@@ -59,7 +59,9 @@ nfpms:
       - rpm
 ```
 
-- Build **amd64 and arm64**; the APT repository declares both.
+- Build at least **amd64 and arm64**. Other architectures are fine (nimbus
+  also ships `armhf`, from `goarch: arm` + `goarm: "7"`): the APT `Release`
+  declares whatever architectures the packages in the repository have.
 - `package_name` is what users type in `apt install`. All ByJG packages share
   one repository, so it must be unique across projects.
 
@@ -125,8 +127,8 @@ they can be downloaded.
    `packages/byjg.gpg` (binary) and `packages/byjg.asc` (armored).
 2. Downloads the release's `*.deb` and `*.rpm` assets.
 3. **APT:** copies the `.deb` files into `packages/apt/`, regenerates
-   `Packages`, `Packages.gz` and `Release`, and signs them into `Release.gpg`
-   and `InRelease`.
+   `Packages`, `Packages.gz` and `Release` (its `Architectures:` line is taken
+   from `Packages`), and signs them into `Release.gpg` and `InRelease`.
 4. **RPM:** copies the `.rpm` files into `packages/rpm/`, signs every `.rpm`
    there with `rpmsign --addsign` (files already signed by the key are
    skipped), runs `createrepo_c --update`, and signs `repodata/repomd.xml`.

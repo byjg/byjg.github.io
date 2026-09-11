@@ -86,7 +86,7 @@ jobs:
               echo "Label: ByJG"
               echo "Suite: stable"
               echo "Codename: stable"
-              echo "Architectures: amd64 arm64"
+              echo "Architectures: $(awk '/^Architecture:/ && $2 != "all" {print $2}' Packages | sort -u | xargs)"
               echo "Components: main"
               echo "Date: $(date -Ru)"
               echo "MD5Sum:"

@@ -2,9 +2,9 @@ Origin: ByJG Opensource
 Label: ByJG
 Suite: stable
 Codename: stable
-Architectures: amd64 arm64
+Architectures: amd64 arm64 armhf
 Components: main
-Date: Sat, 25 Apr 2026 14:11:14 +0000
+Date: Fri, 11 Sep 2026 17:06:14 +0000
 MD5Sum:
  a7c1d245df99786185c6d3aabe9168f6 30056 Packages
  829083bc6e019b2edda2be84ce84aa72 7024 Packages.gz
