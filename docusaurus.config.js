@@ -149,6 +149,7 @@ const config = {
           {to: '/docs/php', label: 'PHP Components', position: 'left'},
           {to: '/docs/devops', label: 'Docker & DevOps', position: 'left'},
           {to: '/docs/js', label: 'Node & JS', position: 'left'},
+          {to: '/docs/ai', label: 'AI', position: 'left'},
           {to: '/docs/helm', label: 'Helm Chart', position: 'left'},
           {to: '/docs/packages', label: 'Linux Packages', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
@@ -180,6 +181,10 @@ const config = {
               {
                 label: 'Node & Js',
                 to: '/docs/js',
+              },
+              {
+                label: 'AI',
+                to: '/docs/ai',
               },
               {
                 label: 'Helm Charts',

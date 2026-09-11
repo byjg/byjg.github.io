@@ -9,6 +9,7 @@ on:
           - php
           - js
           - devops
+          - ai
           - archived
         required: true
       project:
@@ -67,7 +68,7 @@ jobs:
         run: |
           set -x
           
-          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~^${{ inputs.folder }}-~~")
           rm -rf byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/
           rm -rf byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
 
@@ -97,7 +98,7 @@ jobs:
           # The dependency graph is built from composer.json, not from a hand
           # written block in the README. Each project records its own edges here
           # when it publishes; the next step aggregates whatever is on record.
-          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~${{ inputs.folder }}-~~g")
+          PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~^${{ inputs.folder }}-~~")
           mkdir -p byjg.github.io/data/dependencies
           python3 byjg.github.io/collect-deps.py \
             "${{ inputs.project }}/composer.json" \

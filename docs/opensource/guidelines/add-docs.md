@@ -9,8 +9,8 @@ A project's documentation lives in its own repository. The
 reusable workflow copies it into this site every time `master` builds.
 
 :::warning
-Never edit `docs/php`, `docs/devops`, `docs/js` or `docs/archived` in this
-repository. The workflow deletes and re-copies a project's folder on every
+Never edit `docs/php`, `docs/devops`, `docs/js`, `docs/ai` or `docs/archived`
+in this repository. The workflow deletes and re-copies a project's folder on every
 publish, so edits made here are lost. Change the source repository instead.
 :::
 
@@ -32,7 +32,7 @@ Add a job to the project's workflow, after the job that runs the tests:
 
 | Input | Required | Meaning |
 |---|---|---|
-| `folder` | yes | Site section: `php`, `js`, `devops` or `archived` |
+| `folder` | yes | Site section: `php`, `js`, `devops`, `ai` or `archived` |
 | `project` | yes | Repository name, without the owner |
 | `owner` | no | Repository owner; defaults to `byjg` |
 
@@ -43,12 +43,14 @@ and fill in the same inputs.
 
 ## Where it lands
 
-The `folder` prefix is removed from the repository name to form the URL:
+The `folder` prefix is removed from the start of the repository name to form
+the URL:
 
 | Repository | `folder` | Site path |
 |---|---|---|
 | `php-micro-orm` | `php` | `docs/php/micro-orm` |
 | `docker-easy-haproxy` | `devops` | `docs/devops/docker-easy-haproxy` |
+| `mcpserver-byjg-docs` | `ai` | `docs/ai/mcpserver-byjg-docs` |
 
 Only `README.md`, `docs/` and `composer.json` are read from the repository.
 What the site shows depends on whether `docs/` exists:
@@ -139,6 +141,11 @@ Write links that work on GitHub. The workflow rewrites them for the site:
 - Do not link to files outside `docs/` -- `LICENSE`, `CHANGELOG`, source
   files. They are not copied, so the link breaks. Use the full GitHub URL
   instead.
+- Do not name a page `index.md` (or `README.md`) inside a `docs/` subfolder
+  and link to it. The rewrite turns `guides/index.md` into `guides/index`,
+  while the site serves that page at `guides/` -- a broken link. Give it a
+  normal name, such as `guides/overview.md`, or use a `_category_.json` with a
+  generated index instead.
 
 :::danger
 **The site build fails on any broken link.** One bad link in one project's
