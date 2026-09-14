@@ -63,6 +63,12 @@ What the site shows depends on whether `docs/` exists:
 The project's folder is deleted before copying, so a page removed from the
 repository also disappears from the site.
 
+The commit is pushed to this site's `master`, which every project pushes to --
+`add-doc`, `add-helm` and `add-pkg` all commit here. When two releases overlap,
+the second push is rejected (`! [rejected] ... (fetch first)`), so the three
+workflows rebase and retry up to 5 times before failing. Any other job that
+pushes here must do the same; a plain `git push` loses the run's work.
+
 ## Repository layout
 
 ```

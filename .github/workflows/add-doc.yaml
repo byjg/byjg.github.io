@@ -123,4 +123,12 @@ jobs:
           git config user.name "CI/CD"
           git config user.email "info@byjg.com.br"
           git diff-index --quiet HEAD || git commit -m "Update documentation '${{ inputs.folder }}' '${{ inputs.project }}'"
-          git push
+          # byjg.github.io takes pushes from every project: another one may land
+          # between the checkout and the push. Rebase on top of it and retry.
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            sleep $((RANDOM % 10 + 1))
+            git pull --rebase
+          done
+          echo "Could not push to byjg.github.io after 5 attempts" >&2
+          exit 1
