@@ -12,7 +12,7 @@ You do not need to change the server side nor the client side.
 [![Build Status](https://github.com/byjg/yaj-sse/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/yaj-sse/actions/workflows/build.yml)
 [![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](http://opensource.byjg.com)
 [![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/byjg/yaj-sse/)
-[![GitHub license](https://img.shields.io/github/license/byjg/yaj-sse.svg)](https://opensource.byjg.com/opensource/licensing.html)
+[![GitHub license](https://img.shields.io/github/license/byjg/yaj-sse.svg)](https://opensource.byjg.com/license/)
 [![GitHub release](https://img.shields.io/github/release/byjg/yaj-sse.svg)](https://github.com/byjg/yaj-sse/releases/)
 [![](https://data.jsdelivr.com/v1/package/npm/yaj-sse/badge)](https://www.jsdelivr.com/package/npm/yaj-sse)
 
