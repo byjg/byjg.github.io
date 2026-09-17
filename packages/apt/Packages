@@ -1,20 +1,5 @@
 Package: nimbus
 Version: 0.2.0
-Architecture: arm64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 7872
-Filename: ./nimbus_0.2.0_linux_arm64.deb
-Size: 3214684
-MD5sum: bd744d866cc8c2e369eb5b7ec6e31e55
-SHA1: b0f7100d4d99b95bbaf67a25c1a39eba14fa0913
-SHA256: f093d3f5dd3711a2bcb435fca64f45e797b5181f45b34f31c5454176f1229744
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus CLI - manage your cloud infrastructure
-License: MIT
-
-Package: nimbus
-Version: 0.2.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
 Installed-Size: 8132
@@ -27,6 +12,21 @@ Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus CLI - manage your cloud infrastructure
 Architecture-Variant: amd64v1
+License: MIT
+
+Package: nimbus
+Version: 0.2.0
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 7872
+Filename: ./nimbus_0.2.0_linux_arm64.deb
+Size: 3214684
+MD5sum: bd744d866cc8c2e369eb5b7ec6e31e55
+SHA1: b0f7100d4d99b95bbaf67a25c1a39eba14fa0913
+SHA256: f093d3f5dd3711a2bcb435fca64f45e797b5181f45b34f31c5454176f1229744
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus CLI - manage your cloud infrastructure
 License: MIT
 
 Package: nimbus
@@ -153,6 +153,20 @@ Architecture-Variant: amd64v1
 
 Package: nimbus
 Version: 0.6.0
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 10048
+Filename: ./nimbus_0.6.0_linux_arm64.deb
+Size: 3992512
+MD5sum: ceab7606146e4627c6a14d042ce70323
+SHA1: 8757bb985dff1bac1d8400c72b10275d1603b51f
+SHA256: 5550680cbb5864587c7bc2d33b76e22da2927c7938109fc2e36941ae3c53fed5
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus CLI - manage your cloud infrastructure
+
+Package: nimbus
+Version: 0.6.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
 Installed-Size: 10556
@@ -167,20 +181,6 @@ Description: DockNimbus CLI - manage your cloud infrastructure
 Architecture-Variant: amd64v1
 
 Package: nimbus
-Version: 0.6.0
-Architecture: arm64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 10048
-Filename: ./nimbus_0.6.0_linux_arm64.deb
-Size: 3992512
-MD5sum: ceab7606146e4627c6a14d042ce70323
-SHA1: 8757bb985dff1bac1d8400c72b10275d1603b51f
-SHA256: 5550680cbb5864587c7bc2d33b76e22da2927c7938109fc2e36941ae3c53fed5
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus CLI - manage your cloud infrastructure
-
-Package: nimbus
 Version: 0.6.1
 Architecture: armhf
 Maintainer: DockNimbus <hello@docknimbus.com>
@@ -190,6 +190,20 @@ Size: 4119526
 MD5sum: 7cbb48dd9a891c66bd70a051c1f9feef
 SHA1: b9af49698272f77c9aec28c03081c71bc82698dd
 SHA256: 02f9f5268e3d8a365227728ad505dfb62db9d0d87fe331a5e1319fd922c92aec
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus CLI - manage your cloud infrastructure
+
+Package: nimbus
+Version: 0.6.1
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 10048
+Filename: ./nimbus_0.6.1_linux_arm64.deb
+Size: 3992504
+MD5sum: e24a34e03d30c6564ee9be983cb50961
+SHA1: 6977c8e2c1207c6d947d8ef63d85501f98c0a9f1
+SHA256: c3dd44f55f0921f7a5d57eeaa78e44202e93d4a17f21274400ad46670ced095d
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus CLI - manage your cloud infrastructure
@@ -208,20 +222,6 @@ Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus CLI - manage your cloud infrastructure
 Architecture-Variant: amd64v1
-
-Package: nimbus
-Version: 0.6.1
-Architecture: arm64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 10048
-Filename: ./nimbus_0.6.1_linux_arm64.deb
-Size: 3992504
-MD5sum: e24a34e03d30c6564ee9be983cb50961
-SHA1: 6977c8e2c1207c6d947d8ef63d85501f98c0a9f1
-SHA256: c3dd44f55f0921f7a5d57eeaa78e44202e93d4a17f21274400ad46670ced095d
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus CLI - manage your cloud infrastructure
 
 Package: nimbus
 Version: 0.7.0
@@ -299,22 +299,6 @@ License: MIT
 
 Package: nimbus-agent
 Version: 0.3.0
-Architecture: amd64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 6740
-Filename: ./nimbus-agent_0.3.0_linux_amd64.deb
-Size: 2919686
-MD5sum: 51fd6580738db8960315de3429ce4b44
-SHA1: db9febc286dff47733abf923a20ed5db90b17e14
-SHA256: 549ba5348a887770894353e863d7bd2c45a43a5e35cd1e7e2aa80804ea593d2c
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus Agent - runs on worker nodes
-Architecture-Variant: amd64v1
-License: MIT
-
-Package: nimbus-agent
-Version: 0.3.0
 Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
 Installed-Size: 6336
@@ -329,15 +313,15 @@ Description: DockNimbus Agent - runs on worker nodes
 License: MIT
 
 Package: nimbus-agent
-Version: 0.4.0
+Version: 0.3.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 6744
-Filename: ./nimbus-agent_0.4.0_linux_amd64.deb
-Size: 2920958
-MD5sum: 2f81cff57292cedaa4d82ae809a601de
-SHA1: e6adfa768a64605a3537f7148a3f8ce6e4c26b6f
-SHA256: 957c5c98026a9818b0419a70021c445e4ed6ad78c340bdce86b86fba8f0aa46c
+Installed-Size: 6740
+Filename: ./nimbus-agent_0.3.0_linux_amd64.deb
+Size: 2919686
+MD5sum: 51fd6580738db8960315de3429ce4b44
+SHA1: db9febc286dff47733abf923a20ed5db90b17e14
+SHA256: 549ba5348a887770894353e863d7bd2c45a43a5e35cd1e7e2aa80804ea593d2c
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus Agent - runs on worker nodes
@@ -360,18 +344,19 @@ Description: DockNimbus Agent - runs on worker nodes
 License: MIT
 
 Package: nimbus-agent
-Version: 0.4.1
-Architecture: arm64
+Version: 0.4.0
+Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 6336
-Filename: ./nimbus-agent_0.4.1_linux_arm64.deb
-Size: 2675078
-MD5sum: 120aff3f5ddc337d87b0ef3fc25c7c88
-SHA1: e2fe5272c4f96c43fb30738cdeeed474f67546c2
-SHA256: ddcf3fc65e7dfedd2b81233cedf260dc4747a27659996bdfdb7c1ebad2fef0ca
+Installed-Size: 6744
+Filename: ./nimbus-agent_0.4.0_linux_amd64.deb
+Size: 2920958
+MD5sum: 2f81cff57292cedaa4d82ae809a601de
+SHA1: e6adfa768a64605a3537f7148a3f8ce6e4c26b6f
+SHA256: 957c5c98026a9818b0419a70021c445e4ed6ad78c340bdce86b86fba8f0aa46c
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus Agent - runs on worker nodes
+Architecture-Variant: amd64v1
 License: MIT
 
 Package: nimbus-agent
@@ -391,6 +376,35 @@ Architecture-Variant: amd64v1
 License: MIT
 
 Package: nimbus-agent
+Version: 0.4.1
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 6336
+Filename: ./nimbus-agent_0.4.1_linux_arm64.deb
+Size: 2675078
+MD5sum: 120aff3f5ddc337d87b0ef3fc25c7c88
+SHA1: e2fe5272c4f96c43fb30738cdeeed474f67546c2
+SHA256: ddcf3fc65e7dfedd2b81233cedf260dc4747a27659996bdfdb7c1ebad2fef0ca
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus Agent - runs on worker nodes
+License: MIT
+
+Package: nimbus-agent
+Version: 0.5.0
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 6464
+Filename: ./nimbus-agent_0.5.0_linux_arm64.deb
+Size: 2710528
+MD5sum: d199e59eeae05b3d9fff58ddb4baebd7
+SHA1: 800fa68ff7f6a4e1e9cdfc390cf14de049bb3616
+SHA256: e83ac63325bf99d40ed491c65a03aa205842a0a68dbb14869ea7529dd2333c39
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus Agent - runs on worker nodes
+
+Package: nimbus-agent
 Version: 0.5.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
@@ -406,15 +420,15 @@ Description: DockNimbus Agent - runs on worker nodes
 Architecture-Variant: amd64v1
 
 Package: nimbus-agent
-Version: 0.5.0
+Version: 0.6.0
 Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
 Installed-Size: 6464
-Filename: ./nimbus-agent_0.5.0_linux_arm64.deb
-Size: 2710528
-MD5sum: d199e59eeae05b3d9fff58ddb4baebd7
-SHA1: 800fa68ff7f6a4e1e9cdfc390cf14de049bb3616
-SHA256: e83ac63325bf99d40ed491c65a03aa205842a0a68dbb14869ea7529dd2333c39
+Filename: ./nimbus-agent_0.6.0_linux_arm64.deb
+Size: 2711118
+MD5sum: 94f3fc3d11ec97ed1765672e2d5a6945
+SHA1: 7e345b16269cb4b0669c3543ffce87fb9f316f4c
+SHA256: 41a2e82d21e0776902d2c91a33a5f8752b20e9f717c472e45c42de1a7ca35864
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus Agent - runs on worker nodes
@@ -435,15 +449,15 @@ Description: DockNimbus Agent - runs on worker nodes
 Architecture-Variant: amd64v1
 
 Package: nimbus-agent
-Version: 0.6.0
+Version: 0.6.1
 Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
 Installed-Size: 6464
-Filename: ./nimbus-agent_0.6.0_linux_arm64.deb
+Filename: ./nimbus-agent_0.6.1_linux_arm64.deb
 Size: 2711118
-MD5sum: 94f3fc3d11ec97ed1765672e2d5a6945
-SHA1: 7e345b16269cb4b0669c3543ffce87fb9f316f4c
-SHA256: 41a2e82d21e0776902d2c91a33a5f8752b20e9f717c472e45c42de1a7ca35864
+MD5sum: 2dc76862e3f01afadfe143321f2466a4
+SHA1: d2347117e5d9bdacbe28ed3da5945c2011183737
+SHA256: e7f136c4b63542f08fc388fe81a6abe78c06d8d7e56af5a1dce4a446229499e5
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus Agent - runs on worker nodes
@@ -478,34 +492,6 @@ Description: DockNimbus Agent - runs on worker nodes
 Architecture-Variant: amd64v1
 
 Package: nimbus-agent
-Version: 0.6.1
-Architecture: arm64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 6464
-Filename: ./nimbus-agent_0.6.1_linux_arm64.deb
-Size: 2711118
-MD5sum: 2dc76862e3f01afadfe143321f2466a4
-SHA1: d2347117e5d9bdacbe28ed3da5945c2011183737
-SHA256: e7f136c4b63542f08fc388fe81a6abe78c06d8d7e56af5a1dce4a446229499e5
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus Agent - runs on worker nodes
-
-Package: nimbus-agent
-Version: 0.7.0
-Architecture: arm64
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 6528
-Filename: ./nimbus-agent_0.7.0_linux_arm64.deb
-Size: 2719208
-MD5sum: a7d7ecac96b1eeee9ab4a5feb777f759
-SHA1: a6f9737cbfe5475e702ee93701e605ca8db6d83d
-SHA256: 201bb6565b9d8127cea39392d11042dbf2b2663c54b9b788b68353a2e527aa66
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus Agent - runs on worker nodes
-
-Package: nimbus-agent
 Version: 0.7.0
 Architecture: armhf
 Maintainer: DockNimbus <hello@docknimbus.com>
@@ -534,22 +520,19 @@ Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus Agent - runs on worker nodes
 Architecture-Variant: amd64v1
 
-Package: nimbus-api
-Version: 0.2.0
-Architecture: amd64
+Package: nimbus-agent
+Version: 0.7.0
+Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 8746
-Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.2.0_linux_amd64.deb
-Size: 3993272
-MD5sum: 19a6e5212f12a7919675ecbf0337415c
-SHA1: c681a6220a756d791d27a86c0a7bebb0a8d84853
-SHA256: 8a5e896dbbe752bc047a69b1ac017135c52569a02bfeadc070ef4e60cbc7296c
+Installed-Size: 6528
+Filename: ./nimbus-agent_0.7.0_linux_arm64.deb
+Size: 2719208
+MD5sum: a7d7ecac96b1eeee9ab4a5feb777f759
+SHA1: a6f9737cbfe5475e702ee93701e605ca8db6d83d
+SHA256: 201bb6565b9d8127cea39392d11042dbf2b2663c54b9b788b68353a2e527aa66
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus API Server - control plane for your cloud
-Architecture-Variant: amd64v1
-License: MIT
+Description: DockNimbus Agent - runs on worker nodes
 
 Package: nimbus-api
 Version: 0.2.0
@@ -568,16 +551,16 @@ Description: DockNimbus API Server - control plane for your cloud
 License: MIT
 
 Package: nimbus-api
-Version: 0.3.0
+Version: 0.2.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 23447
+Installed-Size: 8746
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.3.0_linux_amd64.deb
-Size: 10195912
-MD5sum: 227f47c738c7ce00edfdfa30752528b0
-SHA1: 06cec6b46d6c29638c85b9400049cf00a6affc03
-SHA256: 527f11b8504675e9f4928081a1d20a5d3a7f194afd3bb321a6bcae5011ea6a13
+Filename: ./nimbus-api_0.2.0_linux_amd64.deb
+Size: 3993272
+MD5sum: 19a6e5212f12a7919675ecbf0337415c
+SHA1: c681a6220a756d791d27a86c0a7bebb0a8d84853
+SHA256: 8a5e896dbbe752bc047a69b1ac017135c52569a02bfeadc070ef4e60cbc7296c
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
@@ -601,16 +584,16 @@ Description: DockNimbus API Server - control plane for your cloud
 License: MIT
 
 Package: nimbus-api
-Version: 0.4.0
+Version: 0.3.0
 Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 36587
+Installed-Size: 23447
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.4.0_linux_amd64.deb
-Size: 15813544
-MD5sum: c595d1d632041a88c5b2df0726966839
-SHA1: b327385febcdcc5014f898f9e3b7427e41050c73
-SHA256: 76e9bd7b99462803a22711d76219c279131b383cf9b6fbc81ff3a2f9c581a9f2
+Filename: ./nimbus-api_0.3.0_linux_amd64.deb
+Size: 10195912
+MD5sum: 227f47c738c7ce00edfdfa30752528b0
+SHA1: 06cec6b46d6c29638c85b9400049cf00a6affc03
+SHA256: 527f11b8504675e9f4928081a1d20a5d3a7f194afd3bb321a6bcae5011ea6a13
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
@@ -634,19 +617,20 @@ Description: DockNimbus API Server - control plane for your cloud
 License: MIT
 
 Package: nimbus-api
-Version: 0.4.1
-Architecture: arm64
+Version: 0.4.0
+Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 35296
+Installed-Size: 36587
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.4.1_linux_arm64.deb
-Size: 15068880
-MD5sum: 0732c3b46211262db426398d90f554ed
-SHA1: d06c8d5d29dd3b67418ba01809c3efa8f5440818
-SHA256: 648a0a68a9d326105f840f588fc6d77164d53ff25ec1b966f0e399309b4b37f1
+Filename: ./nimbus-api_0.4.0_linux_amd64.deb
+Size: 15813544
+MD5sum: c595d1d632041a88c5b2df0726966839
+SHA1: b327385febcdcc5014f898f9e3b7427e41050c73
+SHA256: 76e9bd7b99462803a22711d76219c279131b383cf9b6fbc81ff3a2f9c581a9f2
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
+Architecture-Variant: amd64v1
 License: MIT
 
 Package: nimbus-api
@@ -667,20 +651,20 @@ Architecture-Variant: amd64v1
 License: MIT
 
 Package: nimbus-api
-Version: 0.5.0
-Architecture: amd64
+Version: 0.4.1
+Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 36441
+Installed-Size: 35296
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.5.0_linux_amd64.deb
-Size: 15770132
-MD5sum: 72830d5274815e5dea335dff63a0a78a
-SHA1: 17ed01aadf01a8729703c32f5029cdacf99e3468
-SHA256: 72b67ab3b5a9e22fa330a3cc06ed097f81ca4c5e3fa42803f147ae42e18a1649
+Filename: ./nimbus-api_0.4.1_linux_arm64.deb
+Size: 15068880
+MD5sum: 0732c3b46211262db426398d90f554ed
+SHA1: d06c8d5d29dd3b67418ba01809c3efa8f5440818
+SHA256: 648a0a68a9d326105f840f588fc6d77164d53ff25ec1b966f0e399309b4b37f1
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
-Architecture-Variant: amd64v1
+License: MIT
 
 Package: nimbus-api
 Version: 0.5.0
@@ -698,19 +682,20 @@ Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
 
 Package: nimbus-api
-Version: 0.6.0
-Architecture: arm64
+Version: 0.5.0
+Architecture: amd64
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 35306
+Installed-Size: 36441
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.6.0_linux_arm64.deb
-Size: 15092618
-MD5sum: 17a57f25a78e6c5a1887fe510fb5b47e
-SHA1: f0a10d1813c7fb5ac53f5cdc6c81df7e8eb4d823
-SHA256: 8e48ad88646e1b48ccc02bfaf4c3e2c1aefb11dac2a054f49252e2acb0dae742
+Filename: ./nimbus-api_0.5.0_linux_amd64.deb
+Size: 15770132
+MD5sum: 72830d5274815e5dea335dff63a0a78a
+SHA1: 17ed01aadf01a8729703c32f5029cdacf99e3468
+SHA256: 72b67ab3b5a9e22fa330a3cc06ed097f81ca4c5e3fa42803f147ae42e18a1649
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
+Architecture-Variant: amd64v1
 
 Package: nimbus-api
 Version: 0.6.0
@@ -729,6 +714,21 @@ Description: DockNimbus API Server - control plane for your cloud
 Architecture-Variant: amd64v1
 
 Package: nimbus-api
+Version: 0.6.0
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 35306
+Depends: nimbus, nimbus-agent
+Filename: ./nimbus-api_0.6.0_linux_arm64.deb
+Size: 15092618
+MD5sum: 17a57f25a78e6c5a1887fe510fb5b47e
+SHA1: f0a10d1813c7fb5ac53f5cdc6c81df7e8eb4d823
+SHA256: 8e48ad88646e1b48ccc02bfaf4c3e2c1aefb11dac2a054f49252e2acb0dae742
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus API Server - control plane for your cloud
+
+Package: nimbus-api
 Version: 0.6.1
 Architecture: arm64
 Maintainer: DockNimbus <hello@docknimbus.com>
@@ -739,21 +739,6 @@ Size: 17944888
 MD5sum: 001eb82c53af5ed0010a5ef4b83e2729
 SHA1: 77cff2445b7e79d427193eeb3392b80e1ab002bc
 SHA256: 40e89d2ab2cecb8c1fec2222a1b1d03cac198d1afe7cbb22e7b3f638d1901b1e
-Priority: optional
-Homepage: https://github.com/docknimbus/nimbus
-Description: DockNimbus API Server - control plane for your cloud
-
-Package: nimbus-api
-Version: 0.6.1
-Architecture: armhf
-Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 42022
-Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.6.1_linux_armv7.deb
-Size: 18154632
-MD5sum: 34530aa293eeaffa9d4bbe3e2b003530
-SHA1: 40626ee479347095df57d1af9c83a00a9185a609
-SHA256: 2da1c66769f444251f8ca8b281e0cb32b35f12c2fc40c708318bae586dd5377b
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
@@ -775,16 +760,16 @@ Description: DockNimbus API Server - control plane for your cloud
 Architecture-Variant: amd64v1
 
 Package: nimbus-api
-Version: 0.7.0
-Architecture: arm64
+Version: 0.6.1
+Architecture: armhf
 Maintainer: DockNimbus <hello@docknimbus.com>
-Installed-Size: 42102
+Installed-Size: 42022
 Depends: nimbus, nimbus-agent
-Filename: ./nimbus-api_0.7.0_linux_arm64.deb
-Size: 17975926
-MD5sum: c7ca71e8e553620f3a92cc643c936744
-SHA1: 292ec1d77d57015bda4f9f7ba58c0969954bd2ab
-SHA256: 567bab6cfe494bdf1fd662c9bbdd3ea442aa0700975fa1451ebd9c2d6fc72ec9
+Filename: ./nimbus-api_0.6.1_linux_armv7.deb
+Size: 18154632
+MD5sum: 34530aa293eeaffa9d4bbe3e2b003530
+SHA1: 40626ee479347095df57d1af9c83a00a9185a609
+SHA256: 2da1c66769f444251f8ca8b281e0cb32b35f12c2fc40c708318bae586dd5377b
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
@@ -800,6 +785,21 @@ Size: 18185926
 MD5sum: 3ad82122a3dcee7150315a4a564d6058
 SHA1: 475538519008763318762c5e7ffa93b8f109301b
 SHA256: fc15c091e0d17127a3a185e6c3c04a73293ed16117921f67c8e9e6a14021364e
+Priority: optional
+Homepage: https://github.com/docknimbus/nimbus
+Description: DockNimbus API Server - control plane for your cloud
+
+Package: nimbus-api
+Version: 0.7.0
+Architecture: arm64
+Maintainer: DockNimbus <hello@docknimbus.com>
+Installed-Size: 42102
+Depends: nimbus, nimbus-agent
+Filename: ./nimbus-api_0.7.0_linux_arm64.deb
+Size: 17975926
+MD5sum: c7ca71e8e553620f3a92cc643c936744
+SHA1: 292ec1d77d57015bda4f9f7ba58c0969954bd2ab
+SHA256: 567bab6cfe494bdf1fd662c9bbdd3ea442aa0700975fa1451ebd9c2d6fc72ec9
 Priority: optional
 Homepage: https://github.com/docknimbus/nimbus
 Description: DockNimbus API Server - control plane for your cloud
@@ -853,21 +853,6 @@ License: MIT
 
 Package: static-httpserver
 Version: 0.3.0
-Architecture: arm64
-Maintainer: ByJG <opensource@byjg.com>
-Installed-Size: 7744
-Filename: ./static-httpserver_0.3.0_linux_arm64.deb
-Size: 3184742
-MD5sum: e31e0ef6dc94fb0654d3576fcbf53618
-SHA1: 69253684e4faf45f10ea57cda6b02553c937643a
-SHA256: 0ec0efda5ee5c853788f6fa9e92f2ea8d6afcc82f6afcad757f0fdd50e3423fb
-Priority: optional
-Homepage: https://github.com/byjg/docker-static-httpserver
-Description: Minimal HTTP/HTTPS server for static files with SPA support
-License: MIT
-
-Package: static-httpserver
-Version: 0.3.0
 Architecture: amd64
 Maintainer: ByJG <opensource@byjg.com>
 Installed-Size: 8264
@@ -880,6 +865,21 @@ Priority: optional
 Homepage: https://github.com/byjg/docker-static-httpserver
 Description: Minimal HTTP/HTTPS server for static files with SPA support
 Architecture-Variant: amd64v1
+License: MIT
+
+Package: static-httpserver
+Version: 0.3.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7744
+Filename: ./static-httpserver_0.3.0_linux_arm64.deb
+Size: 3184742
+MD5sum: e31e0ef6dc94fb0654d3576fcbf53618
+SHA1: 69253684e4faf45f10ea57cda6b02553c937643a
+SHA256: 0ec0efda5ee5c853788f6fa9e92f2ea8d6afcc82f6afcad757f0fdd50e3423fb
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
 License: MIT
 
 Package: static-httpserver
@@ -907,6 +907,34 @@ Size: 3175190
 MD5sum: 59f3ce7ede26b3c4354430926e6f940c
 SHA1: 851e5b8687253956b914aaebc0fd222b8f88a1e3
 SHA256: 7a0c24a2615b9e502447f36736cc34ab53abdf32c0afc6962ad4189b60cecb7e
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+
+Package: static-httpserver
+Version: 0.5.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7744
+Filename: ./static-httpserver_0.5.0_linux_arm64.deb
+Size: 3175644
+MD5sum: 4604832df898a4cf0b49ed874a540146
+SHA1: d4c86867fae39b6ad280cb0c1aae3efe8535e0df
+SHA256: 177cee1bfa6cc2340b2039415333b2a9aa34ff21bbc1bc690ba2c0d71f8c79ed
+Priority: optional
+Homepage: https://github.com/byjg/docker-static-httpserver
+Description: Minimal HTTP/HTTPS server for static files with SPA support
+
+Package: static-httpserver
+Version: 0.5.0
+Architecture: amd64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 8304
+Filename: ./static-httpserver_0.5.0_linux_amd64.deb
+Size: 3510360
+MD5sum: 92ba78aaeedd9f56cb71ae36f442aa15
+SHA1: a74accdb3e08d3b5ed164a7ffd6dd298ffc6e2e7
+SHA256: 01788d0edf0b8559ed3c3932c9fb10565693daa91cba3a08428e2028054542cb
 Priority: optional
 Homepage: https://github.com/byjg/docker-static-httpserver
 Description: Minimal HTTP/HTTPS server for static files with SPA support
