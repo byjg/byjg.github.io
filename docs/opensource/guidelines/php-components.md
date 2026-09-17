@@ -191,7 +191,7 @@ jobs:
 |---|---|
 | `README.md` | Front matter and links as in [Publishing documentation](add-docs.md) |
 | `docs/` | Documentation pages |
-| `LICENSE` | MIT -- see [licensing](../licensing.md) |
+| `LICENSE` | MIT -- see [license](/license) |
 | `CONTRIBUTING.md` | Branch model and contribution rules |
 | `CHANGELOG-<a.b>.md` | Changes of the release line |
 | `.github/FUNDING.yml` | `github: byjg` |

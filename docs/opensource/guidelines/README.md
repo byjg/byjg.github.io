@@ -24,14 +24,21 @@ project's files, and pushes a commit to it.
 
 ## Shared rules
 
+These exist for the reasons in
+[Simple Principles to Avoid Overcomplicating the Complex](/blog/simple-principles-avoid-complexity):
+keep the pipeline simple enough to reason about, write it once instead of
+copying it into every project, and let the tests be what decides whether
+something publishes.
+
 - **Publish only after the tests pass.** Documentation and Helm jobs carry
   `if: github.ref == 'refs/heads/master'` and `needs:` the job that runs the
   tests, so broken code never reaches the site. Linux packages publish from a
   release tag instead.
 - **Chain publishing jobs; never run them in parallel.** They all push to
-  `byjg/byjg.github.io`. Two pushes at the same moment make the second one
-  fail, so a project that publishes a chart *and* documentation runs one after
-  the other with `needs:`.
+  `byjg/byjg.github.io`, so a project that publishes a chart *and* documentation
+  runs one after the other with `needs:`. The reusable workflows rebase and
+  retry when another project pushes at the same moment, but chaining keeps a
+  release from racing against itself.
 - **Check the default branch.** Most repositories use `master`, some use
   `main`. Read it; do not assume.
 - **Releases are tags.** Version tags are plain semver, `1.2.3`. The one
