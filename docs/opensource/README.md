@@ -34,3 +34,4 @@ are tested, released and documented -- read them before adding a new one. The
 thinking behind them is in
 [Simple Principles to Avoid Overcomplicating the Complex](/blog/simple-principles-avoid-complexity)
 and the [KISS principle](kiss.md).
+
