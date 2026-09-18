@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Helm
         run: |
-          wget https://get.helm.sh/helm-v3.9.4-linux-amd64.tar.gz -o /dev/null -O helm.tar.gz
+          wget https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz -o /dev/null -O helm.tar.gz
           tar xvf helm.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin
           helm version
