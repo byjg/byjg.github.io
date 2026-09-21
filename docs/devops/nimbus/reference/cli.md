@@ -40,12 +40,28 @@ Show client and server versions.
 | Subcommand       | Description                   | Key Flags                                                                                                      |
 |------------------|-------------------------------|----------------------------------------------------------------------------------------------------------------|
 | `add`            | Add a node via SSH or locally | `--ip` (required), `--user`, `--port`, `--key`, `--password`, `--profile`, `--name`, `--local`, `--gpu-driver` |
-| `update`         | Update agent binary           | `[node-id]`, `--user`, `--port`, `--key`, `--password`, `--all`, `--local`                                     |
+| `update`         | Update the agent over SSH from the control plane | `[node-id]`, `--profile`, `--user`, `--port`, `--key`, `--password`, `--all`, `--local`          |
+| `update-agent`   | Update agent binary via the agent task queue (no SSH) | `[node-id-or-name]`, `--all`                                           |
+| `os-update`      | Upgrade OS packages on a node | `[node-id-or-name]`, `--all`                                                                                   |
 | `list`           | List all nodes                |                                                                                                                |
+| `events`         | Show a node's events (deploy steps, join failures, SSH updates) | `[node-id-or-ip]`                                               |
 | `describe`       | Show node details             | `[id]`                                                                                                         |
 | `drain`          | Drain a node                  | `[id]`                                                                                                         |
 | `delete`         | Delete a node                 | `[id]`                                                                                                         |
+| `update-ip`      | Change a node's IP / pinned interface | `[node-id]`, `--ip`, `--interface`, `--regenerate-cert`                                                |
 | `gpu-overcommit` | Set GPU overcommit factor     | `[node-id]` `[factor]` (1, 2, 4, or 8)                                                                         |
+
+There are two ways to update a node's agent. `update-agent` queues the work on the **agent's own task queue**: no SSH credentials, but the agent has to be reachable and the node `ready`. `update` works over **SSH**, so it also works when the agent is down. Reach for `update-agent` first, and fall back to `update` when an agent is unreachable.
+
+Like `add`, `update` runs its SSH connection from the **control plane**, not from your machine. It can use a stored SSH profile (`--profile`), and it reaches nodes your machine cannot. A `--key` file is read on your machine and sent to the control plane. The control plane copies the agent binary and a freshly issued client certificate to a private staging directory on the node, installs them owned by root (the certificate goes to `/var/lib/nimbus`, where the agent reads it), and restarts the agent. A non-root SSH user needs passwordless `sudo`. Progress is recorded as node events (`ssh_update_started`, `ssh_update_completed` or `ssh_update_failed`), which `update` prints as they arrive; it exits non-zero if any node failed. `update --local` updates the agent on the machine you run it on, without SSH.
+
+`os-update` runs a full OS package upgrade (`apt-get upgrade` / `dnf upgrade`) on the node through its agent — it does not use SSH. If the upgrade requires a reboot (for example a new kernel), the node transitions to the `needs_reboot` state and stops running tasks until an administrator reboots it manually; the agent never reboots on its own. Use `--all` to queue the upgrade on every ready node.
+
+Because the upgrade can take several minutes, the task reports a `running` status while it is in progress (visible in the node's task list in the UI and via `nimbus task list`). When it finishes, the package-manager output is stored on the task result — inspect it with `nimbus task show <task-id>`.
+
+`update-ip` records a node's new address and pins the interface the agent watches for future changes. For the **control-plane** node, add `--regenerate-cert`: the API's TLS certificate lists the addresses it was issued for, so after the control plane moves, clients cannot verify it on the new one. The flag reissues that certificate from the existing CA and swaps it in without a restart — agents and already-downloaded connection configs keep working, since the CA is unchanged. See [Handling Dynamic Node IPs](../guides/node-dynamic-ip).
+
+The agent also checks for available OS package updates automatically once per day and reports the counts back to the control plane. `nimbus node list` shows an `UPDATES` column (total, with the security subset in parentheses; `-` means the node has not reported a check yet), and the node detail view shows the same along with when it was last checked. Nothing is installed automatically — use `os-update` when you want to apply them.
 
 ## nimbus swarm
 

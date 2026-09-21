@@ -98,6 +98,20 @@ nimbus manifest apply --file infra.yaml --prune
 
 Any `${VAR}` in the manifest is replaced before parsing. Variables are resolved from `--env` flags first, then OS environment variables. Unresolved variables are left as-is.
 
+## Drift
+
+A manifest records what you applied, and applying it is the last time DockNimbus compares it against anything. If the resources it created are later removed, stopped, or fail, the manifest itself still reads `applied` — that status describes the apply, not the current state of the cluster.
+
+So an applied manifest is also reported with a **drift** note whenever the resources it owns no longer match, naming which ones and what state they are in:
+
+```
+2 of 5 resources diverged (api: not_found, cache: stopped)
+```
+
+Ownership comes from the `manifest` tag DockNimbus writes on everything a manifest creates, so nothing extra is tracked — the note is derived from the statuses the agents already report, and is recalculated on every read rather than stored.
+
+Resources still starting up count as healthy, so a manifest applied moments ago does not report drift while its workloads come up. Re-applying the manifest is the usual way to resolve it.
+
 ## Removal
 
 `nimbus manifest remove` tears down all resources declared in the manifest in reverse dependency order:

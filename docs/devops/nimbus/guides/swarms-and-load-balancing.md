@@ -33,6 +33,14 @@ nimbus swarm add-node --swarm SWARM_ID --node NODE_ID
 
 The first node becomes the manager; additional nodes join as workers.
 
+The join runs on the node in the background. Once it succeeds, the node's local DNS is pointed at the manager for the swarm's domain. If it fails, the node is taken out of the swarm and the swarm keeps its status. The reason is recorded as a `swarm_join_failed` event:
+
+```bash
+nimbus node events NODE_ID
+```
+
+The most common reason is a Docker daemon that won't start on the node. The event then includes the state of `docker.service` and dockerd's last log line; `journalctl -u docker` on the node shows the rest.
+
 ## List swarms
 
 ```bash
@@ -75,6 +83,16 @@ This configures `systemd-resolved` to forward queries for swarm domains to the m
 ```bash
 sudo nimbus dns remove
 ```
+
+## Unmanaged resources
+
+DockNimbus manages only the resources it created, so anything you deploy straight to Docker stays outside its control. The swarm's detail page in the web UI has an **Unmanaged Resources** panel that shows those services, so a swarm is not a place where things can hide.
+
+Press **Scan** to run it. The scan is manual rather than automatic because each run queues a task on the swarm manager, and its result is never stored — it is a live look at the swarm, accurate as of the moment you pressed the button.
+
+DockNimbus's own services are excluded: instances, the load balancer, local DNS, and every service belonging to a stack deployed through DockNimbus, including stacks whose services carry no DockNimbus label of their own.
+
+The panel is read-only. It shows you what is there; stopping it is still done through Docker.
 
 ## Delete a swarm
 

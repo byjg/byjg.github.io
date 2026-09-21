@@ -61,6 +61,8 @@ nimbus node add --ip 192.168.1.11 --user root --key ~/.ssh/id_rsa
 > For repeated use or shared SSH settings, create a reusable profile first:
 > `nimbus ssh-profile add` and then use `--profile <name>` instead of `--user`/`--key`.
 
+If a deploy fails (for example, a wrong or unreachable IP), it cleans up after itself, so you can retry right away. A machine that used to run a DockNimbus control plane can be added too: the join disables its old `nimbus-api`/`nimbus-gui` and backs up their files. It does not leave an old Docker Swarm, so run `docker swarm leave --force` on it first if it still has one.
+
 For nodes where SSH is not available (multi-cloud, NAT), generate a join token and run the agent manually:
 
 ```bash
@@ -77,6 +79,16 @@ If the node cannot be reached via SSH but can reach the API's public IP (e.g. be
 # Run on the node itself:
 sudo nimbus node add --local --ip <API_PUBLIC_IP>
 ```
+
+### Managing nodes in the UI
+
+The **Nodes** page works by selection: tick the nodes you want with the checkboxes (or **Select all**), and the toolbar above the table acts on them. Every action lives there, so there is one place to look.
+
+Actions that work on any number of nodes — **Update agent**, **OS update**, **Reboot**, **Check updates** — show how many of the selected nodes they apply to, such as **Update agent (2)** when only two are outdated, and are disabled when that count is zero.
+
+**Rename**, **Change IP** and **Delete** act on a single machine, so they are enabled only when exactly one node is selected. Delete still asks you to type the node's name.
+
+Progress for anything you start appears in the [activity dock](../guides/activity-dock).
 
 ## 3. Verify
 

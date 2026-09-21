@@ -95,7 +95,7 @@ This automatically:
 1. Pre-creates a node record and issues a client certificate
 2. Downloads the agent binary from the API server
 3. Copies binary, CA cert, and client cert/key to the remote machine via SSH
-4. Installs Docker and WireGuard if missing
+4. Installs WireGuard if missing (Docker is installed automatically only when the node is assigned to a Docker Swarm)
 5. Writes the agent config and starts the systemd service
 6. Waits for the node to become ready
 
@@ -111,3 +111,7 @@ With your node ready, try the workflows in the [Guides](../guides/compute) secti
 GOOS=linux GOARCH=arm64 make build    # ARM64
 make build-cross                         # All platforms
 ```
+
+## Deploying a development build
+
+To install your build on an existing control plane, or to run it in the foreground on the control plane itself, use the helpers described in [Development Scripts](./scripts).

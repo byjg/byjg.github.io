@@ -84,6 +84,9 @@ the old one.
 - Once WireGuard is down, agents cannot reach the API (which is on the overlay
   `10.106.103.1`) and become unreachable.
 - New join tokens will still encode the old CP IP until `update-ip` is run.
+- **The API's TLS certificate no longer matches.** It lists the addresses it was
+  issued for, so any client reaching the CP on its new address fails
+  verification with `x509: certificate is valid for ..., not <new-cp-ip>`.
 
 **Fix — while workers are still connected (tunnel still up):**
 
@@ -91,8 +94,34 @@ Run `update-ip` before the old IP becomes unreachable. The CP will push peer
 updates to all workers over the still-live tunnel:
 
 ```bash
-nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip>
+nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
 ```
+
+`--regenerate-cert` applies to the control-plane node only. It reissues the API
+server certificate so it covers the new address and swaps it in **without a
+restart**. The certificate authority is not touched, which matters:
+
+- Every agent's client certificate was issued by that CA and keeps working.
+- Connection configs already downloaded (`nimbus configure --from ...`) embed the
+  CA, not the server certificate, so they stay valid. Only the `api_url` they
+  point at needs updating:
+
+  ```bash
+  nimbus configure --from nimbus-config.json --api-url https://<new-cp-ip>:8443
+  ```
+
+In the web dashboard the same option appears as **“Reissue the API certificate
+for the new address”** in the *Change IP Address* dialog. It is shown only for
+the control-plane node, and is pre-selected there.
+
+The dashboard has its own certificate (`gui.crt`) with the same problem. It is
+checked and reissued when `nimbus-gui` restarts, so no separate step is needed —
+but until then the browser will warn about the CP's new address.
+
+> **Never delete `ca.crt` or `ca.key` to force a new certificate.** The CA is the
+> root of trust for every node certificate it has issued; replacing it locks
+> every agent out of the mesh. `--regenerate-cert` — and a service restart —
+> reissue only `server.crt`/`gui.crt` and their keys, leaving the CA untouched.
 
 **Fix — after workers have already lost connectivity (tunnel down):**
 
@@ -135,10 +164,11 @@ cat /etc/wireguard/wg-nimbus.conf | grep PrivateKey | \
 
 Once the tunnel is restored, the worker will reconnect to the API and can
 receive normal tasks again. Then run `update-ip` from the CLI to persist the
-change and redistribute configs to all nodes:
+change, redistribute configs to all nodes, and reissue the API certificate for
+the new address:
 
 ```bash
-nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip>
+nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
 ```
 
 ---

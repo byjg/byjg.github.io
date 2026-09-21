@@ -42,6 +42,8 @@ nimbus k8s remove-node --cluster CLUSTER_ID --node NODE_ID
 
 The control plane node cannot be removed.
 
+A new worker installs the k3s agent in the background, which can take a minute or more. If the install fails, the node is taken out of the cluster and the cluster keeps its status. The reason is recorded as a `cluster_join_failed` event (`nimbus node events NODE_ID`).
+
 ## Promote and demote nodes
 
 In HA clusters (created with `--ha`), worker nodes can be promoted to control plane and demoted back:
@@ -81,6 +83,16 @@ nimbus k8s delete-cluster CLUSTER_ID
 ## Load balancing
 
 K3s clusters automatically deploy EasyHAProxy as an ingress controller. Compute instances deployed to K8s get an Ingress resource with a domain in the format `<name>.<cluster-name>.nimbus`.
+
+## Unmanaged resources
+
+DockNimbus manages only the resources it created, so deployments applied straight through `kubectl` stay outside its control. The cluster's detail page in the web UI has an **Unmanaged Resources** panel listing those deployments.
+
+Press **Scan** to run it. The scan is manual because each run queues a task on the control-plane node, and its result is never stored — it is a live look at the cluster rather than an inventory that can go stale.
+
+Excluded from the listing are the cluster's own system namespaces (`kube-system`, `kube-public`, `kube-node-lease` — which is where K3s keeps CoreDNS, Traefik, metrics-server and the local path provisioner), anything carrying a `nimbus` label, and any namespace DockNimbus created. That last rule is what keeps the EasyHAProxy ingress out of the list: it is installed from a Helm chart whose labels are not DockNimbus's to set, so DockNimbus labels the namespace it creates for it instead.
+
+The panel is read-only. It shows you what is there; removing it is still done through `kubectl`.
 
 ## Access control (OIDC)
 

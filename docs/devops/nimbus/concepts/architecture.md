@@ -34,7 +34,7 @@ User --> nimbus CLI (HMAC/JWT) --> nimbus-api (control plane, TLS)
 Each agent gets a unique client certificate signed by the API's CA during the node join process. The agent's node ID is embedded in the certificate's CommonName. All agent-to-API traffic uses mutual TLS over WireGuard.
 
 The agent communicates through three endpoints:
-- **POST /v1/internal/heartbeat** — periodic health reports with hardware metrics
+- **POST /v1/internal/heartbeat** — periodic health reports with hardware metrics, plus the workload statuses (instance and compose-stack state, running replica counts, error reasons) observed by the agent's Docker/Kubernetes watchers. Normally only what changed since the previous heartbeat is sent, so heartbeats stay small; every five minutes the agent sends every status instead. That full report is what corrects a status the API never applied — since the agent otherwise reports only changes, a status that was dropped would never be sent again on its own
 - **GET /v1/internal/tasks/`{nodeId}`** — poll for pending tasks to execute
 - **POST /v1/internal/tasks/`{taskId}`/result** — report task completion or failure
 

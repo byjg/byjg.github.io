@@ -63,3 +63,28 @@ nimbus service list
 nimbus service describe SERVICE_ID
 nimbus service remove SERVICE_ID
 ```
+
+## Service status and replicas
+
+`nimbus service list` shows the live state of each stack as observed on the swarm:
+
+```
+ID          NAME      SWARM       REPLICAS  STATUS   REASON  CREATED
+svc-xxxxxx  my-stack  swarm-xxxx  3         running          2026-07-06T12:00:00Z
+```
+
+- **REPLICAS** is the number of tasks actually running across the stack's services (not the desired count from the compose file).
+- **STATUS** starts as `pending` when a deploy is queued and only becomes `running` once the agent on the swarm manager confirms the stack's tasks are up. If tasks fail or the stack disappears from the swarm, the status changes to `error` or `not_found` with the reason in **REASON**.
+
+The agent on each swarm manager watches its workloads continuously (Docker events plus a periodic sync) and pushes changes to the API with its heartbeat, so the CLI and the web UI reflect real state within roughly the heartbeat interval (10 seconds by default) — including for services deployed through manifests. A service whose node stops sending heartbeats is marked `error` with reason `node offline`.
+
+### Drift
+
+A service you stopped through DockNimbus, but which is running on the swarm anyway, is reported as `drifted` rather than being quietly changed to `running`. That happens when someone scales the stack back up directly in Docker: what DockNimbus recorded and what the swarm is doing no longer agree, and neither is assumed to be the one you meant.
+
+Resolve it whichever way you intended:
+
+- `nimbus service stop SERVICE_ID` enforces the recorded state and stops it again.
+- `nimbus service start SERVICE_ID` adopts what is running, and the status returns to `running`.
+
+Doing nothing is also fine — the status stays `drifted`, and if the stack later stops on its own it goes back to `stopped` by itself.

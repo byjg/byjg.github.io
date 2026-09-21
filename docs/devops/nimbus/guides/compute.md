@@ -62,6 +62,12 @@ nimbus compute start INSTANCE_ID
 nimbus compute terminate INSTANCE_ID
 ```
 
+An instance you stopped through DockNimbus, but which the runtime reports as running, is shown as `drifted`. That happens when someone scales the service back up directly in Docker or Kubernetes: what DockNimbus recorded and what is actually running no longer agree, and DockNimbus will not silently pick a side.
+
+Either resolution works — `nimbus compute stop` enforces the recorded state, `nimbus compute start` adopts what is running — and if the instance stops again on its own the status returns to `stopped` without you doing anything.
+
+Terminated instances are never treated this way: they are gone deliberately and are not resurrected by an observation.
+
 ## Logs
 
 Fetch the last 100 lines of an instance's container logs:
