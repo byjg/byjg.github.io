@@ -11,7 +11,7 @@ packages are signed with the ByJG Opensource key, published as
 `https://opensource.byjg.com/byjg.asc` (armored, for RPM). Both repositories
 are stored in `packages/` of this site's repository.
 
-How users install from them: [Linux Package Repository](/docs/packages).
+How users install from them: [Package Repository](/docs/packages).
 
 ## How it works
 
@@ -145,6 +145,19 @@ they can be downloaded.
   succeeds.
 - **Old versions stay.** The repository keeps every version
   (`dpkg-scanpackages --multiversion`), so users can pin one.
+
+## Homebrew
+
+Command-line tools are also published as Homebrew formulas in
+[byjg/homebrew-tap](https://github.com/byjg/homebrew-tap), for macOS and
+Linux. The formulas build from the source archive of a release tag, so no
+macOS binaries, code signing or extra release job is needed.
+
+- **Adding a tool:** add `Formula/<name>.rb` to the tap with a `test do`
+  block. The tap README has the checks to run.
+- **New versions:** nothing to do. A daily workflow in the tap finds newer
+  release tags with `brew livecheck`, updates `url` and `sha256`, then builds,
+  tests and audits the formula before committing it.
 
 ## The signing key
 

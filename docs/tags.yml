@@ -113,3 +113,23 @@ rpm:
 deb:
   label: DEB
   description: Debian package format
+
+rust:
+  label: Rust
+  description: Rust tools and libraries
+
+shell:
+  label: Shell
+  description: Shells and command-line tools
+
+acp:
+  label: ACP
+  description: Agent Client Protocol clients and agents
+
+macos:
+  label: macOS
+  description: Tools available on macOS
+
+homebrew:
+  label: Homebrew
+  description: Homebrew formulas and the ByJG tap

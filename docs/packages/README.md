@@ -2,15 +2,17 @@
 id: packages
 slug: /packages
 sort: 5
-tags: [linux, packages, apt, rpm, deb]
+tags: [linux, macos, packages, apt, rpm, deb, homebrew]
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Linux Package Repository
+# Package Repository
 
-Here you can find Linux packages for our opensource projects.
+Here you can find Linux packages for our opensource projects, and a
+[Homebrew](https://brew.sh) tap ([byjg/homebrew-tap](https://github.com/byjg/homebrew-tap))
+with our command-line tools for macOS and Linux.
 
 ## Setup
 
@@ -62,6 +64,19 @@ EOF
 ```
 
 </TabItem>
+<TabItem value="brew" label="macOS / Linux (Homebrew)">
+
+Add the ByJG tap:
+
+```bash
+brew tap byjg/tap
+```
+
+This step is optional: `brew install byjg/tap/<formula>` adds the tap
+automatically. Formulas build from source on your machine, so macOS does not
+quarantine the binaries.
+
+</TabItem>
 </Tabs>
 
 ## Install a package
@@ -85,6 +100,13 @@ sudo yum install <package-name>
 ```
 
 </TabItem>
+<TabItem value="brew" label="macOS / Linux (Homebrew)">
+
+```bash
+brew install byjg/tap/<formula-name>
+```
+
+</TabItem>
 </Tabs>
 
 ## List available packages
@@ -102,6 +124,15 @@ grep ^Package /var/lib/apt/lists/*opensource.byjg.com*Packages
 ```bash
 dnf repoquery --repo=byjg --available
 ```
+
+</TabItem>
+<TabItem value="brew" label="macOS / Linux (Homebrew)">
+
+```bash
+ls "$(brew --repository byjg/tap)/Formula"
+```
+
+The tap has the command-line tools: `parolsh` and `static-httpserver`.
 
 </TabItem>
 </Tabs>
@@ -123,6 +154,15 @@ sudo apt update
 sudo rm /etc/yum.repos.d/byjg.repo
 sudo dnf clean all
 ```
+
+</TabItem>
+<TabItem value="brew" label="macOS / Linux (Homebrew)">
+
+```bash
+brew untap byjg/tap
+```
+
+Uninstall its formulas first (`brew uninstall <formula-name>`).
 
 </TabItem>
 </Tabs>
