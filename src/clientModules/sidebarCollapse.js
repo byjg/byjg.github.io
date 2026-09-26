@@ -70,9 +70,8 @@ export function onRouteDidUpdate({location, previousLocation}) {
   if (typeof window === 'undefined') return;
 
   setTimeout(() => {
-    // Don't collapse on index pages (README pages)
-    const indexPages = ['/docs/php', '/docs/devops', '/docs/js', '/docs/helm'];
-    const isIndexPage = indexPages.some(page => location.pathname === page || location.pathname === page + '/');
+    // Don't collapse on section index pages (README pages): /docs/<section> or /<locale>/docs/<section>
+    const isIndexPage = /^(\/[a-z]{2})?\/docs\/[^/]+\/?$/.test(location.pathname);
 
     if (isIndexPage) {
       // Show all topics on index pages
