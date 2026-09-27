@@ -95,6 +95,7 @@ already enabled. See [Getting started](getting-started).
 - [Input routing](input-routing)
 - [Projects](projects)
 - [Configuration](configuration)
+- [Troubleshooting](troubleshooting)
 
 ## Build from source
 
