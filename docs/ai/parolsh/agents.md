@@ -95,7 +95,7 @@ offer, and the conversation keeps going. The list can change: Claude drops
 `fast` for models without a fast mode. Options are values the agent reports
 for your account and version, so check `#options` rather than this page.
 
-`options` merges key by key, like `env`: a project can change one option.
+`options` merges key by key: a project can change one option.
 
 ### Less thinking
 
@@ -123,9 +123,9 @@ export OPENAI_API_KEY=sk-...
 ```
 
 The agent inherits them through Parolsh. `env` works for keys too, but then
-the key sits in plain text in `config.toml`, and in a project's
-`.parolsh/config.toml` it can end up in git. Use `env` for base URLs, model
-names and switches.
+the key sits in plain text in `config.toml`. Use `env` for base URLs, model
+names and switches. `env` is only read from the global file, see
+[What a project can change](configuration.md#what-a-project-can-change).
 
 ## Summary
 
@@ -464,10 +464,26 @@ instead of adding lines:
 ⠹ Running: Terminal · 12s
 ```
 
-Tool calls only update that line. While the agent reasons before answering
-("thinking"), the line shows the latest bit of its reasoning, for example
-`⠸ Thinking: Let me calculate · 3s`; the reasoning itself is not printed. When
-the turn ends, the status line is replaced by a summary:
+Tool calls only update that line: `Running: <title> (8s)` with the time that
+tool has taken, `2 tools running` when there are more, `Failed: <title>` when
+one fails, and back to `Thinking` when they are done. An agent that shares
+its plan shows the step in progress, `Plan 2/5: <step>`. While the agent
+reasons before answering ("thinking"), the line shows the latest bit of its
+reasoning, for example `⠸ Thinking: Let me calculate · 3s`; the reasoning
+itself is not printed.
+
+After 15 seconds without anything from the agent, the line says for how long
+it has been quiet, and after a minute how to cancel:
+
+```text
+⠦ Thinking · 376s · quiet 340s · Ctrl+C to cancel
+```
+
+A quiet agent may still be working, for example waiting for a slow tool or
+its API, since agents send nothing while they wait. To see what it really
+sent, see [Logging the agent's messages](troubleshooting.md#logging-the-agents-messages).
+
+When the turn ends, the status line is replaced by a summary:
 
 ```text
 The container exits because DATABASE_URL is not set...
