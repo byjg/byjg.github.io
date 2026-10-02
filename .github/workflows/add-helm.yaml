@@ -28,14 +28,14 @@ jobs:
 
     steps:
       - name: Checkout repository (byjg.github.io)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.DOC_TOKEN }}
           repository: byjg/byjg.github.io
           path: byjg.github.io
 
       - name: Checkout Project ${{ env.REPOSITORY }} repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           repository: ${{ env.REPOSITORY }}
