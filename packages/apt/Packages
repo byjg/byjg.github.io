@@ -1159,6 +1159,36 @@ Priority: optional
 Homepage: https://github.com/byjg/parolsh
 Description: Natural-language-first shell for ACP agents
 
+Package: parolsh
+Version: 0.7.0
+Architecture: arm64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7163
+Depends: bash
+Filename: ./parolsh_0.7.0_linux_arm64.deb
+Size: 3352702
+MD5sum: 4fb3a4e42783827b9425214b6a7e7e91
+SHA1: 1549bb97e6c8b56f0ec8377dc279d2e5fb7bfc8a
+SHA256: abdfd77288b3e41b6024c25e01231570309ec7f75ab82592c62845402cd3cc31
+Priority: optional
+Homepage: https://github.com/byjg/parolsh
+Description: Natural-language-first shell for ACP agents
+
+Package: parolsh
+Version: 0.7.0
+Architecture: amd64
+Maintainer: ByJG <opensource@byjg.com>
+Installed-Size: 7652
+Depends: bash
+Filename: ./parolsh_0.7.0_linux_amd64.deb
+Size: 3448578
+MD5sum: 1f5afe0202fd6c54a5c100b4e3942efa
+SHA1: ae91feac040d41096e2f253a368a297ecf005402
+SHA256: 3f9029dd8ad2021894ef4233d84e6130b49cf42257b3466c821b34f2389ed5c3
+Priority: optional
+Homepage: https://github.com/byjg/parolsh
+Description: Natural-language-first shell for ACP agents
+
 Package: static-httpserver
 Version: 0.2.0
 Architecture: amd64
