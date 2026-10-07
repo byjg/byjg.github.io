@@ -214,9 +214,19 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.stepCol {
+  margin-bottom: 2rem;
+}
+
+.stepCard {
+  height: 100%;
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.stepLink {
+  display: inline-block;
+  margin-right: 1rem;
+  font-weight: var(--ifm-font-weight-semibold);
 }
 
 /* Responsive Design */
@@ -270,11 +280,6 @@
     width: 40px;
     height: 40px;
     font-size: 1.5rem;
-  }
-
-  .featureSvg {
-    height: 150px;
-    width: 150px;
   }
 }
 

@@ -14,6 +14,7 @@ new project, or before changing how an existing one is released.
 | Documentation on this site | `add-doc.yaml` reusable workflow | [Publishing documentation](add-docs.md) |
 | A Helm chart to `opensource.byjg.com/helm` | `add-helm.yaml` reusable workflow | [Publishing a Helm chart](helm.md) |
 | DEB/RPM packages to the APT and RPM repositories | `add-pkg.yaml` reusable workflow | [Publishing Linux packages](linux-packages.md) |
+| A Homebrew formula to `byjg/homebrew-tap` | A formula in the tap; a daily workflow there follows the release tags | [Homebrew](linux-packages.md#homebrew) |
 | A Docker image | The project's own `build.yml` | [Docker images](docker-images.md) |
 | A PHP component to Packagist | A git tag | [PHP components](php-components.md) |
 

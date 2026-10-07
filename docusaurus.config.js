@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Opensource ByJG',
-  tagline: 'A wide range of opensource projects ByJG',
+  tagline: 'Open source to build, run and evolve software with AI assistance',
   favicon: 'img/favicon.ico',
   staticDirectories: ['helm-charts', 'packages', 'static'],
 

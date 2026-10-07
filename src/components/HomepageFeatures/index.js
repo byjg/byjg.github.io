@@ -7,6 +7,26 @@ import {useState} from 'react';
 // Highlighted Projects - These are the featured/important projects
 const HighlightedProjects = [
   {
+    title: 'Parolsh',
+    link: '/docs/ai/parolsh',
+    image: require('@site/docs/ai/parolsh/images/logo-mark.png').default,
+    description: (
+      <>
+        A shell where natural language is the default command language, working with any ACP agent.
+      </>
+    ),
+  },
+  {
+    title: 'DockNimbus',
+    link: '/docs/devops/nimbus',
+    image: require('@site/docs/devops/nimbus/docknimbus-transparent.png').default,
+    description: (
+      <>
+        Turns bare metal machines into a platform with compute, networking, storage and clusters.
+      </>
+    ),
+  },
+  {
     title: 'EasyHAProxy',
     link: '/docs/devops/docker-easy-haproxy',
     image: require('@site/docs/devops/docker-easy-haproxy/logo.png').default,
@@ -48,37 +68,55 @@ const HighlightedProjects = [
   },
 ];
 
-// Main Groups - These are the category navigation
-const MainGroups = [
+// Steps - the path described in docs/opensource/ecosystem.md
+const Steps = [
   {
-    title: 'PHP Components',
-    link: '/docs/php',
-    Svg: require('@site/static/img/php_logo.svg').default,
-    description: (
-      <>
-          Check the documentation for the Opensource PHP components.
-      </>
-    ),
+    title: '1. Build',
+    description: 'Start an application from Gluo and independent, reusable components.',
+    links: [
+      {label: 'Gluo', to: '/docs/php/gluo'},
+      {label: 'PHP Components', to: '/docs/php'},
+      {label: 'Node & JS', to: '/docs/js'},
+    ],
   },
   {
-    title: 'Docker & DevOps',
-    link: '/docs/devops',
-    Svg: require('@site/static/img/docker_logo.svg').default,
-    description: (
-      <>
-        Docker images and DevOps tools.
-      </>
-    ),
+    title: '2. Test locally',
+    description: 'Run it on your machine with the same Docker images used in production.',
+    links: [
+      {label: 'Docker PHP', to: '/docs/devops/docker-php'},
+    ],
   },
   {
-    title: 'Node & JS',
-    link: '/docs/js',
-    Svg: require('@site/static/img/nodejs_logo.svg').default,
-    description: (
-      <>
-        Components for Node and JS.
-      </>
-    ),
+    title: '3. Deploy',
+    description: 'CI/CD builds the image and deploys it to a platform made from your machines.',
+    links: [
+      {label: 'DockNimbus', to: '/docs/devops/nimbus'},
+      {label: 'Docker & DevOps', to: '/docs/devops'},
+    ],
+  },
+  {
+    title: '4. Run in production',
+    description: 'The image you tested, behind a load balancer with service discovery.',
+    links: [
+      {label: 'EasyHAProxy', to: '/docs/devops/docker-easy-haproxy'},
+    ],
+  },
+  {
+    title: 'One standard',
+    description: 'Independent projects, joined by automation: tests, releases and publishing to apt, dnf, brew and Helm.',
+    links: [
+      {label: 'Guidelines', to: '/docs/opensource/guidelines'},
+      {label: 'Helm Charts', to: '/docs/helm'},
+      {label: 'Linux Packages', to: '/docs/packages'},
+    ],
+  },
+  {
+    title: 'Docs for humans and AI',
+    description: 'One documentation, read on this site and served to AI assistants.',
+    links: [
+      {label: 'ByJG Docs MCP', to: '/docs/ai/mcpserver-byjg-docs'},
+      {label: 'Parolsh', to: '/docs/ai/parolsh'},
+    ],
   },
 ];
 
@@ -196,15 +234,21 @@ function ProjectCarousel({projects}) {
   );
 }
 
-function MainGroup({Svg, link, title, description}) {
+function Step({title, description, links}) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Link to={link}><Svg className={styles.featureSvg} role="img" /></Link>
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Link to={link}><Heading as="h3">{title}</Heading>
-        <p>{description}</p></Link>
+    <div className={clsx('col col--4', styles.stepCol)}>
+      <div className={clsx('card', styles.stepCard)}>
+        <div className="card__header">
+          <Heading as="h3">{title}</Heading>
+        </div>
+        <div className="card__body">
+          <p>{description}</p>
+        </div>
+        <div className="card__footer">
+          {links.map(({label, to}) => (
+            <Link key={to} to={to} className={styles.stepLink}>{label}</Link>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -223,15 +267,18 @@ export default function HomepageFeatures() {
         </div>
       </section>
 
-      {/* Main Groups Section */}
+      {/* Steps Section */}
       <section className={styles.features}>
         <div className="container">
           <div className="text--center margin-bottom--lg">
-            <Heading as="h2">Explore by Category</Heading>
+            <Heading as="h2">From Idea to Production</Heading>
+            <p>
+              One path, the same containers and the same standard. <Link to="/docs/opensource/ecosystem">See how it fits together</Link>.
+            </p>
           </div>
           <div className="row">
-            {MainGroups.map((props, idx) => (
-              <MainGroup key={idx} {...props} />
+            {Steps.map((props, idx) => (
+              <Step key={idx} {...props} />
             ))}
           </div>
         </div>

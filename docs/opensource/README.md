@@ -4,16 +4,21 @@ sidebar_position: 1
 
 # Opensource by JG
 
-A set of small, independent components, all [MIT licensed](/license/) and
-maintained in the open at [github.com/byjg](https://github.com/byjg).
+Open source projects to build, run and evolve software with AI assistance:
+reusable application components, container images, delivery tooling, an
+infrastructure platform, and the documentation of all of it made available to
+AI assistants. Everything is [MIT licensed](/license/) and maintained in the
+open at [github.com/byjg](https://github.com/byjg).
 
-| Where | What you will find |
-|---|---|
-| [PHP](/docs/php) | Components published on Packagist: database access, REST, migrations, caching, JWT, queues |
-| [DevOps](/docs/devops) | Docker images and tooling, from HAProxy with service discovery to the Kubernetes CI image |
-| [JavaScript](/docs/js) | Small browser libraries |
-| [AI](/docs/ai) | Tooling built around these projects, such as the documentation MCP server |
-| [Linux packages](/docs/packages) and [Helm charts](/docs/helm) | The APT, RPM and Helm repositories |
+Each project works on its own. [The ByJG Ecosystem](ecosystem.md) shows how
+they fit together, from an idea to production.
+
+| Layer | Where | What you will find |
+|---|---|---|
+| Knowledge and developer experience | [AI](/docs/ai) | The documentation MCP server and Parolsh, the natural language shell |
+| Application building blocks | [PHP](/docs/php), [JavaScript](/docs/js) | Components published on Packagist (database access, REST, migrations, caching, JWT, queues) and small browser libraries |
+| Runtime, delivery and infrastructure | [DevOps](/docs/devops) | Docker images, HAProxy with service discovery, the Kubernetes CI image and the DockNimbus platform |
+| Distribution | [Linux packages](/docs/packages), [Helm charts](/docs/helm) | The APT, RPM and Helm repositories |
 
 ## Taking part
 
