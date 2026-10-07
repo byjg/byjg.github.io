@@ -53,13 +53,13 @@ If you didn't use `--lb` at creation time, you can manage the load balancer sepa
 
 ```bash
 # Deploy EasyHAProxy
-nimbus swarm lb set --swarm SWARM_ID
+nimbus gateway lb set --swarm SWARM_ID
 
 # List load balancers
-nimbus swarm lb list
+nimbus gateway lb list
 
-# Remove EasyHAProxy
-nimbus swarm lb remove --swarm SWARM_ID
+# Delete the load balancer
+nimbus gateway lb delete --swarm SWARM_ID
 ```
 
 ## Gateway status
@@ -75,13 +75,13 @@ nimbus gateway status
 Configure your workstation to resolve swarm domains (e.g., `web-1.production.nimbus`) via dnsmasq running on the swarm manager:
 
 ```bash
-sudo nimbus dns setup
+sudo nimbus dns create
 ```
 
 This configures `systemd-resolved` to forward queries for swarm domains to the manager node's dnsmasq. To remove:
 
 ```bash
-sudo nimbus dns remove
+sudo nimbus dns delete
 ```
 
 ## Unmanaged resources
@@ -97,5 +97,17 @@ The panel is read-only. It shows you what is there; stopping it is still done th
 ## Delete a swarm
 
 ```bash
-nimbus swarm delete SWARM_ID
+nimbus swarm delete SWARM_ID          # load balancer and nodes removed first
+nimbus swarm delete SWARM_ID --force  # removes the load balancer, every node leaves
 ```
+
+A swarm that still has instances or services Nimbus manages (that are not terminated) cannot be
+deleted: delete them first. The same holds for removing its last node, or deleting that node.
+
+Every member leaves the Docker swarm, and the swarm shows as `deleting` until they all have. A node
+whose agent is offline leaves when it comes back, so the swarm is never removed while a node is still
+in it. If a leave fails, the swarm stays in `error` with that node still listed; run the delete again once
+the node is fixed, and its leave is retried.
+Removing the last node with `nimbus swarm remove-node` deletes the swarm the same way.
+
+While a swarm is `deleting`, its name cannot be reused.

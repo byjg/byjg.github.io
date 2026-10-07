@@ -18,7 +18,7 @@ Cloudflare's servers must be able to reach Nimbus to validate tokens. If Nimbus 
 
 **Option A — Public domain on port 8443** (simplest):
 ```bash
-nimbus certificate add \
+nimbus certificate create \
   --domain nimbus.example.com \
   --cert /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
   --key  /etc/letsencrypt/live/nimbus.example.com/privkey.pem

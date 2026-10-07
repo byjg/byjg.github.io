@@ -55,6 +55,7 @@ s3:
 kubernetes:
   cluster1:
     nodes: [web1, web2]
+    lb: true                     # EasyHAProxy, serving the cluster's Ingress objects
     # manifests:
     #   - apiVersion: apps/v1
     #     kind: Deployment

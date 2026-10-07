@@ -11,7 +11,7 @@ Compute instances are containers running on Docker Swarm or Kubernetes clusters,
 ## Create an instance
 
 ```bash
-nimbus compute run \
+nimbus compute create \
   --name web-1 \
   --swarm SWARM_ID \
   --image byjg/static-httpserver \
@@ -24,7 +24,7 @@ nimbus compute run \
 For Kubernetes deployments, use `--k8s` instead of `--swarm`:
 
 ```bash
-nimbus compute run \
+nimbus compute create \
   --name web-1 \
   --k8s CLUSTER_ID \
   --image nginx:latest \
@@ -59,7 +59,7 @@ nimbus compute scale --id INSTANCE_ID --replicas 3
 ```bash
 nimbus compute stop INSTANCE_ID
 nimbus compute start INSTANCE_ID
-nimbus compute terminate INSTANCE_ID
+nimbus compute delete INSTANCE_ID
 ```
 
 An instance you stopped through DockNimbus, but which the runtime reports as running, is shown as `drifted`. That happens when someone scales the service back up directly in Docker or Kubernetes: what DockNimbus recorded and what is actually running no longer agree, and DockNimbus will not silently pick a side.
@@ -95,14 +95,15 @@ Works with both Docker Swarm and Kubernetes instances.
 Mount an NFS volume to a running instance:
 
 ```bash
-nimbus compute volume attach --instance INSTANCE_ID --volume VOL_ID:/data
-nimbus compute volume detach --instance INSTANCE_ID --volume VOL_ID
+nimbus volume attach VOL_ID --instance INSTANCE_ID --path /data
+nimbus volume detach VOL_ID --instance INSTANCE_ID
+nimbus volume list --instance INSTANCE_ID
 ```
 
 Or specify volumes at creation time:
 
 ```bash
-nimbus compute run --name app --swarm SWARM_ID \
+nimbus compute create --name app --swarm SWARM_ID \
   --image myapp --type small --volume VOL_ID:/data
 ```
 
@@ -111,7 +112,7 @@ nimbus compute run --name app --swarm SWARM_ID \
 Route traffic through the load balancer with a custom domain:
 
 ```bash
-nimbus compute run --name app --swarm SWARM_ID \
+nimbus compute create --name app --swarm SWARM_ID \
   --image myapp --type small --port 80:8080 \
   --domain app.example.com
 ```
@@ -121,14 +122,14 @@ nimbus compute run --name app --swarm SWARM_ID \
 Request NVIDIA GPUs for ML training, inference, or other GPU workloads. GPUs are an independent resource — pick any instance type for CPU/memory and add `--gpu N`:
 
 ```bash
-nimbus compute run --name ml-train --swarm SWARM_ID \
+nimbus compute create --name ml-train --swarm SWARM_ID \
   --image pytorch/pytorch:latest --type large --gpu 1
 ```
 
 On Kubernetes:
 
 ```bash
-nimbus compute run --name inference --k8s CLUSTER_ID \
+nimbus compute create --name inference --k8s CLUSTER_ID \
   --image llama:latest --type medium --gpu 2
 ```
 
@@ -159,14 +160,22 @@ Allowed values: `1`, `2`, `4`, `8`.
 nimbus node list
 ```
 
-The GPU column shows `used/total` virtual slots for GPU nodes, or `-` for non-GPU nodes. Use `nimbus node describe NODE_ID` for per-device details including model, memory, and health status.
+The GPU column shows `available/total` virtual slots for GPU nodes, like the CPU and MEMORY columns, or `-` for non-GPU nodes. Use `nimbus node describe NODE_ID` for per-device details including model, memory, and health status.
+
+A slot is in use when something holds it, whoever placed it:
+
+- **Docker Swarm:** the slots a running container's service reserves (`generic_resources: gpu`), whether it is a compute instance, a stack, or a service deployed outside Nimbus.
+- **Kubernetes:** the `nvidia.com/gpu` its pods request, reported by the cluster's control node.
+- **Outside the orchestrators:** each workload using a GPU without either (`docker run --gpus`, a process on the host) holds one slot of each GPU it uses. A workload is a container with all its processes, or a process outside any container.
+
+A slot counts a tenant, not how much of the GPU it uses, the same as time-slicing does. The count is information: Swarm and Kubernetes place GPU work by their own reservations, which know nothing of a workload outside them, so with an overcommit factor above 1 they may place work beside it.
 
 ## Platform constraints
 
 Target specific architectures:
 
 ```bash
-nimbus compute run --name arm-app --swarm SWARM_ID \
+nimbus compute create --name arm-app --swarm SWARM_ID \
   --image myapp --type small --platform arm64
 ```
 

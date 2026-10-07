@@ -12,7 +12,7 @@ User --> nimbus CLI (HMAC/JWT) --> nimbus-api (control plane, TLS)
                                     +--> nimbus-agent (on each node, mTLS)
                                     |       +-- Docker Swarm
                                     |       +-- K3s clusters
-                                    |       +-- MinIO (S3)
+                                    |       +-- RustFS (S3)
                                     |       +-- WireGuard tunnel
                                     |
                                     +--> SQLite (state)

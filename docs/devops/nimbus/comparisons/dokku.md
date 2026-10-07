@@ -10,7 +10,7 @@ Both simplify self-hosted deployments, but at completely different levels:
 | **Multi-node** | Built-in (multi-node clusters) | Single-node only (no clustering) |
 | **Node provisioning** | Automated via SSH | Not applicable — runs on one server |
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | Nginx reverse proxy, Let's Encrypt built-in |
-| **Storage** | NFS volumes, MinIO S3 | Plugin-based (postgres, redis, etc. as services) |
+| **Storage** | NFS volumes, RustFS S3 | Plugin-based (postgres, redis, etc. as services) |
 | **Databases** | Not included (deploy as containers) | First-class plugins (postgres, mysql, redis, mongo) |
 | **SSL/TLS** | Self-signed or custom certs | Automatic Let's Encrypt |
 | **IaC** | YAML manifests for full infrastructure | App config via CLI, no full IaC |

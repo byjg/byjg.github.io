@@ -12,7 +12,7 @@ Similar to the Dokku comparison but CapRover adds clustering and a web UI:
 | **Node provisioning** | Automated via SSH (installs everything) | Manual — install Docker + join Swarm yourself |
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | Docker Swarm overlay, Nginx, Let's Encrypt |
 | **SSL/TLS** | Self-signed or custom certs | Automatic Let's Encrypt (one-click) |
-| **Storage** | NFS volumes, MinIO S3 built-in | Docker volumes only |
+| **Storage** | NFS volumes, RustFS S3 built-in | Docker volumes only |
 | **Kubernetes** | K3s clusters built-in | Not supported |
 | **IaC** | Built-in YAML manifests with drift detection | Not included — all via UI/CLI |
 | **One-click apps** | Not included | App store with 100+ templates (WordPress, Postgres, etc.) |

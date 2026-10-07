@@ -37,7 +37,7 @@ What it does:
 
 Requirements: SSH access to the host, passwordless `sudo` on it, and the three systemd units already installed.
 
-`deploy.sh` only updates the control plane. To move the other nodes to the new agent afterwards, run `nimbus node update-agent --all`: each agent fetches the new binary that `deploy.sh` put in `/var/lib/nimbus/dist/`, with no SSH. For a node whose agent is down, use `nimbus node update <node> --profile <ssh-profile>`, which has the control plane install it over SSH.
+`deploy.sh` only updates the control plane. To move the other nodes to the new agent afterwards, run `nimbus node agent update --all`: each agent fetches the new binary that `deploy.sh` put in `/var/lib/nimbus/dist/`, with no SSH. For a node whose agent is down, use `nimbus node agent update --ssh <node> --profile <ssh-profile>`, which has the control plane install it over SSH.
 
 ## dev-run.sh
 

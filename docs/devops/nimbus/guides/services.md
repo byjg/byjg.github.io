@@ -28,6 +28,8 @@ nimbus service deploy \
   --env DB_PASSWORD=secret
 ```
 
+Values passed with `--env` are stored with the service. For passwords and tokens, use a [secret](secrets) instead: the compose file declares it `external` and never holds the value.
+
 ### With volume mappings
 
 Map Compose volume names to DockNimbus NFS volumes:
@@ -61,7 +63,7 @@ nimbus service start SERVICE_ID
 ```bash
 nimbus service list
 nimbus service describe SERVICE_ID
-nimbus service remove SERVICE_ID
+nimbus service delete SERVICE_ID
 ```
 
 ## Service status and replicas

@@ -12,7 +12,7 @@ Both target self-hosters, but they work at different layers:
 | **Cluster model** | Central API + per-node agents | Peer cluster (Corosync) |
 | **Node provisioning** | Automated via SSH | Manual Proxmox installation on each node |
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | Linux bridges, VLANs, OVS, SDN |
-| **Storage** | NFS volumes, MinIO S3 | ZFS, Ceph, LVM, NFS, iSCSI, GlusterFS |
+| **Storage** | NFS volumes, RustFS S3 | ZFS, Ceph, LVM, NFS, iSCSI, GlusterFS |
 | **IaC** | Built-in YAML manifests | Not built-in — needs Terraform provider or Ansible |
 | **Container orchestration** | Docker Swarm + K3s built-in | None — LXC containers are standalone |
 | **Live migration** | Not supported | VM live migration between nodes |

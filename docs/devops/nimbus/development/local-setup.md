@@ -11,7 +11,7 @@ This guide walks you through building and running DockNimbus locally on a single
 ## Prerequisites
 
 - **Go 1.22+** (to build from source)
-- **Docker** (for compute instances, K3s clusters, MinIO, and EasyHAProxy)
+- **Docker** (for compute instances, K3s clusters, RustFS, and EasyHAProxy)
 - **Linux** (agent metrics use Linux syscalls; API and CLI work on macOS too)
 
 Optional:

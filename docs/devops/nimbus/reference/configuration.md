@@ -49,12 +49,12 @@ The OIDC provider is always enabled. The issuer URL is derived automatically fro
 |------------------------------|------------------------------|
 | `10.106.103.0/24` (default)  | `https://10.106.103.1:8443`  |
 
-The issuer URL is **dynamic**: when a request arrives with a `Host` header matching a certificate stored in the database, nimbus automatically uses that domain as the OIDC issuer. This means browser-based SSO works for any domain you register with `nimbus certificate add` — no configuration file changes or restarts required.
+The issuer URL is **dynamic**: when a request arrives with a `Host` header matching a certificate stored in the database, nimbus automatically uses that domain as the OIDC issuer. This means browser-based SSO works for any domain you register with `nimbus certificate create` — no configuration file changes or restarts required.
 
 For example, after adding a certificate for `nimbus.example.com`:
 
 ```bash
-nimbus certificate add \
+nimbus certificate create \
   --domain nimbus.example.com \
   --cert /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
   --key  /etc/letsencrypt/live/nimbus.example.com/privkey.pem
@@ -62,7 +62,7 @@ nimbus certificate add \
 
 Requests to `https://nimbus.example.com/.well-known/openid-configuration` return an OIDC discovery document with `issuer: https://nimbus.example.com`. K3s and agents continue using the WireGuard IP unaffected.
 
-To enable MinIO SSO via a custom domain, pass the certificate ID at creation time:
+To enable S3 console SSO via a custom domain, pass the certificate ID at creation time:
 
 ```bash
 nimbus s3 create --name mystore --swarm my-swarm --volume my-vol \
@@ -96,6 +96,8 @@ tls_key: "/var/lib/nimbus/client.key"
 
 This file is the same JSON returned by the API during bootstrap or API key creation. Download it from the GUI ("Download Config") or save it from the CLI bootstrap output, then import with `nimbus configure --from nimbus-config.json`.
 
+To work with more than one installation, save each as a **context**: `nimbus --context prod configure --from prod-config.json` writes `~/.nimbus/prod.json`, and `nimbus --context prod ...` (or `NIMBUS_CONFIG=prod`) uses it. Without either, the CLI uses `~/.nimbus/config.json`.
+
 ```json
 {
   "api_url": "https://10.106.103.1:8443",
@@ -108,7 +110,7 @@ This file is the same JSON returned by the API during bootstrap or API key creat
 | Field | Description |
 |-------|-------------|
 | `api_url` | API server URL (WireGuard IP) |
-| `access_key` | HMAC access key (from bootstrap or `iam create-key`) |
+| `access_key` | HMAC access key (from bootstrap or `iam key create`) |
 | `secret_key` | HMAC secret key |
 | `tls_ca` | CA certificate PEM (embedded, not a file path) |
 

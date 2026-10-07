@@ -12,7 +12,7 @@ Both target small-scale, multi-node self-hosted infrastructure, making this one 
 | **Cluster setup** | Central API + SSH-based node provisioning | Interactive `microcloud init` across nodes |
 | **Minimum nodes** | 1 | 3 (for Ceph quorum) |
 | **Networking** | WireGuard mesh VPN, EasyHAProxy, dnsmasq | OVN (full SDN: virtual switches, routers, ACLs) |
-| **Storage** | NFS volumes, MinIO S3 | Ceph (distributed, replicated block/object storage) |
+| **Storage** | NFS volumes, RustFS S3 | Ceph (distributed, replicated block/object storage) |
 | **Storage resilience** | Single NFS server (no replication) | Ceph replication across nodes (survives node loss) |
 | **IaC** | Built-in YAML manifests with drift detection | Not built-in — Terraform provider or cloud-init |
 | **Kubernetes** | K3s clusters built-in | Not included (can run K8s inside VMs/containers) |

@@ -105,9 +105,13 @@ volumes:
   data-vol:
     node: web1                 # Node alias from the nodes section
     folder: /srv/nimbus/data   # Path on the node
+  pg-data:
+    node: web1
+    folder: /srv/nimbus/pg
+    local: true                # Not exported: workloads using it run on web1
 ```
 
-Volumes are immutable after creation — changing the `node` or `folder` of an existing volume will produce an error to prevent accidental data loss.
+Volumes are immutable after creation — changing the `node`, `folder` or `local` of an existing volume will produce an error to prevent accidental data loss. See [Local volumes](../volumes.md#local-volumes).
 
 ### `swarms`
 
@@ -127,16 +131,15 @@ On re-apply, node membership is reconciled — nodes added to the list are joine
 
 ### `s3`
 
-MinIO S3-compatible object storage instances deployed to a swarm.
+RustFS S3-compatible object storage instances deployed to a swarm. See [S3 Storage](../s3-storage).
 
 ```yaml
 s3:
   store1:
     swarm: prod                # Swarm alias
     volume: data-vol           # Volume alias for persistent storage
-    password: ${S3_PASSWORD}   # MinIO root password
-    # license: /path/to/license    # Optional MinIO license file
-    # certs: /path/to/certs.pem   # Optional custom TLS certificates
+    password: ${S3_PASSWORD}   # Root secret key, at least 8 characters (generated if omitted)
+    # oidc_cert: public-cert   # Optional certificate alias: enables console SSO through Nimbus
 ```
 
 ### `kubernetes`
@@ -147,6 +150,7 @@ K3s Kubernetes clusters. The first node becomes the control plane; additional no
 kubernetes:
   dev-k8s:
     nodes: [web1, web2]
+    lb: true                   # Deploy EasyHAProxy, which serves the cluster's Ingress objects
     ha: true                   # Enable HA with embedded etcd (required for promote/demote)
     volumes:                   # NFS volumes to attach as PV + PVC
       data-vol: 1Gi
@@ -172,14 +176,21 @@ kubernetes:
                     - containerPort: 80
 ```
 
+`lb` is asked for, as with `nimbus k8s create --lb`. Without it the cluster has no ingress controller, and nothing serves its Ingress objects, including the ones compute instances on the cluster generate (`ingressClassName: easyhaproxy`). That is the right shape when ingress is handled elsewhere.
+
+Adding `lb: true` to an existing cluster and applying again deploys the load balancer. Removing it, or setting it to `false`, never takes one away: that is done on purpose, with `nimbus gateway lb delete --cluster <id>`.
+
 | Field | Description |
 |-------|-------------|
 | `nodes` | Node aliases — first is control plane, rest are workers |
+| `lb` | Deploy EasyHAProxy, which serves the cluster's Ingress objects (default: `false`). See above |
 | `ha` | Enable HA mode with embedded etcd (default: `false`). Required for promoting workers to control-plane. Uses more resources than single-server (SQLite) mode |
 | `volumes` | Map of volume alias to PVC size — creates NFS-backed PersistentVolume and PersistentVolumeClaim |
-| `manifests` | Inline Kubernetes resources applied via `kubectl apply` after cluster creation |
+| `manifests` | Inline Kubernetes resources, applied once the cluster is ready as the service `<cluster>-manifests` (see below) |
 
 On re-apply, cluster node membership is reconciled (the control plane node cannot be removed).
+
+The inline `manifests` become one service, named `<cluster>-manifests`, the same as `nimbus service deploy --cluster` would create: the agent on the cluster's control node applies them with the kubectl K3s ships, so the machine running the API needs no kubectl. The service shows in `nimbus service list` with its status. Nimbus records the objects it applied, so applying again deletes the ones no longer in the list, and `nimbus manifest remove` removes them before the cluster, external clusters included. Applying waits for the service to run, so the compute and services that follow can rely on what it created.
 
 ### `compute`
 
@@ -368,6 +379,8 @@ nimbus manifest apply --file infra.yaml --prune
 ## Removal
 
 `nimbus manifest remove` tears down all resources declared in the manifest in reverse dependency order. Unlike `--prune`, it removes everything in the manifest, not just orphans.
+
+The manifest record is kept, so it can be applied again. Add `--purge` to delete the record too, once its resources are gone.
 
 ```bash
 nimbus manifest remove --file infra.yaml --env S3_PASSWORD=secret

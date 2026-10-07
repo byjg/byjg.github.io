@@ -10,7 +10,7 @@ These are fundamentally different tools solving different problems:
 | **Container model** | Application containers (Docker/OCI) | System containers (run full init, feel like VMs) |
 | **Cluster model** | Central API server + per-node agents (hub-spoke) | Distributed peer cluster (Raft/Dqlite) |
 | **Networking** | WireGuard mesh VPN, EasyHAProxy LB, dnsmasq DNS | OVN, bridged, macvlan, SR-IOV |
-| **Storage** | NFS volumes, MinIO S3 | ZFS, Btrfs, LVM, Ceph, CephFS |
+| **Storage** | NFS volumes, RustFS S3 | ZFS, Btrfs, LVM, Ceph, CephFS |
 | **IaC** | Built-in YAML manifests with idempotent apply, drift detection, pruning | No native IaC; relies on Terraform provider or Juju |
 | **Orchestration** | Docker Swarm + K3s built-in | None (manages instances, not orchestration) |
 | **State** | Centralized SQLite | Distributed Dqlite across cluster |

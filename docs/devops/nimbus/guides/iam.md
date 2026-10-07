@@ -13,7 +13,7 @@ DockNimbus supports multiple users with API key and JWT authentication, IAM grou
 ### Create a user
 
 ```bash
-nimbus iam create-user --username developer
+nimbus iam user create --username developer
 ```
 
 Add `--admin` for administrator privileges. Admin users are automatically added to the built-in `admin` group.
@@ -21,7 +21,7 @@ Add `--admin` for administrator privileges. Admin users are automatically added 
 ### Generate API keys
 
 ```bash
-nimbus iam create-key --user-id USER_ID
+nimbus iam key create --user-id USER_ID
 ```
 
 Returns an access key and secret key for HMAC authentication.
@@ -30,7 +30,7 @@ Returns an access key and secret key for HMAC authentication.
 
 ```bash
 # Set a password
-nimbus iam set-password --user-id USER_ID --password <password>
+nimbus iam user set-password --user-id USER_ID --password <password>
 
 # Login and get a JWT token
 nimbus iam login --username developer --password <password>
@@ -59,8 +59,8 @@ nimbus:<resource-type>:<resource-id>:<permission>
 | `nimbus:k8s:*:admin`          | Admin on **all** Kubernetes clusters    |
 | `nimbus:k8s:cls-abc123:admin` | Admin on cluster `cls-abc123` only      |
 | `nimbus:k8s:cls-abc123:read`  | Read-only on cluster `cls-abc123` only  |
-| `nimbus:s3:*:admin`           | Admin on **all** MinIO instances        |
-| `nimbus:s3:s3-xyz789:read`    | Read-only on MinIO instance `s3-xyz789` |
+| `nimbus:s3:*:admin`           | Admin on **all** S3 instances           |
+| `nimbus:s3:s3-xyz789:read`    | Read-only on S3 instance `s3-xyz789`    |
 | `nimbus:compute:*:admin`      | Admin on all compute instances          |
 
 For external services (OAuth2 clients):
@@ -72,7 +72,7 @@ external:<client-name>:<permission>
 
 ### List registered scopes
 
-Scopes are automatically registered when resources are provisioned (K3s clusters, MinIO instances). You can also register custom scopes manually:
+Scopes are automatically registered when resources are provisioned (K3s clusters, S3 instances). S3 instances take `admin`, `readwrite` and `read`; the console receives them as RustFS policies (see [S3 Storage](s3-storage.md#console-sso-via-oidc-recommended)). You can also register custom scopes manually:
 
 ```bash
 nimbus iam scope list

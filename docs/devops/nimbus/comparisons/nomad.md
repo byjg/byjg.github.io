@@ -11,7 +11,7 @@ The closest architectural peer — both are lightweight orchestrators, but with 
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | Consul Connect (service mesh), no built-in LB |
 | **Service discovery** | Built-in DNS | Requires Consul (separate tool) |
 | **Secrets** | Not included | Requires Vault (separate tool) |
-| **Storage** | NFS volumes, MinIO S3 built-in | CSI plugins, host volumes |
+| **Storage** | NFS volumes, RustFS S3 built-in | CSI plugins, host volumes |
 | **IaC** | YAML manifests (nodes → clusters → workloads) | HCL job specs (workloads only) |
 | **Cluster model** | Central API + agents (hub-spoke) | Server + client nodes (Raft consensus) |
 | **Multi-region** | Not built-in | Native multi-region federation |

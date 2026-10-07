@@ -11,7 +11,7 @@ These are closer in ambition — both are platforms — but differ massively in 
 | **Minimum footprint** | Single node, ~256MB RAM | 3 control plane nodes, ~16GB RAM each |
 | **Installation** | SSH into nodes, auto-installs agent | Complex installer (IPI/UPI), CoreOS-based |
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | OpenShift SDN/OVN-Kubernetes, HAProxy Router |
-| **Storage** | NFS volumes, MinIO S3 | CSI drivers, OCS/ODF (Ceph), PVs/PVCs |
+| **Storage** | NFS volumes, RustFS S3 | CSI drivers, OCS/ODF (Ceph), PVs/PVCs |
 | **IaC** | Built-in YAML manifests with drift detection | Native Kubernetes YAML + Operators + Helm + ArgoCD |
 | **CI/CD** | Not included | Built-in (OpenShift Pipelines/Tekton, GitOps) |
 | **Container registry** | Not included | Built-in integrated registry |

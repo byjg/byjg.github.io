@@ -10,7 +10,7 @@ Both make Docker easier to manage, but at different scopes:
 | **Node provisioning** | Built-in via SSH | Not included — Docker must already be installed |
 | **Cluster creation** | Creates Docker Swarm + K3s clusters | Connects to existing clusters |
 | **Networking** | WireGuard mesh VPN, EasyHAProxy, dnsmasq | Uses Docker/K8s networking as-is |
-| **Storage** | NFS volumes, MinIO S3 built-in | Manages existing Docker volumes |
+| **Storage** | NFS volumes, RustFS S3 built-in | Manages existing Docker volumes |
 | **IaC** | Built-in YAML manifests with drift detection | Stacks (Compose files) via UI, no full IaC |
 | **Compose support** | Deploy via `nimbus service` commands/manifests | Deploy Compose stacks via web UI |
 | **K8s support** | Creates and manages K3s clusters | Connects to existing K8s, deploys via UI |

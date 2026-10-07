@@ -11,7 +11,7 @@ Both manage Kubernetes clusters, but from very different angles:
 | **Node provisioning** | Built-in via SSH (installs agent, Docker, WireGuard) | Node drivers for cloud providers; manual for bare metal |
 | **Non-K8s workloads** | Docker Swarm services, Compose stacks | Kubernetes only |
 | **Networking** | WireGuard mesh, EasyHAProxy, dnsmasq | Delegates to CNI (Canal, Calico, Cilium) |
-| **Storage** | NFS volumes, MinIO S3 built-in | Longhorn (optional), CSI drivers |
+| **Storage** | NFS volumes, RustFS S3 built-in | Longhorn (optional), CSI drivers |
 | **IaC** | Built-in YAML manifests (full stack) | Not built-in — use Terraform provider or Fleet |
 | **GitOps** | Not included | Fleet (built-in), integrates with ArgoCD |
 | **App catalog** | Not included | Helm chart catalog in UI |

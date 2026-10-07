@@ -11,14 +11,16 @@ DockNimbus deploys lightweight Kubernetes clusters using K3s. The first node bec
 ## Create a cluster
 
 ```bash
-nimbus k8s create-cluster --name dev-k8s --nodes NODE1_ID,NODE2_ID
+nimbus k8s create --name dev-k8s --nodes NODE1_ID,NODE2_ID
 ```
 
 For a highly available control plane (embedded etcd, required for promote/demote):
 
 ```bash
-nimbus k8s create-cluster --name dev-k8s --nodes NODE1_ID,NODE2_ID --ha
+nimbus k8s create --name dev-k8s --nodes NODE1_ID,NODE2_ID --ha
 ```
+
+`--lb` deploys EasyHAProxy as the cluster's ingress controller — see [load balancing](#load-balancing) for what it does and how to add or remove one later.
 
 ## Get kubeconfig
 
@@ -49,8 +51,8 @@ A new worker installs the k3s agent in the background, which can take a minute o
 In HA clusters (created with `--ha`), worker nodes can be promoted to control plane and demoted back:
 
 ```bash
-nimbus k8s promote-node --cluster CLUSTER_ID --node NODE_ID
-nimbus k8s demote-node --cluster CLUSTER_ID --node NODE_ID
+nimbus k8s promote --cluster CLUSTER_ID --node NODE_ID
+nimbus k8s demote --cluster CLUSTER_ID --node NODE_ID
 ```
 
 ## Attach NFS volumes
@@ -58,16 +60,17 @@ nimbus k8s demote-node --cluster CLUSTER_ID --node NODE_ID
 Attach an NFS volume to a cluster as a PersistentVolume and PersistentVolumeClaim:
 
 ```bash
-nimbus k8s volume attach --cluster CLUSTER_ID --name VOL_ID --size 1Gi
-nimbus k8s volume detach --cluster CLUSTER_ID --name VOL_ID
+nimbus volume attach VOL_ID --cluster CLUSTER_ID [--size 10Gi]
+nimbus volume list   --cluster CLUSTER_ID
+nimbus volume detach VOL_ID --cluster CLUSTER_ID
 ```
 
-This automatically installs `nfs-common` on all cluster nodes and creates the PV/PVC resources.
+This installs `nfs-common` on all cluster nodes and creates the PV/PVC resources. The claim is named `nfs-<volume>`, which is what a manifest mounts. Until a volume is attached that claim does not exist, and a manifest mounting it applies cleanly and then never schedules.
 
 ## Deploy compute instances to K8s
 
 ```bash
-nimbus compute run --name web-app --k8s CLUSTER_ID \
+nimbus compute create --name web-app --k8s CLUSTER_ID \
   --image nginx:latest --type small --port 80:80
 ```
 
@@ -77,12 +80,37 @@ This creates a Deployment, Service, and Ingress (via EasyHAProxy) in the cluster
 
 ```bash
 nimbus k8s list
-nimbus k8s delete-cluster CLUSTER_ID
+nimbus k8s delete CLUSTER_ID
 ```
+
+A cluster that still has instances or services Nimbus manages (that are not terminated) cannot be
+deleted, nor its last node removed: delete them first.
+
+Every node uninstalls K3s, and the cluster shows as `deleting` until all of them have; a node whose
+agent is offline uninstalls when it comes back. If an uninstall fails, the cluster stays in `error`
+so the node still running K3s is not forgotten; delete it again once the node is fixed, and only the
+nodes that have not uninstalled yet are retried. Removing a worker with `nimbus k8s remove-node`
+leaves the cluster as it is.
 
 ## Load balancing
 
-K3s clusters automatically deploy EasyHAProxy as an ingress controller. Compute instances deployed to K8s get an Ingress resource with a domain in the format `<name>.<cluster-name>.nimbus`.
+A cluster gets EasyHAProxy as its ingress controller when it is asked for, exactly as a swarm does:
+
+```bash
+nimbus k8s create --name dev-k8s --nodes NODE1_ID --lb
+```
+
+Without it the cluster runs fine and workloads are reachable inside it, but nothing serves Ingress objects — which is what you want when ingress is someone else's job. Compute instances deployed to a cluster get an Ingress with a domain in the format `<name>.<cluster-name>.nimbus`, and that Ingress needs a controller to answer it.
+
+The decision is not permanent:
+
+```bash
+nimbus gateway lb set    --cluster CLUSTER_ID   # deploy it
+nimbus gateway lb delete --cluster CLUSTER_ID   # take it away
+nimbus gateway lb list                          # every load balancer, swarm and cluster alike
+```
+
+The web UI has the same on the cluster's detail page, under **Load Balancer**. Removing one leaves every workload running; what stops is the ingress in front of them.
 
 ## Unmanaged resources
 

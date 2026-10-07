@@ -1,5 +1,6 @@
 ---
 sidebar_key: nimbus
+tags: [devops, docker, cli]
 ---
 
 # DockNimbus
@@ -8,7 +9,9 @@ Self-hosted cloud platform for bare metal machines.
 
 [Website](https://docknimbus.com) | [Documentation](https://opensource.byjg.com/docs/devops/nimbus/) | [GitHub](https://github.com/docknimbus/nimbus)
 
-DockNimbus turns heterogeneous bare metal machines (Raspberry Pi 4/5, x86 servers, etc.) into a cloud platform with compute instances (Docker Swarm), Kubernetes clusters (K3s), object storage (MinIO), and load balancers (EasyHAProxy) — all managed through a REST API and CLI.
+[![Install MCP Server](https://img.shields.io/badge/Install-MCP_Server-8A2BE2?logo=modelcontextprotocol&logoColor=white)](https://opensource.byjg.com/docs/ai/mcpserver-byjg-docs/)
+
+DockNimbus turns heterogeneous bare metal machines (Raspberry Pi 4/5, x86 servers, etc.) into a cloud platform with compute instances (Docker Swarm), Kubernetes clusters (K3s), object storage (RustFS), and load balancers (EasyHAProxy) — all managed through a REST API and CLI.
 
 **Key capabilities:**
 
@@ -26,7 +29,7 @@ User --> nimbus-gui (Web UI) -------^
                                     +--> nimbus-agent (on each node, mTLS)
                                     |       +-- Docker Swarm
                                     |       +-- K3s clusters
-                                    |       +-- MinIO (S3)
+                                    |       +-- RustFS (S3)
                                     |       +-- WireGuard tunnel
                                     |
                                     +--> SQLite (state)
@@ -77,11 +80,11 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 - **Go** — Single binary, ARM64+x86 cross-compile
 - **Docker Swarm** — Compute clustering
 - **K3s** — Lightweight Kubernetes
-- **MinIO** — S3-compatible object storage
+- **RustFS** — S3-compatible object storage
 - **EasyHAProxy** — Docker-native and K8s load balancing
 - **WireGuard** — Encrypted mesh networking
 - **SQLite (WAL)** — Embedded state store
 
 ## Current Release
 
-v0.8.0
+v0.9.0

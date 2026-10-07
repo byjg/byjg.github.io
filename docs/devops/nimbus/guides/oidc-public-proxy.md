@@ -8,11 +8,11 @@ title: "Exposing OIDC/OAuth2 Publicly"
 
 By default the Nimbus OIDC provider issues tokens with the WireGuard `.1` address as the
 issuer (`https://10.106.103.1:8443`). This is sufficient for K3s and agents — they
-communicate internally — but browser-based SSO (MinIO console login) requires users'
+communicate internally — but browser-based SSO (S3 console login) requires users'
 browsers to reach the OIDC endpoints too.
 
 Nimbus is **domain-aware**: once you register a TLS certificate for a public domain via
-`nimbus certificate add`, OIDC discovery requests arriving at that domain automatically
+`nimbus certificate create`, OIDC discovery requests arriving at that domain automatically
 receive a response with that domain as the issuer. No config file changes or restarts needed.
 
 There are two approaches depending on your security requirements:
@@ -22,7 +22,7 @@ There are two approaches depending on your security requirements:
 | OIDC endpoints exposed | All OIDC paths via port 8443 | Only OIDC paths via port 443 |
 | API exposed publicly | Yes (port 8443 open) | No |
 | Complexity | Low — just a CLI command | Medium — extra service |
-| Certificate management | `nimbus certificate add` | Let's Encrypt + static-httpserver |
+| Certificate management | `nimbus certificate create` | Let's Encrypt + static-httpserver |
 
 ---
 
@@ -43,7 +43,7 @@ certbot certonly --standalone -d nimbus.example.com
 ### Step 2 — Add the certificate to Nimbus
 
 ```bash
-nimbus certificate add \
+nimbus certificate create \
   --domain nimbus.example.com \
   --cert /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
   --key  /etc/letsencrypt/live/nimbus.example.com/privkey.pem
@@ -72,7 +72,7 @@ Once the certificate is registered, nimbus automatically uses `https://nimbus.ex
 
 For maximum security, only the OIDC endpoints are exposed — all other API paths remain
 unreachable from the internet. This uses
-[`static-httpserver`](https://github.com/byjg/docker-static-httpserver) v0.4.0+ as a
+[`static-httpserver`](https://github.com/byjg/docker-static-httpserver) v0.5.0+ as a
 TLS-terminating reverse proxy on port 443.
 
 ```
@@ -97,7 +97,7 @@ sudo dnf install static-httpserver
 
 Or download from the [releases page](https://github.com/byjg/docker-static-httpserver/releases).
 
-### Step 3 — Run the proxy
+### Step 2 — Run the proxy
 
 Create an empty root directory (no static files needed — all traffic is proxied):
 
@@ -105,24 +105,15 @@ Create an empty root directory (no static files needed — all traffic is proxie
 sudo mkdir -p /var/www/nimbus-proxy
 ```
 
-:::note Let's Encrypt cert format
-Let's Encrypt names its files `fullchain.pem` and `privkey.pem`. static-httpserver
-expects `cert.pem` and `key.pem`. Symlink them:
-```bash
-ln -s /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
-      /etc/letsencrypt/live/nimbus.example.com/cert.pem
-ln -s /etc/letsencrypt/live/nimbus.example.com/privkey.pem \
-      /etc/letsencrypt/live/nimbus.example.com/key.pem
-```
-:::
-
-Start static-httpserver, exposing only the OIDC endpoints:
+Start static-httpserver, exposing only the OIDC endpoints. `--tls-cert-file` and
+`--tls-key-file` read the Let's Encrypt files directly:
 
 ```bash
 static-httpserver \
   --root-dir /var/www/nimbus-proxy \
   --tls-port 443 \
-  --tls-cert-dir /etc/letsencrypt/live/nimbus.example.com \
+  --tls-cert-file /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
+  --tls-key-file /etc/letsencrypt/live/nimbus.example.com/privkey.pem \
   --proxy /.well-known/openid-configuration=https://10.106.103.1:8443/.well-known/openid-configuration \
   --proxy /keys=https://10.106.103.1:8443/keys \
   --proxy /authorize=https://10.106.103.1:8443/authorize \
@@ -139,7 +130,7 @@ The `--proxy-ca` flag makes static-httpserver trust the Nimbus self-signed CA wh
 connecting to the backend. Everything else — `/v1/nodes`, `/v1/bootstrap`, etc. —
 returns `404` from the static server and never reaches the API.
 
-### Step 4 — Run as a systemd service
+### Step 3 — Run as a systemd service
 
 Create `/etc/systemd/system/nimbus-oidc-proxy.service`:
 
@@ -152,7 +143,8 @@ After=network.target nimbus-api.service
 ExecStart=/usr/bin/static-httpserver \
   --root-dir /var/www/nimbus-proxy \
   --tls-port 443 \
-  --tls-cert-dir /etc/letsencrypt/live/nimbus.example.com \
+  --tls-cert-file /etc/letsencrypt/live/nimbus.example.com/fullchain.pem \
+  --tls-key-file /etc/letsencrypt/live/nimbus.example.com/privkey.pem \
   --proxy /.well-known/openid-configuration=https://10.106.103.1:8443/.well-known/openid-configuration \
   --proxy /keys=https://10.106.103.1:8443/keys \
   --proxy /authorize=https://10.106.103.1:8443/authorize \

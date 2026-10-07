@@ -112,11 +112,12 @@ NFS traffic between nodes uses the **WireGuard overlay**, so volume data is encr
 | NFS server IP stored in DB | **OVERLAY** | Other nodes mounting NFS | Stored as `vol.ServerIP` |
 | NFS mount in `create_service` | **OVERLAY** | Docker containers (cross-node) | `addr=overlay,rw,nolock,soft` |
 
-## S3 (MinIO)
+## S3 (RustFS)
 
 | Where | IP Used | Who Connects | Notes |
 |---|---|---|---|
 | S3 endpoint URL | **OVERLAY** | Internal agents/containers | `http://overlay:9000` |
+| Console | **OVERLAY** | EasyHAProxy (`console-<domain>`) | `http://overlay:9001` |
 
 ## Cloudflare DNS
 
@@ -126,7 +127,7 @@ NFS traffic between nodes uses the **WireGuard overlay**, so volume data is encr
 
 ## CLI DNS Setup (host machine)
 
-The host machine running `nimbus dns setup` is **not** on the WireGuard network, so it must use the public IP to reach dnsmasq on the manager node.
+The host machine running `nimbus dns create` is **not** on the WireGuard network, so it must use the public IP to reach dnsmasq on the manager node.
 
 | Where | IP Used | Who Connects | Notes |
 |---|---|---|---|

@@ -26,7 +26,7 @@ nimbus compute instance-types
 The instance type is set with `--type` when creating a compute instance:
 
 ```bash
-nimbus compute run --name web --swarm SWARM_ID --image nginx --type medium
+nimbus compute create --name web --swarm SWARM_ID --image nginx --type medium
 ```
 
 In manifests, use the `type` field:
@@ -44,7 +44,7 @@ compute:
 GPUs are requested independently from instance types using the `--gpu` flag. Any instance type can be combined with GPU requests:
 
 ```bash
-nimbus compute run --name ml-train --swarm SWARM_ID \
+nimbus compute create --name ml-train --swarm SWARM_ID \
   --image pytorch/pytorch --type large --gpu 2
 ```
 

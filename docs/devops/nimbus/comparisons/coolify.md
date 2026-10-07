@@ -12,7 +12,7 @@ Coolify is the modern self-hosted PaaS that's been gaining a lot of traction:
 | **Node provisioning** | Automated via SSH (installs agent, Docker, WireGuard) | Connects to servers via SSH (installs Docker) |
 | **Networking** | WireGuard mesh VPN, EasyHAProxy, dnsmasq | Traefik reverse proxy, automatic SSL |
 | **SSL/TLS** | Self-signed or custom certs | Automatic Let's Encrypt |
-| **Storage** | NFS volumes, MinIO S3 built-in | Docker volumes, S3 backups |
+| **Storage** | NFS volumes, RustFS S3 built-in | Docker volumes, S3 backups |
 | **Databases** | Deploy as containers manually | One-click managed databases (Postgres, MySQL, Redis, MongoDB, etc.) |
 | **Kubernetes** | K3s clusters built-in | Not supported |
 | **Docker Swarm** | Built-in cluster orchestration | Docker standalone (no Swarm) |

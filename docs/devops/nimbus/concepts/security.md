@@ -27,7 +27,7 @@ Certificate revocation is supported via `nimbus node delete`, which revokes the 
 
 ## SSH (Control Plane → Node)
 
-Every SSH connection to a node, for `nimbus node add`, `nimbus node update` and manifest applies, is opened by the control plane, never by the CLI. SSH profiles keep their private keys and passwords encrypted with the control plane's CA key; a key passed with `--key` is read on your machine and sent to the control plane over the authenticated API.
+Every SSH connection to a node, for `nimbus node add`, `nimbus node agent update --ssh` and manifest applies, is opened by the control plane, never by the CLI. SSH profiles keep their private keys and passwords encrypted with the control plane's CA key; a key passed with `--key` is read on your machine and sent to the control plane over the authenticated API.
 
 Files for the node are copied into a private staging directory created with `mktemp` on the node, then installed with `install -o root -g root`, so the agent binary and its certificate are owned by root whatever the SSH user. A non-root SSH user must have passwordless `sudo`, which is checked before anything is copied. Connection attempts time out after 15 seconds.
 
@@ -38,7 +38,7 @@ CLI requests are signed using HMAC-SHA256. Each request includes:
 - An `X-Signature` header containing the HMAC signature of the request
 - An `X-Timestamp` header for replay protection
 
-API key pairs are generated during `nimbus bootstrap` (for the admin user) or via `nimbus iam create-key`.
+API key pairs are generated during `nimbus bootstrap` (for the admin user) or via `nimbus iam key create`.
 
 ## JWT Authentication
 
@@ -46,7 +46,7 @@ As an alternative to HMAC, users can authenticate with username and password:
 
 ```bash
 # Set a password
-nimbus iam set-password --user-id USER_ID --password <password>
+nimbus iam user set-password --user-id USER_ID --password <password>
 
 # Login to get a JWT token
 nimbus iam login --username admin --password <password>
@@ -75,6 +75,6 @@ The API server listens on `:8443` with TLS. By default, it generates a self-sign
 
 A server certificate is only valid for the addresses it was issued for, so on startup the API checks its own certificate against the machine's current hostname and addresses and reissues it from the existing CA when it no longer covers them. `nimbus-gui` does the same for its certificate. The CA itself is created once and never regenerated — it is the root of trust for every node certificate it has issued, so replacing it would lock every agent out of the mesh. If the CA key is missing, the API refuses to start rather than mint a new one.
 
-To reissue the API certificate immediately after moving the control plane, without waiting for a restart, see [`node update-ip --regenerate-cert`](../guides/node-dynamic-ip).
+To reissue the API certificate immediately after moving the control plane, without waiting for a restart, see [`node set-ip --regenerate-cert`](../guides/node-dynamic-ip).
 
 For production, you can provide your own certificates via `tls_cert` and `tls_key` in the API configuration. Operator-supplied certificates are never inspected or replaced — renewing them is up to you.

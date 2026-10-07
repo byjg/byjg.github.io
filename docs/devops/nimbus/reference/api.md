@@ -44,13 +44,17 @@ Used by agents. Requires mutual TLS with a valid client certificate.
 | `GET`    | `/v1/nodes/{id}`                | Get node                                                                  |
 | `PATCH`  | `/v1/nodes/{id}`                | Update the node's display name (`{"name": "..."}`) — see note below       |
 | `POST`   | `/v1/nodes/{id}/ip`             | Change IP and/or pinned interface (`{"ip_address", "interface", "regenerate_cert"}`) |
-| `POST`   | `/v1/nodes/{id}/drain`          | Drain node                                                                |
+| `POST`   | `/v1/nodes/{id}/drain`          | Cordon a node and have its orchestrators move the workloads off           |
+| `POST`   | `/v1/nodes/{id}/cordon`         | Mark a node unschedulable, leaving its workloads alone                    |
+| `POST`   | `/v1/nodes/{id}/uncordon`       | Put a cordoned or drained node back into service                          |
 | `POST`   | `/v1/nodes/{id}/gpu-overcommit` | Set GPU overcommit factor (`{"gpu_overcommit_factor": N}`, N ∈ {1,2,4,8}) |
 | `POST`   | `/v1/nodes/{id}/update-agent`   | Queue an agent binary update on the node (no SSH; node must be `ready`)   |
 | `POST`   | `/v1/nodes/{id}/update-ssh`     | Update the agent binary and client certificate over SSH from the control plane, in the background (`202`); for an agent that is down. Takes the SSH credential fields below |
 | `POST`   | `/v1/nodes/{id}/os-update`      | Queue a full OS package upgrade; node enters `needs_reboot` if a reboot is required |
 | `POST`   | `/v1/nodes/{id}/check-updates`  | Re-check for OS package updates now, instead of waiting for the daily check |
 | `POST`   | `/v1/nodes/{id}/reboot`         | Queue a reboot                                                            |
+| `POST`   | `/v1/nodes/{id}/stop`           | Stop the agent on a node; it reports offline and stops. The machine and its workloads keep running |
+| `POST`   | `/v1/nodes/{id}/start`          | Start the agent on a node over SSH from the control plane, in the background (`202`); a stopped node has no agent to take a task. Takes the SSH credential fields below |
 | `POST`   | `/v1/nodes/{id}/logs`           | Queue an agent log fetch (`?since=TIMESTAMP`, else `?lines=N` — default 100, max 10000); returns a task ID |
 | `GET`    | `/v1/nodes/{id}/logs/{taskId}`  | Poll the log fetch result                                                 |
 | `DELETE` | `/v1/nodes/{id}`                | Delete node                                                               |
@@ -136,7 +140,7 @@ The IP change and the reissue are reported independently: if the certificate fai
 | `GET`    | `/v1/swarms/{id}`         | Get swarm              |
 | `POST`   | `/v1/swarms/{id}/join`    | Add node to swarm      |
 | `POST`   | `/v1/swarms/{id}/leave`   | Remove node from swarm |
-| `DELETE` | `/v1/swarms/{id}`         | Delete swarm           |
+| `DELETE` | `/v1/swarms/{id}`         | Delete swarm (`202` while its nodes leave, `200` when already gone) |
 | `GET`    | `/v1/swarms/{id}/members` | List swarm members     |
 | `POST`   | `/v1/swarms/{id}/lb`      | Deploy load balancer   |
 | `DELETE` | `/v1/swarms/{id}/lb`      | Remove load balancer   |
@@ -170,10 +174,12 @@ The IP change and the reissue are reported independently: if the certificate fai
 | `POST`   | `/v1/kubernetes/clusters/{id}/nodes`              | Add worker node            |
 | `GET`    | `/v1/kubernetes/clusters/{id}/nodes`              | List cluster nodes         |
 | `DELETE` | `/v1/kubernetes/clusters/{id}/nodes/{nodeId}`     | Remove worker node         |
+| `POST`   | `/v1/kubernetes/clusters/{id}/lb`                 | Deploy EasyHAProxy on the cluster |
+| `DELETE` | `/v1/kubernetes/clusters/{id}/lb`                 | Remove it                  |
 | `POST`   | `/v1/kubernetes/clusters/{id}/volumes`            | Attach NFS volume (PV+PVC) |
-| `DELETE` | `/v1/kubernetes/clusters/{id}/volumes/{volumeId}` | Detach NFS volume          |
+| `DELETE` | `/v1/kubernetes/clusters/{id}/volumes/{volumeId}` | Detach volume              |
 
-## Volumes (NFS)
+## Volumes
 
 | Method   | Path               | Description   |
 |----------|--------------------|---------------|
@@ -182,33 +188,72 @@ The IP change and the reissue are reported independently: if the certificate fai
 | `GET`    | `/v1/volumes/{id}` | Get volume    |
 | `DELETE` | `/v1/volumes/{id}` | Delete volume |
 
-## S3 (MinIO)
+## Secrets and configs
 
-| Method   | Path                    | Description           |
-|----------|-------------------------|-----------------------|
-| `POST`   | `/v1/s3/instances`      | Deploy MinIO instance |
-| `GET`    | `/v1/s3/instances`      | List instances        |
-| `DELETE` | `/v1/s3/instances/{id}` | Delete instance       |
+The same endpoints under `/v1/secrets` and `/v1/configs`. Values are base64 in `data`. A secret's is never returned, a config's is returned by `GET /v1/configs/{id}`. `{id}` may also be a name, as long as only one has it.
+
+| Method   | Path                  | Description                                                                          |
+|----------|-----------------------|--------------------------------------------------------------------------------------|
+| `POST`   | `/v1/secrets`         | Create: `name`, `swarm_id` **or** `cluster_id` (+ `namespace`), `data`                |
+| `GET`    | `/v1/secrets`         | List, each with `services` (the services using it)                                   |
+| `GET`    | `/v1/secrets/{id}`    | Get one                                                                              |
+| `PUT`    | `/v1/secrets/{id}`    | Replace the value (`data`); the services using it are redeployed                     |
+| `DELETE` | `/v1/secrets/{id}`    | Delete; `409` naming the services while any uses it                                  |
+
+Create body: `name`, `node_id`, `folder`, and `type`: `"nfs"` (default) or `"local"`. The type is
+fixed once created; volumes report it as `type`. A local volume has no `server_ip`.
+
+## S3 (RustFS)
+
+| Method   | Path                    | Description            |
+|----------|-------------------------|------------------------|
+| `POST`   | `/v1/s3/instances`      | Deploy RustFS instance |
+| `GET`    | `/v1/s3/instances`      | List instances         |
+| `DELETE` | `/v1/s3/instances/{id}` | Delete instance        |
+
+Deploy body: `name`, `swarm_id` and `volume_id` are required; `password` (at least 8 characters,
+generated when omitted) and `cert_id` (enables console SSO) are optional. Instances report `domain`
+(the S3 API) and `console_domain` (the web console).
 
 ## Services
 
-| Method   | Path                      | Description           |
-|----------|---------------------------|-----------------------|
-| `POST`   | `/v1/services`            | Deploy compose stack  |
-| `GET`    | `/v1/services`            | List services         |
-| `GET`    | `/v1/services/{id}`       | Get service           |
-| `PUT`    | `/v1/services/{id}`       | Update service        |
-| `POST`   | `/v1/services/{id}/stop`  | Stop service          |
-| `POST`   | `/v1/services/{id}/start` | Start service         |
-| `DELETE` | `/v1/services/{id}`       | Remove service        |
+A service is a deployed workload bundle: a Compose stack on a swarm, or a Kubernetes manifest on a cluster.
+
+| Method   | Path                      | Description                                        |
+|----------|---------------------------|----------------------------------------------------|
+| `POST`   | `/v1/services`            | Deploy a compose stack, or apply a k8s manifest    |
+| `GET`    | `/v1/services`            | List services                                      |
+| `GET`    | `/v1/services/{id}`       | Get service, with its applied objects              |
+| `PUT`    | `/v1/services/{id}`       | Replace the spec and redeploy (a manifest re-applies and prunes) |
+| `POST`   | `/v1/services/{id}/stop`  | Stop service (a manifest's objects are deleted)    |
+| `POST`   | `/v1/services/{id}/start` | Start service (a manifest is re-applied)           |
+| `DELETE` | `/v1/services/{id}`       | Remove service                                     |
+| `POST`   | `/v1/services/{id}/logs`  | Queue a log read; answers with a `task_id`         |
+| `GET`    | `/v1/services/{id}/logs/{taskId}` | Result of a queued log read                |
+
+Specs are **base64-encoded on the way in**, on `POST` and `PUT` alike, and returned as readable YAML on the way out. A deploy body carries exactly one backend. Compose:
+
+```json
+{ "name": "web", "swarm_id": "swarm-3f1d5a37", "compose_file": "<base64 YAML>" }
+```
+
+Kubernetes:
+
+```json
+{ "name": "api", "cluster_id": "cl-7f2b18d0", "manifest": "<base64 YAML>" }
+```
+
+A service stores one spec; the target says how to read it. On the wire it is named for what it is, so a service carries `swarm_id` with `compose_file`, or `cluster_id` with `manifest`, and — for a manifest — `applied_objects`: the objects `kubectl` reported applying (`kind`, `name`, `namespace`, `api_version`). That list is what Nimbus monitors, prunes against on a re-apply, and deletes on removal.
 
 ## Gateway / Load Balancer
 
 | Method  | Path                     | Description                    |
 |---------|--------------------------|--------------------------------|
-| `GET`   | `/v1/gateway`            | Gateway status + routing table |
+| `GET`   | `/v1/gateway`            | Routing table + every load balancer |
 | `GET`   | `/v1/loadbalancers`      | List load balancers            |
 | `GET`   | `/v1/loadbalancers/{id}` | Get load balancer              |
+
+`GET /v1/gateway` answers with `{"routes": [...], "load_balancers": [...]}`. Both lists are always present, empty when there is nothing to report. A load balancer names the swarm or the cluster it serves in `swarm_id` or `cluster_id` — exactly one of the two is set.
 
 ## SSH Profiles
 

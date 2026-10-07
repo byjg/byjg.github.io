@@ -116,6 +116,8 @@ Resources still starting up count as healthy, so a manifest applied moments ago 
 
 `nimbus manifest remove` tears down all resources declared in the manifest in reverse dependency order:
 
+The manifest record is kept, so it can be applied again. Add `--purge` to delete the record too, once its resources are gone.
+
 ```bash
 nimbus manifest remove --file infra.yaml --env S3_PASSWORD=secret
 ```

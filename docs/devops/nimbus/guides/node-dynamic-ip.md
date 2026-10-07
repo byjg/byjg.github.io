@@ -1,7 +1,7 @@
 # Handling Dynamic Node IPs
 
 This guide explains what happens when a node's public IP address changes, and
-how to recover connectivity using the `nimbus node update-ip` command.
+how to recover connectivity using the `nimbus node set-ip` command.
 
 ---
 
@@ -39,7 +39,7 @@ This makes IP changes **fully automatic** for any node that can still reach the
 API — which covers the common case of a worker whose WireGuard roaming kept the
 tunnel alive through the IP change.
 
-Running `nimbus node update-ip` manually is only needed when the self-healing
+Running `nimbus node set-ip` manually is only needed when the self-healing
 path is broken (see [Scenario 2](#scenario-2--control-plane-cp-node-ip-changes)).
 
 ## WireGuard roaming
@@ -63,7 +63,7 @@ means worker IP changes are fully transparent in most cases.
 **Fix:**
 
 ```bash
-nimbus node update-ip --node <node-id> --ip <new-ip>
+nimbus node set-ip --node <node-id> --ip <new-ip>
 ```
 
 This updates the DB and queues `update_wireguard_peers` on all provisioned
@@ -94,7 +94,7 @@ Run `update-ip` before the old IP becomes unreachable. The CP will push peer
 updates to all workers over the still-live tunnel:
 
 ```bash
-nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
+nimbus node set-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
 ```
 
 `--regenerate-cert` applies to the control-plane node only. It reissues the API
@@ -168,7 +168,7 @@ change, redistribute configs to all nodes, and reissue the API certificate for
 the new address:
 
 ```bash
-nimbus node update-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
+nimbus node set-ip --node <cp-node-id> --ip <new-cp-ip> --regenerate-cert
 ```
 
 ---
@@ -204,19 +204,19 @@ IP), consider:
 
 ## Reference
 
-### `nimbus node update-ip`
+### `nimbus node set-ip`
 
 ```
 Usage:
-  nimbus node update-ip [node-id] [flags]
+  nimbus node set-ip [node-id] [flags]
 
 Flags:
   --node string   Node ID (or pass as positional argument)
   --ip   string   New public IP address (required)
 
 Examples:
-  nimbus node update-ip node-abc123 --ip 192.168.1.50
-  nimbus node update-ip --node node-abc123 --ip 192.168.1.50
+  nimbus node set-ip node-abc123 --ip 192.168.1.50
+  nimbus node set-ip --node node-abc123 --ip 192.168.1.50
 ```
 
 ### API endpoint

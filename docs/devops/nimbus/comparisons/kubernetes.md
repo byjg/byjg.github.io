@@ -12,7 +12,7 @@ DockNimbus sits *above* Kubernetes — it can deploy K3s clusters as one of its 
 | **Networking setup** | WireGuard mesh VPN auto-configured between nodes | Requires CNI plugin (Calico, Flannel, Cilium) |
 | **Load balancing** | Built-in EasyHAProxy with domain routing | Requires Ingress controller (nginx, Traefik) + external LB |
 | **DNS** | Built-in dnsmasq + Cloudflare integration | CoreDNS (cluster-internal only), external DNS separate |
-| **Storage** | NFS volumes + MinIO S3 provisioned via CLI/manifest | Requires CSI drivers, PV/PVC configuration, external storage |
+| **Storage** | NFS volumes + RustFS S3 provisioned via CLI/manifest | Requires CSI drivers, PV/PVC configuration, external storage |
 | **Non-K8s workloads** | Docker Swarm services, Compose stacks, standalone containers | Kubernetes only |
 | **IaC** | Single manifest declares nodes → clusters → workloads | Separate tools needed: Terraform (infra) + Helm/Kustomize (workloads) |
 | **State** | Centralized SQLite (single source of truth for everything) | etcd (cluster state only, not infra) |
