@@ -66,6 +66,15 @@ For detailed license acknowledgments, compatibility information, and attribution
 - New and modified code: MIT License
 - Overall project license: MIT License
 
+### PHP Text Classifier
+
+**Project**: [PHP Text Classifier](/docs/php/text-classifier/)
+**License**: LGPL 2.1
+
+The PHP Text Classifier project is derived from the **b8** spam filter by Tobias Leupold, which is licensed under the **GNU Lesser General Public License, version 2.1**. The source files derived from b8 keep their original copyright and license notices, and the project is distributed under the same license.
+
+The full license text is in the `LICENSE` file of the [repository](https://github.com/byjg/php-text-classifier).
+
 ## General Notice
 
 When using any project from this collection, please:

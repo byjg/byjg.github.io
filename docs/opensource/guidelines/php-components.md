@@ -30,16 +30,14 @@ all of them.
     "php": ">=8.3 <8.7"
   },
   "require-dev": {
-    "phpunit/phpunit": "^12.5"
+    "phpunit/phpunit": "^12.5",
+    "psalm/phar": "^6.16"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "psalm": [
-      "@composer --working-dir=tools/psalm update --no-interaction",
-      "tools/psalm/vendor/bin/psalm --threads=1"
-    ]
+    "psalm": "vendor/bin/psalm.phar"
   }
 }
 ```
@@ -58,18 +56,26 @@ all of them.
 
 ## Psalm
 
-Psalm is installed in its own Composer project under `tools/psalm`, not in
-`require-dev`, so it never constrains the component's dependencies.
-
-`tools/psalm/composer.json`:
+Psalm is installed as `psalm/phar` in `require-dev`, not as `vimeo/psalm`:
 
 ```json
 {
-  "require": {
-    "vimeo/psalm": "^6.16"
+  "require-dev": {
+    "psalm/phar": "^6.16"
   }
 }
 ```
+
+- `vimeo/psalm` lists the PHP versions it supports and no published release
+  includes 8.6, so as a dev dependency it made `composer install` fail on the
+  8.6 build job before any test ran.
+- `psalm/phar` requires only `php ^8.2` and bundles its own dependencies. It
+  installs on every PHP version of the matrix and never constrains the
+  component's dependencies.
+- Psalm itself still does not *run* on 8.6, which is why the Psalm job uses
+  8.5.
+- `composer psalm` runs `vendor/bin/psalm.phar`. There is no `tools/psalm`
+  folder.
 
 `psalm.xml` must set `cacheDirectory="/tmp/psalm"` -- without it Psalm fails
 in CI with `mkdir(): Permission denied`:
@@ -82,7 +88,7 @@ in CI with `mkdir(): Permission denied`:
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     cacheDirectory="/tmp/psalm"
-    xsi:schemaLocation="https://getpsalm.org/schema/config tools/psalm/vendor/vimeo/psalm/config.xsd"
+    xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/6.x/config.xsd"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
 >
@@ -95,11 +101,7 @@ in CI with `mkdir(): Permission denied`:
 </psalm>
 ```
 
-**Check `.gitignore` before committing.** Unanchored `vendor` and
-`composer.lock` also cover `tools/psalm/`. If the patterns are anchored
-(`/vendor`), add `/tools/*/vendor/` and `/tools/*/composer.lock` -- otherwise
-Psalm's whole vendor tree gets committed. Only `tools/psalm/composer.json`
-belongs in git.
+`.gitignore` covers `vendor` and `composer.lock`; neither is committed.
 
 ## Tests
 
@@ -140,7 +142,7 @@ jobs:
           - "8.3"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: composer install
       - run: composer test
 
@@ -154,12 +156,11 @@ jobs:
       options: --user root --privileged
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: composer install
-      - run: composer --working-dir=tools/psalm update --no-interaction
       - name: Psalm
         # Exit code 2 means flaws were found, not that Psalm failed to run.
-        run: ./tools/psalm/vendor/bin/psalm
+        run: ./vendor/bin/psalm.phar
           --show-info=true
           --report=psalm-results.sarif || [ $? = 2 ]
       - name: Upload Analysis results to GitHub
@@ -191,10 +192,13 @@ jobs:
 |---|---|
 | `README.md` | Front matter and links as in [Publishing documentation](add-docs.md) |
 | `docs/` | Documentation pages |
-| `LICENSE` | MIT -- see [license](/license) |
-| `CONTRIBUTING.md` | Branch model and contribution rules |
+| `LICENSE` | MIT -- see [license](/license), which also lists the exceptions |
 | `CHANGELOG-<a.b>.md` | Changes of the release line |
-| `.github/FUNDING.yml` | `github: byjg` |
+
+No `CONTRIBUTING.md`, `SECURITY.md` or `.github/FUNDING.yml` in the repository:
+they come from the account-wide defaults in
+[byjg/.github](https://github.com/byjg/.github), so there is one copy to
+maintain.
 
 No `.travis*` files; CI is GitHub Actions only.
 

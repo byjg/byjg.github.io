@@ -133,3 +133,15 @@ macos:
 homebrew:
   label: Homebrew
   description: Homebrew formulas and the ByJG tap
+
+laravel:
+  label: Laravel
+  description: Components and connectors for the Laravel framework
+
+openapi:
+  label: OpenAPI
+  description: OpenAPI specification, contract testing and API tooling
+
+sms:
+  label: SMS
+  description: SMS messaging clients
