@@ -115,8 +115,11 @@ brew install byjg/tap/<formula-name>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
 
 ```bash
-grep ^Package /var/lib/apt/lists/*opensource.byjg.com*Packages
+curl -fsSL https://opensource.byjg.com/apt/Packages | grep ^Package | sort -u
 ```
+
+This reads the index from the repository itself. The copy `apt` keeps in
+`/var/lib/apt/lists` is compressed on some systems, such as the Docker images.
 
 </TabItem>
 <TabItem value="rpm" label="Fedora / RHEL / CentOS (DNF/Yum)">
