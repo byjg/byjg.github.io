@@ -94,7 +94,7 @@ front. It discovers the services from Docker labels, Swarm services or
 Kubernetes Ingress, issues the TLS certificates and reloads HAProxy without
 dropping connections. DockNimbus
 [uses it for load balancing](../devops/nimbus/guides/swarms-and-load-balancing.md).
-[Static HTTP Server](../devops/docker-static-httpserver.md) serves frontends
+[Static HTTP Server](../devops/docker-static-httpserver/README.md) serves frontends
 and static sites.
 
 ## 5. One standard for every project
