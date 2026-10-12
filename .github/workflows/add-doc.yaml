@@ -98,7 +98,15 @@ jobs:
           # The dependency graph is built from composer.json, not from a hand
           # written block in the README. Each project records its own edges here
           # when it publishes; the next step aggregates whatever is on record.
+          #
+          # A repository without a composer.json at its root is not a package (a
+          # comparison or a showcase, say): it publishes its pages and has no place
+          # in the graph.
           PROJECT_WITHOUT_FOLDER=$(echo ${{ inputs.project }} | sed "s~^${{ inputs.folder }}-~~")
+          if [ ! -f "${{ inputs.project }}/composer.json" ]; then
+            echo "No composer.json in ${{ inputs.project }}: not recorded in the dependency graph."
+            exit 0
+          fi
           mkdir -p byjg.github.io/data/dependencies
           python3 byjg.github.io/collect-deps.py \
             "${{ inputs.project }}/composer.json" \
