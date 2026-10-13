@@ -101,8 +101,10 @@ already enabled. See [Getting started](getting-started).
 ## Documentation
 
 - [Getting started](getting-started)
-- [Agents](agents)
 - [Input routing](input-routing)
+- [Working with agents](working-with-agents)
+- [Sessions and history](sessions)
+- [Agents](agents)
 - [Projects](projects)
 - [Configuration](configuration)
 - [Security model](security)
@@ -121,8 +123,8 @@ Run the checks the CI runs:
 
 ```bash
 cargo fmt --check
-cargo clippy --all-targets -- -D warnings
-cargo test
+cargo clippy --all-targets --locked -- -D warnings
+cargo test --locked
 ```
 
 ## License
