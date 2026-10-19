@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/jwt-wrapper": "^6.0"
+      "byjg/jwt-wrapper": "^7.0"
     }
   },
   "name": "byjg/jwt-session"
