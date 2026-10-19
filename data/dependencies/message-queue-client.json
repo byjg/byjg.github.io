@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/uri": "^6.0"
+      "byjg/uri": "^7.0"
     }
   },
   "name": "byjg/message-queue-client"
