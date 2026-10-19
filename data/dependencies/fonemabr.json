@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/convert": "^6.0"
+      "byjg/convert": "^7.0"
     }
   },
   "name": "byjg/fonemabr"
