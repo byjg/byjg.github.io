@@ -55,7 +55,6 @@ graph LR;
   byjg/anydataset-db -.->|dev| byjg/webrequest;
   byjg/anydataset-json --> byjg/anydataset;
   byjg/anydataset-nosql --> byjg/anydataset;
-  byjg/anydataset-nosql --> byjg/cache-engine;
   byjg/anydataset-nosql --> byjg/serializer;
   byjg/anydataset-nosql --> byjg/webrequest;
   byjg/anydataset-text --> byjg/anydataset;

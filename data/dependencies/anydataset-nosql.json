@@ -1,13 +1,9 @@
 {
   "deps": {
     "require": {
-      "byjg/anydataset": "^6.0",
-      "byjg/cache-engine": "^6.0",
-      "byjg/serializer": "^6.0",
-      "byjg/webrequest": "^6.0"
-    },
-    "suggest": {
-      "byjg/cache-engine": ""
+      "byjg/anydataset": "^7.0",
+      "byjg/serializer": "^7.0",
+      "byjg/webrequest": "^7.0"
     }
   },
   "name": "byjg/anydataset-nosql"
