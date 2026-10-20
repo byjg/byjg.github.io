@@ -2,7 +2,7 @@
   "deps": {
     "require": {
       "byjg/gluo-core": "^7.0",
-      "byjg/scriptify": "^6.0"
+      "byjg/scriptify": "^7.0"
     }
   },
   "name": "byjg/gluo"
