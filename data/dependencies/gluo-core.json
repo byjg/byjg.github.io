@@ -1,0 +1,19 @@
+{
+  "deps": {
+    "require": {
+      "byjg/anydataset-db": "^7.0",
+      "byjg/authuser": "^7.0",
+      "byjg/cache-engine": "^7.0",
+      "byjg/config": "^7.0",
+      "byjg/jinja-php": "^7.0",
+      "byjg/mailwrapper": "^7.0",
+      "byjg/micro-orm": "^7.0",
+      "byjg/migration": "^7.0",
+      "byjg/restserver": "^7.0",
+      "byjg/scriptify": "^7.0",
+      "byjg/serializer": "^7.0",
+      "byjg/swagger-test": "^7.0"
+    }
+  },
+  "name": "byjg/gluo-core"
+}
