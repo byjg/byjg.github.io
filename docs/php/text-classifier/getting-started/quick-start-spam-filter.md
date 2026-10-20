@@ -90,4 +90,4 @@ Before any training, `classify()` returns a result with `score = 0.5` — the cl
 - [Classifying guide](../guides/spam-filter/classifying) — interpreting scores, thresholds
 - [LLM-assisted classification](../guides/llm-assisted-classification) — automatic fallback with active learning
 - [Storage: SQLite / MySQL / PostgreSQL](../guides/spam-filter/storage-rdbms)
-- [Storage: BerkeleyDB](../guides/spam-filter/storage-dba)
+- [Storage: GDBM](../guides/spam-filter/storage-dba)
