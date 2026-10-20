@@ -1,0 +1,11 @@
+{
+  "deps": {
+    "require-dev": {
+      "byjg/cache-engine": "^7.0"
+    },
+    "suggest": {
+      "byjg/cache-engine": ""
+    }
+  },
+  "name": "byjg/resilience"
+}
