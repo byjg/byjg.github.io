@@ -1,4 +1,11 @@
 {
-  "deps": {},
+  "deps": {
+    "require-dev": {
+      "byjg/serializer": "^7.0"
+    },
+    "suggest": {
+      "byjg/serializer": ""
+    }
+  },
   "name": "byjg/statemachine"
 }

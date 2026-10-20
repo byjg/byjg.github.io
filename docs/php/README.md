@@ -90,6 +90,7 @@ graph LR;
   byjg/soap-server --> byjg/jinja-php;
   byjg/soap-server --> byjg/serializer;
   byjg/soap-server --> byjg/webrequest;
+  byjg/statemachine -.->|dev| byjg/serializer;
   byjg/swagger-test --> byjg/webrequest;
   byjg/swagger-test -.->|dev| byjg/restserver;
   byjg/text-classifier --> byjg/llm-api-objects;
