@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/anydataset-db": "^6.0"
+      "byjg/anydataset-db": "^7.0"
     }
   },
   "name": "byjg/migration"
