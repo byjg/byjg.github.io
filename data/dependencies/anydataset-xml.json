@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/anydataset": "^6.0"
+      "byjg/anydataset": "^7.0"
     }
   },
   "name": "byjg/anydataset-xml"
