@@ -1,10 +1,10 @@
 {
   "deps": {
     "require": {
-      "byjg/anydataset-db": "^6.0"
+      "byjg/anydataset-db": "^7.0"
     },
     "require-dev": {
-      "byjg/cache-engine": "^6.0"
+      "byjg/cache-engine": "^7.0"
     }
   },
   "name": "byjg/micro-orm"
