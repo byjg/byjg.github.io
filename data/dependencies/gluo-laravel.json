@@ -1,0 +1,13 @@
+{
+  "deps": {
+    "require-dev": {
+      "byjg/statemachine": "^7.0",
+      "byjg/swagger-test": "^7.0"
+    },
+    "suggest": {
+      "byjg/statemachine": "",
+      "byjg/swagger-test": ""
+    }
+  },
+  "name": "byjg/gluo-laravel"
+}
