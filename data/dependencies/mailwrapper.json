@@ -1,8 +1,8 @@
 {
   "deps": {
     "require": {
-      "byjg/convert": "^6.0",
-      "byjg/webrequest": "^6.0"
+      "byjg/convert": "^7.0",
+      "byjg/webrequest": "^7.0"
     }
   },
   "name": "byjg/mailwrapper"
