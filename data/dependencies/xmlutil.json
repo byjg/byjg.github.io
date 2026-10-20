@@ -1,7 +1,7 @@
 {
   "deps": {
     "require": {
-      "byjg/serializer": "^6.0"
+      "byjg/serializer": "^7.0"
     }
   },
   "name": "byjg/xmlutil"
