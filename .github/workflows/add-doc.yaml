@@ -74,9 +74,13 @@ jobs:
 
           find . -print
           
-          if [ -d ${{ inputs.project }}/docs ]; then
+          # A project with a docs/ folder or a changelog gets a folder of pages; otherwise its README is a single page
+          if [ -d ${{ inputs.project }}/docs ] || ls ${{ inputs.project }}/CHANGELOG*.md >/dev/null 2>&1; then
             mkdir -p byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
-            cp -r ${{ inputs.project }}/docs/* byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            if [ -d ${{ inputs.project }}/docs ]; then
+              cp -r ${{ inputs.project }}/docs/* byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER
+            fi
+            bash byjg.github.io/.github/scripts/copy-changelogs.sh ${{ inputs.project }} byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER ${{ env.REPOSITORY }}
             # The project README's own front matter is authoritative. Only generate
             # one when it has none - otherwise Docusaurus parses the first block and
             # renders the second as page content, and any tags: are discarded.
