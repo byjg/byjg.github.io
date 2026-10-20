@@ -1,0 +1,8 @@
+{
+  "deps": {
+    "require": {
+      "byjg/webrequest": "^7.0"
+    }
+  },
+  "name": "byjg/sms-client"
+}
