@@ -3,6 +3,9 @@
 # its documentation: <destination>/changelog/<version>.md, CHANGELOG.md first, then the versions
 # newest first. Does nothing when the project has no changelog.
 #
+# The page name has no dot (7.0 is published as 7-0, titled "7.0"): a static server takes a URL
+# ending in "7.0" for a file with a ".0" extension and answers 404.
+#
 # Usage: copy-changelogs.sh <project dir> <destination dir> <owner/repository>
 #
 # Links are rewritten for the new location: docs/... points to the project's pages, a
@@ -36,13 +39,13 @@ if [ -f "$SRC/CHANGELOG.md" ]; then
     write_page "$SRC/CHANGELOG.md" changelog "Changelog"
 fi
 for VERSION in $(for f in "${VERSIONED[@]}"; do f=${f##*/CHANGELOG-}; echo "${f%.md}"; done | sort -rV); do
-    write_page "$SRC/CHANGELOG-$VERSION.md" "$VERSION" "$VERSION"
+    write_page "$SRC/CHANGELOG-$VERSION.md" "${VERSION//./-}" "$VERSION"
 done
 
 # The repository files first, so the docs/ and CHANGELOG links below are not taken for them
 REPO="$REPO" perl -pi -e '
     s{\]\((?:\./)?(?!\.\./|docs/|CHANGELOG|[a-zA-Z][a-zA-Z0-9+.-]*:|#|/)([^)\s]+)\)}{](https://github.com/$ENV{REPO}/blob/HEAD/$1)}g;
     s{\]\((?:\./)?docs/}{](../}g;
-    s{\]\((?:\./)?CHANGELOG-([^)#\s]+?)\.md}{]($1}g;
+    s{\]\((?:\./)?CHANGELOG-([^)#\s]+?)\.md}{"](" . ($1 =~ tr/./-/r)}ge;
     s{\]\((?:\./)?CHANGELOG\.md}{](changelog}g;
 ' "$DEST"/changelog/*.md
