@@ -24,7 +24,7 @@ Controls whether EasyHAProxy runs as a **Deployment** (with a Service) or a **Da
 
 | Value                 | Description                                                                                 | Default     |
 |-----------------------|---------------------------------------------------------------------------------------------|-------------|
-| `replicaCount`        | Number of replicas (only used when `service.create: true`)                                  | `1`         |
+| `replicaCount`        | Number of replicas (only used when `service.create: true`; a DaemonSet runs one pod per labeled node) | `1`         |
 | `service.create`      | `true` → Deployment + Service (NodePort, ClusterIP or LoadBalancer). `false` → DaemonSet with host ports. | `false`     |
 | `service.type`        | Service type when `service.create: true`: `NodePort`, `ClusterIP` or `LoadBalancer`                       | `ClusterIP` |
 | `service.annotations` | Annotations to add to the Service resource                                                  | `{}`        |
@@ -37,11 +37,19 @@ Set `service.create: true` and `service.type: NodePort` for most setups. DaemonS
 
 | Value                      | Description                                                        | Default  |
 |----------------------------|--------------------------------------------------------------------|----------|
-| `binding.ports.http`       | HTTP port                                                          | `80`     |
-| `binding.ports.https`      | HTTPS port                                                         | `443`    |
-| `binding.ports.stats`      | HAProxy stats port                                                 | `1936`   |
-| `binding.ports.dashboard`  | Monitoring dashboard port (always `stats + 10000` inside the pod) | `11936`  |
+| `binding.ports.http`       | HTTP host port (DaemonSet mode)                                    | `80`     |
+| `binding.ports.https`      | HTTPS host port (DaemonSet mode)                                   | `443`    |
+| `binding.ports.stats`      | HAProxy stats host port (DaemonSet mode)                           | `1936`   |
+| `binding.ports.dashboard`  | Monitoring dashboard host port (always `stats + 10000` inside the pod) | `11936`  |
+| `binding.nodePorts.http`      | HTTP node port (`service.type: NodePort`)                       | `31080`  |
+| `binding.nodePorts.https`     | HTTPS node port (`service.type: NodePort`)                      | `31443`  |
+| `binding.nodePorts.stats`     | HAProxy stats node port (`service.type: NodePort`)              | `31936`  |
+| `binding.nodePorts.dashboard` | Monitoring dashboard node port (`service.type: NodePort`)       | `31937`  |
 | `binding.additionalPorts`  | List of additional ports to expose                                 | `[]`     |
+
+:::note Node ports
+Kubernetes only accepts node ports in its node port range (30000-32767 by default). Before chart 2.0.7 the NodePort Service used `binding.ports.*`, so the defaults (80, 443, …) were rejected. If you set `binding.ports.*` to make NodePort work, move those values to `binding.nodePorts.*`.
+:::
 
 ## EasyHAProxy Settings
 
@@ -104,6 +112,10 @@ Label the target node before installing:
 ```bash
 kubectl label nodes node-01 "easyhaproxy/node=master"
 ```
+
+:::warning Label exactly one node
+`replicaCount` does not apply to a DaemonSet: it runs one EasyHAProxy pod on **every** node with the label. Two labeled nodes mean two copies, with the problems described in [Limitations](../concepts/limitations), in particular failing ACME certificates.
+:::
 
 ## Standard Kubernetes Fields
 
