@@ -11,7 +11,7 @@ const config = {
   title: 'Opensource ByJG',
   tagline: 'Open source to build, run and evolve software with AI assistance',
   favicon: 'img/favicon.ico',
-  staticDirectories: ['helm-charts', 'packages', 'static'],
+  staticDirectories: ['helm-charts', 'static'],
 
   // Set the production url of your site here
   url: 'https://opensource.byjg.com',

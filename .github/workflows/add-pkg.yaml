@@ -13,10 +13,21 @@ on:
       tag:
         type: string
         required: true
+      keep_versions:
+        description: How many versions of each package the repositories keep; older ones are deleted
+        type: number
+        required: false
+        default: 8
     secrets:
       DOC_TOKEN:
         required: true
       GPG_PRIVATE_KEY:
+        required: true
+      R2_ACCOUNT_ID:
+        required: true
+      R2_ACCESS_KEY_ID:
+        required: true
+      R2_SECRET_ACCESS_KEY:
         required: true
 
 permissions:
@@ -28,14 +39,28 @@ jobs:
 
     env:
       REPOSITORY: ${{ inputs.org }}/${{ inputs.repo }}
+      # The APT and RPM repositories live in this Cloudflare R2 bucket, served as
+      # https://packages.byjg.com (static/_redirects sends opensource.byjg.com/apt and /rpm there).
+      R2_BUCKET: s3://byjg-packages
+      AWS_ENDPOINT_URL: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      # R2 does not accept the checksums newer aws-cli versions send by default
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
 
     steps:
-      - name: Checkout repository (byjg.github.io)
+      - name: Checkout scripts (byjg.github.io)
         uses: actions/checkout@v7
         with:
-          token: ${{ secrets.DOC_TOKEN }}
           repository: byjg/byjg.github.io
           path: byjg.github.io
+          sparse-checkout: |
+            .github
+
+      - name: Download repositories from R2
+        run: aws s3 sync "$R2_BUCKET" packages --no-progress
 
       - name: Install packaging tools
         run: |
@@ -48,8 +73,8 @@ jobs:
           # Export public key for users to download
           # (binary for APT signed-by, armored for rpm --import)
           GPG_KEY_ID=$(gpg --list-keys --with-colons | awk -F: '/^pub/{found=1} found && /^fpr/{print $10; exit}')
-          gpg --export "$GPG_KEY_ID" > byjg.github.io/packages/byjg.gpg
-          gpg --export --armor "$GPG_KEY_ID" > byjg.github.io/packages/byjg.asc
+          gpg --export "$GPG_KEY_ID" > packages/byjg.gpg
+          gpg --export --armor "$GPG_KEY_ID" > packages/byjg.asc
           echo "GPG_KEY_ID=$GPG_KEY_ID" >> "$GITHUB_ENV"
 
       - name: Download release assets
@@ -73,10 +98,11 @@ jobs:
         run: |
           # Copy .deb files to the apt pool
           if ls assets/*.deb 1>/dev/null 2>&1; then
-            cp assets/*.deb byjg.github.io/packages/apt/
+            cp assets/*.deb packages/apt/
+            bash byjg.github.io/.github/scripts/prune-packages.sh packages/apt deb ${{ inputs.keep_versions }}
 
             # Regenerate APT metadata
-            cd byjg.github.io/packages/apt
+            cd packages/apt
             dpkg-scanpackages --multiversion . > Packages
             gzip -k -f Packages
 
@@ -113,41 +139,38 @@ jobs:
         run: |
           # Copy .rpm files to the rpm pool
           if ls assets/*.rpm 1>/dev/null 2>&1; then
-            cp assets/*.rpm byjg.github.io/packages/rpm/
+            cp assets/*.rpm packages/rpm/
+            bash byjg.github.io/.github/scripts/prune-packages.sh packages/rpm rpm ${{ inputs.keep_versions }}
 
             # Sign the RPMs (dnf gpgcheck=1 refuses unsigned packages). rpmsign
             # skips files already signed by this key and re-signs the others,
             # so older packages are covered too, even after a key rotation.
             echo "%_gpg_name $GPG_KEY_ID" > ~/.rpmmacros
-            rpmsign --addsign byjg.github.io/packages/rpm/*.rpm
+            rpmsign --addsign packages/rpm/*.rpm
 
             # Regenerate RPM metadata
-            createrepo_c --update byjg.github.io/packages/rpm
+            createrepo_c --update packages/rpm
 
             # GPG sign the RPM repo metadata
             gpg --batch --yes --armor --detach-sign \
-              -o byjg.github.io/packages/rpm/repodata/repomd.xml.asc \
-              byjg.github.io/packages/rpm/repodata/repomd.xml
+              -o packages/rpm/repodata/repomd.xml.asc \
+              packages/rpm/repodata/repomd.xml
 
             echo "RPM repo updated:"
-            ls -la byjg.github.io/packages/rpm/
+            ls -la packages/rpm/
           else
             echo "No .rpm files found, skipping RPM"
           fi
 
-      - name: Commit and push
+      - name: Upload repositories to R2
         run: |
-          cd byjg.github.io
-          git add "packages/*"
-          git config user.name "CI/CD"
-          git config user.email "info@byjg.com.br"
-          git diff-index --quiet HEAD || git commit -m "[skip ci] Add packages from ${{ env.REPOSITORY }} ${{ inputs.tag }}"
-          # byjg.github.io takes pushes from every project: another one may land
-          # between the checkout and the push. Rebase on top of it and retry.
-          for attempt in 1 2 3 4 5; do
-            git push && exit 0
-            sleep $((RANDOM % 10 + 1))
-            git pull --rebase
-          done
-          echo "Could not push to byjg.github.io after 5 attempts" >&2
-          exit 1
+          # The index files change in place and must never be served stale from the
+          # Cloudflare cache: a cached Packages.gz next to a fresh InRelease makes apt
+          # fail with "Hash Sum mismatch". They go last, after the packages they list,
+          # and old packages are deleted only once nothing points to them anymore.
+          METADATA=(--exclude "apt/Packages*" --exclude "apt/*Release*" --exclude "rpm/repodata/repomd.xml*" --exclude "byjg.*")
+          aws s3 sync packages "$R2_BUCKET" --no-progress "${METADATA[@]}"
+          aws s3 sync packages "$R2_BUCKET" --no-progress --exclude "*" \
+            --include "apt/Packages*" --include "apt/*Release*" --include "rpm/repodata/repomd.xml*" --include "byjg.*" \
+            --cache-control "no-cache"
+          aws s3 sync packages "$R2_BUCKET" --no-progress --delete "${METADATA[@]}"

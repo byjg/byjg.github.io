@@ -16,6 +16,10 @@ with our command-line tools for macOS and Linux.
 
 ## Setup
 
+The repositories are served from `https://packages.byjg.com`. A setup made with
+the former `https://opensource.byjg.com` addresses keeps working: they redirect
+there.
+
 <Tabs>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
 
@@ -23,10 +27,10 @@ Download the GPG signing key and add the repository:
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
-sudo curl -fsSL https://opensource.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
+sudo curl -fsSL https://packages.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
 sudo tee /etc/apt/sources.list.d/byjg.sources <<EOF
 Types: deb
-URIs: https://opensource.byjg.com/apt
+URIs: https://packages.byjg.com/apt
 Suites: /
 Signed-By: /etc/apt/keyrings/byjg.gpg
 EOF
@@ -38,8 +42,8 @@ sudo apt update
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
-sudo curl -fsSL https://opensource.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
-echo "deb [signed-by=/etc/apt/keyrings/byjg.gpg] https://opensource.byjg.com/apt /" | sudo tee /etc/apt/sources.list.d/byjg.list
+sudo curl -fsSL https://packages.byjg.com/byjg.gpg -o /etc/apt/keyrings/byjg.gpg
+echo "deb [signed-by=/etc/apt/keyrings/byjg.gpg] https://packages.byjg.com/apt /" | sudo tee /etc/apt/sources.list.d/byjg.list
 sudo apt update
 ```
 
@@ -51,15 +55,15 @@ sudo apt update
 Import the GPG signing key and add the repository:
 
 ```bash
-sudo rpm --import https://opensource.byjg.com/byjg.asc
+sudo rpm --import https://packages.byjg.com/byjg.asc
 sudo tee /etc/yum.repos.d/byjg.repo <<EOF
 [byjg]
 name=ByJG Packages
-baseurl=https://opensource.byjg.com/rpm
+baseurl=https://packages.byjg.com/rpm
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://opensource.byjg.com/byjg.asc
+gpgkey=https://packages.byjg.com/byjg.asc
 EOF
 ```
 
@@ -115,7 +119,7 @@ brew install byjg/tap/<formula-name>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
 
 ```bash
-curl -fsSL https://opensource.byjg.com/apt/Packages | grep ^Package | sort -u
+curl -fsSL https://packages.byjg.com/apt/Packages | grep ^Package | sort -u
 ```
 
 This reads the index from the repository itself. The copy `apt` keeps in

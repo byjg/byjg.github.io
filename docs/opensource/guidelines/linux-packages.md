@@ -4,12 +4,16 @@ sidebar_position: 4
 
 # Publishing Linux packages
 
-ByJG hosts an APT repository at `https://opensource.byjg.com/apt` and an RPM
-repository at `https://opensource.byjg.com/rpm`. Their metadata and the RPM
+ByJG hosts an APT repository at `https://packages.byjg.com/apt` and an RPM
+repository at `https://packages.byjg.com/rpm`. Their metadata and the RPM
 packages are signed with the ByJG Opensource key, published as
-`https://opensource.byjg.com/byjg.gpg` (binary, for APT) and
-`https://opensource.byjg.com/byjg.asc` (armored, for RPM). Both repositories
-are stored in `packages/` of this site's repository.
+`https://packages.byjg.com/byjg.gpg` (binary, for APT) and
+`https://packages.byjg.com/byjg.asc` (armored, for RPM). Both repositories
+and the keys are stored in the `byjg-packages` Cloudflare R2 bucket, served as
+`https://packages.byjg.com`. They used to be served by this site:
+`static/_redirects` sends `/apt/*`, `/rpm/*`, `/byjg.gpg` and `/byjg.asc` of
+`opensource.byjg.com` there, so a setup made with the former addresses keeps
+working. Nothing of them is in this site's repository.
 
 How users install from them: [Package Repository](/docs/packages).
 
@@ -19,7 +23,7 @@ How users install from them: [Package Repository](/docs/packages).
 flowchart LR
     tag["git tag v1.2.3"] --> build["GoReleaser builds .deb/.rpm<br/>and attaches them to the GitHub release"]
     build --> addpkg["add-pkg.yaml downloads the assets,<br/>adds them to the repositories<br/>and signs the RPMs and the metadata"]
-    addpkg --> site["commit to byjg.github.io"]
+    addpkg --> r2["upload to the R2 bucket"]
 ```
 
 The [`add-pkg.yaml`](https://github.com/byjg/byjg.github.io/blob/master/.github/workflows/add-pkg.yaml)
@@ -110,6 +114,9 @@ jobs:
     secrets:
       DOC_TOKEN: ${{ secrets.DOC_TOKEN }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
 ```
 
 | Input | Meaning |
@@ -117,24 +124,31 @@ jobs:
 | `org` | Repository owner; defaults to `byjg` |
 | `repo` | Repository whose release holds the packages |
 | `tag` | Release tag to download from |
+| `keep_versions` | How many versions of each package the repositories keep; defaults to `8` |
 
 `publish-packages` **must** `needs: release`: the assets have to exist before
 they can be downloaded.
 
 ## What the workflow does
 
-1. Imports `GPG_PRIVATE_KEY` and re-exports the public key to
-   `packages/byjg.gpg` (binary) and `packages/byjg.asc` (armored).
-2. Downloads the release's `*.deb` and `*.rpm` assets.
-3. **APT:** copies the `.deb` files into `packages/apt/`, regenerates
+1. Downloads the whole R2 bucket: the repositories are rebuilt from every
+   package in them.
+2. Imports `GPG_PRIVATE_KEY` and re-exports the public key to `byjg.gpg`
+   (binary) and `byjg.asc` (armored).
+3. Downloads the release's `*.deb` and `*.rpm` assets.
+4. **APT:** copies the `.deb` files into `apt/`, deletes the versions older
+   than the last `keep_versions` of every package, regenerates
    `Packages`, `Packages.gz` and `Release` (its `Architectures:` line is taken
    from `Packages`), and signs them into `Release.gpg` and `InRelease`.
-4. **RPM:** copies the `.rpm` files into `packages/rpm/`, signs every `.rpm`
+5. **RPM:** the same in `rpm/`; then signs every `.rpm`
    there with `rpmsign --addsign` (files already signed by the key are
    skipped), runs `createrepo_c --update`, and signs `repodata/repomd.xml`.
    The RPMs in the repository are signed; the ones attached to the GitHub
    release are not.
-5. Commits `[skip ci] Add packages from <org>/<repo> <tag>` and pushes.
+6. Uploads the bucket back in three passes: the new packages, then the index
+   files with `Cache-Control: no-cache` (a stale `Packages.gz` from the
+   Cloudflare cache next to a fresh `InRelease` makes apt fail with "Hash Sum
+   mismatch"), and only then deletes the pruned packages.
 
 ## Rules
 
@@ -143,8 +157,13 @@ they can be downloaded.
 - **Check the log when nothing appears.** A release without matching assets
   is not an error: the job logs `No .deb files found, skipping APT` and
   succeeds.
-- **Old versions stay.** The repository keeps every version
-  (`dpkg-scanpackages --multiversion`), so users can pin one.
+- **Only the last versions stay.** The repositories keep the last
+  `keep_versions` (8) versions of each package, every architecture of a
+  version together (`dpkg-scanpackages --multiversion`), so users can pin or
+  roll back to one of them. Upgrading never needs the versions in between.
+- **One release at a time.** Two projects publishing at the same moment both
+  upload their copy of the bucket, and the second one deletes what the first
+  added. Re-run the first project's `publish-packages` job to put it back.
 
 ## Homebrew
 
@@ -175,7 +194,7 @@ RPM.
 Check that the key you download matches:
 
 ```bash
-curl -fsSL https://opensource.byjg.com/byjg.gpg | gpg --show-keys
+curl -fsSL https://packages.byjg.com/byjg.gpg | gpg --show-keys
 ```
 
 The private key is held by the maintainers. It reaches a repository as the

@@ -1,0 +1,6 @@
+# The APT and RPM repositories and the signing keys live in the byjg-packages
+# Cloudflare R2 bucket. Keep the URLs users already have working.
+/apt/*    https://packages.byjg.com/apt/:splat  301
+/rpm/*    https://packages.byjg.com/rpm/:splat  301
+/byjg.gpg https://packages.byjg.com/byjg.gpg    301
+/byjg.asc https://packages.byjg.com/byjg.asc    301

@@ -51,6 +51,7 @@ something publishes.
 |---|---|---|
 | `DOC_TOKEN` | `add-doc`, `add-helm`, `add-pkg` | GitHub token with write access to `byjg/byjg.github.io`; `add-pkg` also uses it to download the project's release assets |
 | `GPG_PRIVATE_KEY` | `add-pkg` | Base64-encoded private key that signs the APT and RPM metadata |
+| `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` | `add-pkg` | Cloudflare account and R2 API token (read/write on the `byjg-packages` bucket) that hold the APT and RPM repositories |
 | `DOCKER_REGISTRY` | Docker builds | Registry host the images are pushed to |
 | `DOCKER_REGISTRY_USER`, `DOCKER_REGISTRY_TOKEN` | Docker builds | Credentials for that registry |
 | `NPM_TOKEN` | Node projects | Token that publishes packages to npm |
