@@ -28,6 +28,7 @@ Run any of them with `load.sh <script>`.
 | [kustomize](kustomize) | Download and install Kustomize, to customize Kubernetes manifests |
 | [load](load) | Fetch a script from https://shellscript.download, cache it locally, and optionally execute it. |
 | [maven](maven) | Download and install Apache Maven |
+| [nerdctl](nerdctl) | Install nerdctl with containerd and BuildKit, rootless by default |
 | [node-docker](node-docker) | Create Docker-backed Node.js launchers (node, npm, npx, yarn) |
 | [nvm](nvm) | Install Node Version Manager (NVM) and set up a shell init snippet |
 | [php-docker](php-docker) | Create Docker-backed php and composer launchers |
