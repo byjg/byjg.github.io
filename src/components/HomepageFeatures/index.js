@@ -49,7 +49,7 @@ const HighlightedProjects = [
   {
     title: 'Gluo — PHP REST API Starter',
     link: '/docs/php/gluo',
-    Svg: require('@site/static/img/php_logo.svg').default,
+    Svg: require('@site/docs/php/gluo/gluo-icon.svg').default,
     description: (
       <>
         Production-ready PHP REST API starter with an updatable framework core (Gluo).
