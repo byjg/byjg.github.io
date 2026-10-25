@@ -1,5 +1,4 @@
 ---
-sidebar_key: gluo-framework-comparison
 sidebar_category: gluo
 ---
 
