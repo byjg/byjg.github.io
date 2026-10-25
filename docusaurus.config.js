@@ -111,6 +111,8 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
+          // Groups the PHP components by the sidebar_category of their README.
+          sidebarItemsGenerator: require('./src/sidebar/phpCategories.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:

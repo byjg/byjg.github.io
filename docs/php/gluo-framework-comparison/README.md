@@ -1,5 +1,6 @@
 ---
 sidebar_key: gluo-framework-comparison
+sidebar_category: gluo
 ---
 
 # Gluo vs Laravel vs Symfony

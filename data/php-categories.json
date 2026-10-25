@@ -1,0 +1,32 @@
+[
+  {
+    "key": "gluo",
+    "label": "Gluo (framework)",
+    "description": "The REST API starter, its framework core, and the connectors for Laravel."
+  },
+  {
+    "key": "data-access",
+    "label": "Data access",
+    "description": "Read any data source with the same code, map it to objects, and version the database."
+  },
+  {
+    "key": "http-apis",
+    "label": "HTTP & APIs",
+    "description": "Serve and test REST and SOAP APIs, call HTTP services, and handle JWT tokens and sessions."
+  },
+  {
+    "key": "messaging",
+    "label": "Messaging",
+    "description": "Queues, email and SMS behind one interface each, whatever the service behind it."
+  },
+  {
+    "key": "infrastructure",
+    "label": "Infrastructure",
+    "description": "Configuration and dependency injection, caching, locks, background work, workflows and accounts."
+  },
+  {
+    "key": "text-content",
+    "label": "Text & content",
+    "description": "Convert between formats, render templates, process text and images, and classify content."
+  }
+]
