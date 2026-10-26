@@ -53,6 +53,13 @@ jobs:
           repository: byjg/byjg.github.io
           path: byjg.github.io
 
+      - name: Checkout repository (byjg/skills)
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.DOC_TOKEN }}
+          repository: byjg/skills
+          path: skills
+
       - name: Checkout Project ${{ env.REPOSITORY }} repository
         uses: actions/checkout@v7
         with:
@@ -63,6 +70,7 @@ jobs:
             README.md
             composer.json
             docs
+            .claude/skills
 
       - name: Copy Doc files
         run: |
@@ -95,6 +103,31 @@ jobs:
           else
             cp ${{ inputs.project }}/README.md byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER.md
           fi
+
+      - name: Publish the agent skills
+        run: |
+          # A project's skills live in its .claude/skills/<name>/SKILL.md, next to the code
+          # they describe. Publish them like the docs: to byjg/skills, the plugin catalog the
+          # installers read (Claude Code, npx skills, Codex), and as the /skills pages of this
+          # site. A project without skills removes the ones it published before.
+          python3 byjg.github.io/skills.py publish ${{ inputs.project }} ${{ env.REPOSITORY }} skills
+          python3 byjg.github.io/skills.py pages skills byjg.github.io
+
+          cd skills
+          git add .
+          git config user.name "CI/CD"
+          git config user.email "info@byjg.com.br"
+          git diff-index --quiet HEAD && exit 0
+          git commit -m "Publish the skills of ${{ env.REPOSITORY }}"
+          # byjg/skills takes pushes from every project, like byjg.github.io below. Rebase
+          # on top of one that landed between the checkout and the push, and retry.
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            sleep $((RANDOM % 10 + 1))
+            git pull --rebase
+          done
+          echo "Could not push to byjg/skills after 5 attempts" >&2
+          exit 1
 
       - name: Record dependencies if "php" folder
         if: ${{ inputs.folder == 'php' }}

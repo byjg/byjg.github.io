@@ -85,6 +85,12 @@ overwrites it. The pages under
 [Development Guidelines](/docs/opensource/guidelines/) describe how that
 publishing works, and are worth reading before adding a new project.
 
+Agent skills work the same way: a component's skills live in its own
+`.claude/skills/`, and the publish copies them to the
+[byjg/skills](https://github.com/byjg/skills) catalog and to the
+[Agent Skills](/docs/ai/agent-skills) pages. Change them in the component, never in `byjg/skills`. See
+[Agent skills](/docs/opensource/guidelines/add-docs#agent-skills).
+
 ## Community
 
 Everyone taking part follows the [Code of Conduct](https://github.com/byjg/.github/blob/main/CODE_OF_CONDUCT.md).
