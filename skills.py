@@ -149,6 +149,10 @@ def write_readme(skills_dir, plugins):
     lines = [
         "# ByJG Agent Skills",
         "",
+        "[![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)",
+        "[![Opensource ByJG](https://img.shields.io/badge/opensource-byjg-success.svg)](https://opensource.byjg.com)",
+        f"[![GitHub source](https://img.shields.io/badge/Github-source-informational?logo=github)](https://github.com/{SKILLS_REPOSITORY}/)",
+        "",
         "Skills that teach a coding agent (Claude Code, Codex, Cursor, ...) how to work with the",
         f"ByJG open source components. Documentation: [{PAGES_URL}]({PAGES_URL}).",
         "",
@@ -171,6 +175,7 @@ def write_readme(skills_dir, plugins):
     else:
         lines.append("No skills are published yet.")
     lines += ["", "## Install", ""] + install_lines("<skill>")
+    lines += ["", "----", f"[Open source ByJG]({SITE_URL})"]
     with open(os.path.join(skills_dir, "README.md"), "w", encoding="utf-8") as handle:
         handle.write("\n".join(lines) + "\n")
 
