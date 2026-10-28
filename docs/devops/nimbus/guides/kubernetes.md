@@ -105,12 +105,55 @@ Without it the cluster runs fine and workloads are reachable inside it, but noth
 The decision is not permanent:
 
 ```bash
-nimbus gateway lb set    --cluster CLUSTER_ID   # deploy it
-nimbus gateway lb delete --cluster CLUSTER_ID   # take it away
-nimbus gateway lb list                          # every load balancer, swarm and cluster alike
+nimbus gateway lb set     --cluster CLUSTER_ID   # deploy it
+nimbus gateway lb delete  --cluster CLUSTER_ID   # take it away
+nimbus gateway lb upgrade --cluster CLUSTER_ID   # move it to the newest EasyHAProxy release
+nimbus gateway lb list                           # every load balancer, swarm and cluster alike
 ```
 
+An upgrade moves the Helm chart and the image together; see [Upgrading the load balancer](../reference/cli.md#upgrading-the-load-balancer).
+
 The web UI has the same on the cluster's detail page, under **Load Balancer**. Removing one leaves every workload running; what stops is the ingress in front of them.
+
+### HTTPS with your own certificates
+
+A certificate registered with `nimbus certificate create` is served by the load balancer of every cluster through the Ingresses that name it. The certificate is created as the `kubernetes.io/tls` Secret `nimbus-cert-<domain>` (a wildcard's `*` written `wildcard`) in the namespaces given with `--namespace`, `default` when none is, like `nimbus secret` and `nimbus config`. A namespace that does not exist on a cluster is skipped, not created; it gets the Secret at the next sync, which follows every `nimbus service deploy` on that cluster and every certificate change. `nimbus certificate list` shows the Secret name.
+
+```bash
+nimbus certificate create --domain chat.example.lan \
+  --cert chat.example.lan.crt --key chat.example.lan.key \
+  --namespace default --namespace apps
+```
+
+An Ingress uses it by naming the Secret in `spec.tls`, for the same host; EasyHAProxy then serves that host on 443 with it:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chat
+  namespace: apps
+spec:
+  ingressClassName: easyhaproxy
+  tls:
+    - hosts: [chat.example.lan]
+      secretName: nimbus-cert-chat.example.lan
+  rules:
+    - host: chat.example.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chat
+                port:
+                  number: 80
+```
+
+Deleting the certificate deletes its Secrets. Only the Secrets Nimbus created (labeled `nimbus.certificate=true`) are ever changed or deleted. To change the namespaces of a certificate, delete it and create it again.
+
+The same certificates serve a swarm's services too: see [HTTPS with your own certificates](swarms-and-load-balancing.md#https-with-your-own-certificates) in the Swarm guide.
 
 ## Unmanaged resources
 

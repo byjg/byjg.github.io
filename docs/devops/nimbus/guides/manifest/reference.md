@@ -142,6 +142,22 @@ s3:
     # oidc_cert: public-cert   # Optional certificate alias: enables console SSO through Nimbus
 ```
 
+### `certificates`
+
+TLS certificates, by alias, as with `nimbus certificate create`. The load balancers serve them: on a swarm for any service routed to the domain, on a cluster as the TLS Secret `nimbus-cert-<domain>` in each namespace listed that exists. See HTTPS with your own certificates for a [swarm](../swarms-and-load-balancing.md#https-with-your-own-certificates) and a [cluster](../kubernetes.md#https-with-your-own-certificates).
+
+```yaml
+certificates:
+  public-cert:
+    domain: chat.example.lan
+    cert: ./chat.example.lan.crt   # Path to the certificate PEM
+    key: ./chat.example.lan.key    # Path to the private key PEM
+    # ca: ./ca.pem                 # Optional CA certificate PEM
+    # namespaces: [default, apps]  # Namespaces on the clusters (default: default)
+```
+
+A domain already registered is reused as it is: changing `namespaces` later needs the certificate deleted and applied again.
+
 ### `kubernetes`
 
 K3s Kubernetes clusters. The first node becomes the control plane; additional nodes join as agents.

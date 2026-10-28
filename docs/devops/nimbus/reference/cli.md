@@ -349,10 +349,16 @@ Manage TLS certificates for SNI-based multi-domain serving. Certificates are sto
 database and served immediately — no restart required. The default WireGuard IP cert
 (`10.106.103.1`) is built-in and cannot be deleted.
 
+The load balancers serve them too: on a swarm, on 443 for the services routed to their
+domains; on a cluster, as the TLS Secret `nimbus-cert-<domain>` in each `--namespace` that
+exists, for an Ingress to name in `spec.tls`. See HTTPS with your own certificates for a
+[swarm](../guides/swarms-and-load-balancing.md#https-with-your-own-certificates) and a
+[cluster](../guides/kubernetes.md#https-with-your-own-certificates).
+
 | Subcommand | Description              | Key Flags                                                      |
 |------------|--------------------------|----------------------------------------------------------------|
-| `list`     | List certificates        |                                                                |
-| `create`   | Create a TLS certificate | `--domain` (required), `--cert` (required), `--key` (required), `--ca` |
+| `list`     | List certificates, with their namespaces and Secret name |                                |
+| `create`   | Create a TLS certificate | `--domain` (required), `--cert` (required), `--key` (required), `--ca`, `--namespace` (repeatable, default `default`) |
 | `delete`   | Delete a certificate     | `[id]`                                                         |
 
 ```bash
@@ -392,6 +398,7 @@ See [Exposing OIDC/OAuth2 Publicly](../guides/oidc-public-proxy) for a full setu
 | `status`    | Show the routing table               |                      |
 | `lb set`    | Deploy the load balancer             | `--swarm` **or** `--cluster` |
 | `lb delete` | Delete the load balancer             | `--swarm` **or** `--cluster` |
+| `lb upgrade`| Move it to another EasyHAProxy release | `--swarm` **or** `--cluster`, `--version`, `--chart-version` |
 | `lb list`   | List load balancers                  |                      |
 
 The load balancer (EasyHAProxy) is what the gateway routes through, so it is managed here rather than under `nimbus swarm` — `nimbus swarm create --lb` still deploys one at creation time.
@@ -400,12 +407,43 @@ The load balancer (EasyHAProxy) is what the gateway routes through, so it is man
 
 ```bash
 $ nimbus gateway lb list
-ID              NAME                 SERVES            NODE      PORT   STATUS
-lb-edge-9f2a    easyhaproxy-sw-1     swarm-1a2b        node-1    80     active
-lb-k8s-3c71     easyhaproxy-k8s-p1   cls-ccf2d1c4      node-4    31080  active
+ID              NAME                 SERVES            NODE      PORT   VERSION              STATUS
+lb-edge-9f2a    easyhaproxy-sw-1     swarm-1a2b        node-1    80     6.4.0                active
+lb-k8s-3c71     easyhaproxy-k8s-p1   cls-ccf2d1c4      node-4    31080  6.4.0 (chart 2.0.7)  active
 ```
 
+`VERSION` is the EasyHAProxy release it runs, with the Helm chart on a cluster. A load balancer deployed before Nimbus recorded it shows `-` until its first upgrade.
+
 Both backends work the same way: a load balancer exists when it was asked for — `swarm create --lb`, `k8s create --lb`, or `lb set` later — and `lb delete` takes it away. Removing one leaves the workloads running; what stops is the ingress in front of them.
+
+### Upgrading the load balancer
+
+`lb upgrade` moves a load balancer to another EasyHAProxy release in place:
+
+```bash
+nimbus gateway lb upgrade --swarm SWARM_ID                        # newest release
+nimbus gateway lb upgrade --cluster CLUSTER_ID --version 6.4.0    # a given EasyHAProxy version
+nimbus gateway lb upgrade --cluster CLUSTER_ID --chart-version 2.0.7
+```
+
+Releases are resolved from the EasyHAProxy chart index at `https://opensource.byjg.com/helm`, so the control plane needs to reach it:
+
+| Flags | A cluster gets | A swarm gets |
+|---|---|---|
+| none | the newest chart, running the EasyHAProxy it ships | the newest EasyHAProxy image |
+| `--version V` | the newest chart that ships `V` | the image `byjg/easy-haproxy:V` |
+| `--chart-version C` | chart `C`, running the EasyHAProxy it ships | refused: a swarm runs the image |
+| both | chart `C`, refused unless it ships `V` | refused |
+
+A version no chart ships is refused, so a typo never reaches a node.
+
+- **Swarm:** `docker service update --image` on the `nimbus-easyhaproxy` service, run on the swarm's current manager. Ports, labels, mounts and the DNS service stay as they are. The service restarts, so expect a few seconds without ingress.
+  The service is also kept on managers (`node.role==manager`): EasyHAProxy reads the swarm through the Docker of the node it runs on, and on a worker it exits with "This node is not a swarm manager". New load balancers get this placement when they are created; one deployed before it gets it on its next upgrade.
+- **Cluster:** the `HelmChart` gets the chart version, and K3s's Helm controller runs the `helm upgrade` with the same values. The image always follows the chart, so the two cannot drift apart.
+
+The load balancer reads `upgrading` while the task runs, then `active` with the new version, or `error` with the version that still runs if the upgrade failed; it can be upgraded again from `error`. New load balancers are pinned to the newest release when they are created; without access to the chart index they deploy unpinned, as before.
+
+Upgrading needs an agent that knows the `upgrade_lb` task: update the swarm manager or the cluster's control node with `nimbus node agent update` first.
 
 ## nimbus iam
 

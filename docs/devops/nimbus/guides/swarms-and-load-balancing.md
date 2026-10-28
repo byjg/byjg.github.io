@@ -60,7 +60,47 @@ nimbus gateway lb list
 
 # Delete the load balancer
 nimbus gateway lb delete --swarm SWARM_ID
+
+# Move it to the newest EasyHAProxy release, or to --version
+nimbus gateway lb upgrade --swarm SWARM_ID
 ```
+
+An upgrade replaces the image and keeps EasyHAProxy on managers, which it needs to read the swarm; see [Upgrading the load balancer](../reference/cli.md#upgrading-the-load-balancer).
+
+## HTTPS with your own certificates
+
+A certificate registered with `nimbus certificate create` is also served by the load balancer of every swarm, on 443, for any service routed to its domain: a compute instance created with `--domain`, or a Compose stack with EasyHAProxy labels.
+
+```bash
+nimbus certificate create --domain chat.example.lan \
+  --cert chat.example.lan.crt --key chat.example.lan.key
+```
+
+Each manager of a swarm with a load balancer gets the certificates, since EasyHAProxy may run on any of them, as files in the volume `nimbus-lb-certs`, mounted at EasyHAProxy's certificates folder. Deleting a certificate removes its file. HAProxy picks the certificate whose name matches the one the browser asks for, so a certificate covering several names (SAN) serves all of them.
+
+EasyHAProxy 6.5.2 and later serve a new or changed certificate within a few seconds, without a restart. An older one serves it at its next reload; `nimbus gateway lb upgrade` moves it to the newest release. Load balancers deployed before this feature get the volume with that upgrade, in the same restart.
+
+A Compose stack only needs the routing labels, with `ssl` on the 443 definition; the certificate comes from Nimbus:
+
+```yaml
+services:
+  web:
+    image: nginx
+    deploy:
+      labels:
+        easyhaproxy.http.host: chat.example.lan
+        easyhaproxy.http.port: "80"
+        easyhaproxy.http.localport: "80"
+        easyhaproxy.http.redirect_ssl: "true"
+        easyhaproxy.https.host: chat.example.lan
+        easyhaproxy.https.port: "443"
+        easyhaproxy.https.localport: "80"
+        easyhaproxy.https.ssl: "true"
+```
+
+Do not also give the stack an `easyhaproxy.*.sslcert` label for the same name: HAProxy would then have two certificates for it.
+
+The same certificates also serve Ingresses on a Kubernetes cluster, as TLS Secrets: see [HTTPS with your own certificates](kubernetes.md#https-with-your-own-certificates) in the Kubernetes guide.
 
 ## Gateway status
 

@@ -144,6 +144,7 @@ The IP change and the reissue are reported independently: if the certificate fai
 | `GET`    | `/v1/swarms/{id}/members` | List swarm members     |
 | `POST`   | `/v1/swarms/{id}/lb`      | Deploy load balancer   |
 | `DELETE` | `/v1/swarms/{id}/lb`      | Remove load balancer   |
+| `POST`   | `/v1/swarms/{id}/lb/upgrade` | Move it to another EasyHAProxy image; body `{"version"}`, empty for the newest |
 
 ## Compute
 
@@ -176,6 +177,7 @@ The IP change and the reissue are reported independently: if the certificate fai
 | `DELETE` | `/v1/kubernetes/clusters/{id}/nodes/{nodeId}`     | Remove worker node         |
 | `POST`   | `/v1/kubernetes/clusters/{id}/lb`                 | Deploy EasyHAProxy on the cluster |
 | `DELETE` | `/v1/kubernetes/clusters/{id}/lb`                 | Remove it                  |
+| `POST`   | `/v1/kubernetes/clusters/{id}/lb/upgrade`         | Move it to another release; body `{"version", "chart_version"}`, empty for the newest |
 | `POST`   | `/v1/kubernetes/clusters/{id}/volumes`            | Attach NFS volume (PV+PVC) |
 | `DELETE` | `/v1/kubernetes/clusters/{id}/volumes/{volumeId}` | Detach volume              |
 
