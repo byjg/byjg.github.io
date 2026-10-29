@@ -76,7 +76,7 @@ There are two ways to get a new agent onto a node, and they differ only in trans
 
 Like `add`, `update` runs its SSH connection from the **control plane**, not from your machine. It can use a stored SSH profile (`--profile`), and it reaches nodes your machine cannot. A `--key` file is read on your machine and sent to the control plane. The control plane copies the agent binary and a freshly issued client certificate to a private staging directory on the node, installs them owned by root (the certificate goes to `/var/lib/nimbus`, where the agent reads it), and restarts the agent. A non-root SSH user needs passwordless `sudo`. Progress is recorded as node events (`ssh_update_started`, `ssh_update_completed` or `ssh_update_failed`), which `update` prints as they arrive; it exits non-zero if any node failed. `update --local` updates the agent on the machine you run it on, without SSH.
 
-`os update` runs a full OS package upgrade (`apt-get upgrade` / `dnf upgrade`) on the node through its agent — it does not use SSH. If the upgrade requires a reboot (for example a new kernel), the node transitions to the `needs_reboot` state and stops running tasks until an administrator reboots it manually; the agent never reboots on its own. Use `--all` to queue the upgrade on every ready node.
+`os update` runs a full OS package upgrade (`apt-get upgrade` / `dnf upgrade`) on the node through its agent — it does not use SSH. If the upgrade requires a reboot (for example a new kernel), the node transitions to the `needs_reboot` state and stops running tasks until an administrator reboots it manually; the agent never reboots on its own. Use `--all` to queue the upgrade on every ready node. A node runs one upgrade at a time: a second request while one is running fails with "an OS update is already running on this node". The upgrade reports its own result when it ends; if it ends without doing so, the next heartbeat marks the task failed and queues an update check, so the node's counts and reboot flag still reflect what was installed.
 
 Because the upgrade can take several minutes, the task reports a `running` status while it is in progress (visible in the node's task list in the UI and via `nimbus task list`). When it finishes, the package-manager output is stored on the task result — inspect it with `nimbus task show <task-id>`.
 
@@ -114,7 +114,7 @@ Cordoning is independent of a node's status, so a cordoned node still reports `r
 
 `set-ip` records a node's new address and pins the interface the agent watches for future changes. For the **control-plane** node, add `--regenerate-cert`: the API's TLS certificate lists the addresses it was issued for, so after the control plane moves, clients cannot verify it on the new one. The flag reissues that certificate from the existing CA and swaps it in without a restart — agents and already-downloaded connection configs keep working, since the CA is unchanged. See [Handling Dynamic Node IPs](../guides/node-dynamic-ip).
 
-The agent also checks for available OS package updates automatically once per day and reports the counts back to the control plane. `nimbus node list` shows an `UPDATES` column (total, with the security subset in parentheses; `-` means the node has not reported a check yet), and the node detail view shows the same along with when it was last checked. Nothing is installed automatically — use `os update` when you want to apply them.
+The agent also checks for available OS package updates automatically once per day and reports the counts back to the control plane. `nimbus node list` shows an `UPDATES` column (total, with the security subset in parentheses; `-` means the node has not reported a check yet), and the node detail view shows the same along with when it was last checked. Each check also looks for a pending reboot (`/var/run/reboot-required`, or `dnf needs-restarting -r`), so packages installed outside `os update` — by `unattended-upgrades` or by hand — still put the node in `needs_reboot`. Nothing is installed automatically — use `os update` when you want to apply them.
 
 ## nimbus swarm
 
@@ -230,6 +230,8 @@ nimbus service logs svc-1a2b --container web
 ```
 
 The name to pass is the one in the Compose file (`web`, not `mystack_web`) or the workload's name in the manifest; on Kubernetes `namespace/name` and `kind/name` also work when a manifest declares the same name twice. Only objects that can have logs are read — a Service, ConfigMap or Ingress is skipped. A workload that cannot be read reports its error in place, so one crash-looping pod does not hide the rest of the stack.
+
+A swarm service that runs with a TTY (`tty: true`, as game servers with a console often do) is read the only way Docker allows, raw, and the terminal's colour codes and `\r\n` line endings are removed, so its logs read as plain text in the CLI and the UI.
 
 ### Compose stacks and Kubernetes manifests
 
