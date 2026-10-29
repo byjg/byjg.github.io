@@ -1,12 +1,12 @@
 ---
 title: gluo-developer
 tags: [ai]
-description: "Expert guide for working on a Gluo project: a PHP REST API created from byjg/php-gluo (composer create-project byjg/gluo) on the byjg/gluo-core framework. Use this skill whenever the user is working on such a project — including setting up the dev environment, creating new CRUD features, scaffolding with the code generator, modifying or fixing existing features, writing or updating tests, running migrations, and maintaining OpenAPI documentation. Trigger this skill for any task related to models, repositories, services, REST controllers, attributes, authentication, DI configuration, or the byjg framework stack in this codebase. Even if the user says something generic like \"add a new endpoint\" or \"fix this bug\", use this skill if they're working in this project."
+description: "Develop and maintain PHP REST APIs created with byjg/gluo: endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever working on a Gluo PHP application, even for generic requests such as \"add a new endpoint\" or \"fix this bug\" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration."
 ---
 
 # gluo-developer
 
-Expert guide for working on a Gluo project: a PHP REST API created from byjg/php-gluo (composer create-project byjg/gluo) on the byjg/gluo-core framework. Use this skill whenever the user is working on such a project — including setting up the dev environment, creating new CRUD features, scaffolding with the code generator, modifying or fixing existing features, writing or updating tests, running migrations, and maintaining OpenAPI documentation. Trigger this skill for any task related to models, repositories, services, REST controllers, attributes, authentication, DI configuration, or the byjg framework stack in this codebase. Even if the user says something generic like "add a new endpoint" or "fix this bug", use this skill if they're working in this project.
+Develop and maintain PHP REST APIs created with byjg/gluo: endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever working on a Gluo PHP application, even for generic requests such as "add a new endpoint" or "fix this bug" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration.
 
 ## Install
 
@@ -59,6 +59,7 @@ Loaded by the agent when a task needs them:
 - [http-client.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/http-client.md)
 - [imageutil.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/imageutil.md)
 - [jinja.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/jinja.md)
+- [manual-crud.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/manual-crud.md)
 - [messagequeue.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/messagequeue.md)
 - [openapi-patterns.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/openapi-patterns.md)
 - [queries.md](https://github.com/byjg/php-gluo/tree/master/.claude/skills/gluo-developer/references/queries.md)
