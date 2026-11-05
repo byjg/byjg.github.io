@@ -1,6 +1,7 @@
 {
   "deps": {
     "require": {
+      "byjg/serializer": "^7.0",
       "byjg/uri": "^7.0"
     }
   },
