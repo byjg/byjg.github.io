@@ -50,6 +50,7 @@ not care that the data was XML.
 
 - [XmlDataset](xml-dataset) - Main class for working with XML data
 - [XPath Expressions](xpath-expressions) - Guide to using XPath in the library
+- [XmlStreamDataset](xml-stream-dataset) - Reads a large XML file one row element at a time
 
 ## Quick Example
 
