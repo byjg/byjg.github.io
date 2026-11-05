@@ -1,7 +1,8 @@
 {
   "deps": {
     "require": {
-      "byjg/anydataset": "^7.0"
+      "byjg/anydataset": "^7.0",
+      "byjg/serializer": "^7.0"
     }
   },
   "name": "byjg/anydataset-text"
