@@ -88,6 +88,7 @@ $conn = \ByJG\AnyDataset\Db\Factory::getDbInstance("mysql://root:password@10.0.1
 - [Database Helper](helper)
 - [Filtering the Query](iteratorfilter)
 - [Entity Mapping](entity)
+- [Filling entities yourself (EntityHydratorInterface)](entity-hydrator)
 
 ## Advanced Topics
 
