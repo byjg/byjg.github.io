@@ -16,6 +16,8 @@ Run any of them with `load.sh <script>`.
 | [byjg-repo](byjg-repo) | Add the ByJG package repository (APT, RPM or Alpine) to install ByJG tools |
 | [docker](docker) | Install the Docker Engine on Linux in a safe, idempotent, shell-friendly way |
 | [doctl](doctl) | Download and install doctl, the DigitalOcean command-line tool |
+| [dokku](dokku) | Install Dokku, the self-hosted PaaS, from its APT repository on Debian and Ubuntu |
+| [dokku-docker](dokku-docker) | Run Dokku, the self-hosted PaaS, as a Docker container on any Linux with Docker |
 | [eksctl](eksctl) | Download and install eksctl, the command-line tool for Amazon EKS clusters |
 | [gcloud](gcloud) | Download and install the Google Cloud CLI (gcloud, gsutil, bq) |
 | [gh](gh) | Download and install gh, the GitHub command-line tool |
