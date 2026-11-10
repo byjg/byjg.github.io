@@ -4,16 +4,16 @@ sidebar_position: 4
 
 # Publishing Linux packages
 
-ByJG hosts an APT repository at `https://packages.byjg.com/apt` and an RPM
-repository at `https://packages.byjg.com/rpm`. Their metadata and the RPM
+ByJG hosts an APT repository at `https://packages.byjg.com/apt`, an RPM
+repository at `https://packages.byjg.com/rpm` and an Alpine repository at
+`https://packages.byjg.com/alpine`. The APT and RPM metadata and the RPM
 packages are signed with the ByJG Opensource key, published as
 `https://packages.byjg.com/byjg.gpg` (binary, for APT) and
-`https://packages.byjg.com/byjg.asc` (armored, for RPM). Both repositories
-and the keys are stored in the `byjg-packages` Cloudflare R2 bucket, served as
-`https://packages.byjg.com`. They used to be served by this site:
-`static/_redirects` sends `/apt/*`, `/rpm/*`, `/byjg.gpg` and `/byjg.asc` of
-`opensource.byjg.com` there, so a setup made with the former addresses keeps
-working. Nothing of them is in this site's repository.
+`https://packages.byjg.com/byjg.asc` (armored, for RPM). apk does not use GPG:
+the Alpine index is signed with the same key's RSA material, whose public half
+is published as `https://packages.byjg.com/byjg.rsa.pub`. The repositories
+and these public keys are served from `https://packages.byjg.com` (the private
+keys never are: see [The signing key](#the-signing-key)).
 
 How users install from them: [Package Repository](/docs/packages).
 
@@ -21,14 +21,14 @@ How users install from them: [Package Repository](/docs/packages).
 
 ```mermaid
 flowchart LR
-    tag["git tag v1.2.3"] --> build["GoReleaser builds .deb/.rpm<br/>and attaches them to the GitHub release"]
+    tag["git tag v1.2.3"] --> build["GoReleaser builds .deb/.rpm/.apk<br/>and attaches them to the GitHub release"]
     build --> addpkg["add-pkg.yaml downloads the assets,<br/>adds them to the repositories<br/>and signs the RPMs and the metadata"]
-    addpkg --> r2["upload to the R2 bucket"]
+    addpkg --> r2["upload to the storage"]
 ```
 
 The [`add-pkg.yaml`](https://github.com/byjg/byjg.github.io/blob/master/.github/workflows/add-pkg.yaml)
-workflow does not build anything. It picks up the `*.deb` and `*.rpm` files
-attached to a GitHub release, so the project must build and attach them first.
+workflow does not build anything. It picks up the `*.deb`, `*.rpm` and `*.apk`
+files attached to a GitHub release, so the project must build and attach them first.
 
 ## Build the packages
 
@@ -69,11 +69,9 @@ nfpms:
   declares whatever architectures the packages in the repository have.
 - `package_name` is what users type in `apt install`. All ByJG packages share
   one repository, so it must be unique across projects.
-- `apk` builds Alpine packages. There is no Alpine repository: `add-pkg` picks
-  up only the `.deb` and `.rpm`, and the `.apk` stays a release asset, unsigned.
-  Users download it from the release ([Package Repository](/docs/packages#install-a-package),
-  the Alpine tab); put the command, filled in for the project, in its README.
-  A static binary (`CGO_ENABLED=0`) runs on Alpine's musl as it is.
+- `apk` builds Alpine packages, for the Alpine repository. Build it only for a
+  binary that runs on musl: a static Go binary (`CGO_ENABLED=0`) does; one linked
+  against glibc (a Rust `-gnu` target, cgo) does not.
 
 ## Add the release workflow
 
@@ -123,6 +121,7 @@ jobs:
       R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
       R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      APK_PRIVATE_KEY: ${{ secrets.APK_PRIVATE_KEY }}
 ```
 
 | Input | Meaning |
@@ -133,15 +132,16 @@ jobs:
 | `keep_versions` | How many versions of each package the repositories keep; defaults to `8` |
 
 `publish-packages` **must** `needs: release`: the assets have to exist before
-they can be downloaded.
+they can be downloaded. `APK_PRIVATE_KEY` is needed only when the release has
+`.apk` assets: then the job fails without it.
 
 ## What the workflow does
 
-1. Downloads the whole R2 bucket: the repositories are rebuilt from every
+1. Downloads the whole storage: the repositories are rebuilt from every
    package in them.
 2. Imports `GPG_PRIVATE_KEY` and re-exports the public key to `byjg.gpg`
    (binary) and `byjg.asc` (armored).
-3. Downloads the release's `*.deb` and `*.rpm` assets.
+3. Downloads the release's `*.deb`, `*.rpm` and `*.apk` assets.
 4. **APT:** copies the `.deb` files into `apt/`, deletes the versions older
    than the last `keep_versions` of every package, regenerates
    `Packages`, `Packages.gz` and `Release` (its `Architectures:` line is taken
@@ -151,7 +151,14 @@ they can be downloaded.
    skipped), runs `createrepo_c --update`, and signs `repodata/repomd.xml`.
    The RPMs in the repository are signed; the ones attached to the GitHub
    release are not.
-6. Uploads the bucket back in three passes: the new packages, then the index
+6. **Alpine:** in an Alpine container
+   ([`apk-repo.sh`](https://github.com/byjg/byjg.github.io/blob/master/.github/scripts/apk-repo.sh)),
+   copies each `.apk` to `alpine/<arch>/<name>-<version>.apk`, reading the
+   name, version and architecture from the package, keeps the last
+   `keep_versions`, then rebuilds `APKINDEX.tar.gz` and signs it with
+   `APK_PRIVATE_KEY`. The packages are not signed: apk trusts them by the
+   checksum the signed index has. It also writes `byjg.rsa.pub`.
+7. Uploads the storage back in three passes: the new packages, then the index
    files with `Cache-Control: no-cache` (a stale `Packages.gz` from the
    Cloudflare cache next to a fresh `InRelease` makes apt fail with "Hash Sum
    mismatch"), and only then deletes the pruned packages.
@@ -168,7 +175,7 @@ they can be downloaded.
   version together (`dpkg-scanpackages --multiversion`), so users can pin or
   roll back to one of them. Upgrading never needs the versions in between.
 - **One release at a time.** Two projects publishing at the same moment both
-  upload their copy of the bucket, and the second one deletes what the first
+  upload their copy of the storage, and the second one deletes what the first
   added. Re-run the first project's `publish-packages` job to put it back.
 
 ## Homebrew
@@ -211,3 +218,17 @@ packages must be registered by a maintainer.
 If the key is ever rotated, `byjg.gpg` and `byjg.asc` change and every user
 must download them again, or `apt update` and `dnf` reject the repository. The
 next workflow run re-signs every RPM in the repository with the new key.
+
+### The Alpine key
+
+apk does not use GPG: it signs the Alpine index with a plain RSA key in PEM.
+The ByJG Opensource key is RSA, so its own key material signs the Alpine index
+too: there is one key to keep and to rotate. The `APK_PRIVATE_KEY` secret
+(base64 of the PEM) is not kept separately: the private infrastructure
+repository derives it from `GPG_PRIVATE_KEY` when it provisions the secrets.
+
+Users install the public half as `/etc/apk/keys/byjg.rsa.pub`, which the
+workflow writes on every run. The index signature names that file, so the name
+never changes, even with a new key. A rotated key makes every Alpine user
+download `byjg.rsa.pub` again, or `apk update` reports the repository as
+untrusted. A new key must stay RSA: apk does not take ed25519.

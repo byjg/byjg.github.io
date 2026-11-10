@@ -14,14 +14,24 @@ Here you can find Linux packages for our opensource projects, and a
 [Homebrew](https://brew.sh) tap ([byjg/homebrew-tap](https://github.com/byjg/homebrew-tap))
 with our command-line tools for macOS and Linux.
 
-Alpine packages (`.apk`) are not in a repository: each release of a project
-has them as assets, so they need no setup. See [Install a package](#install-a-package).
-
 ## Setup
 
 The repositories are served from `https://packages.byjg.com`. A setup made with
 the former `https://opensource.byjg.com` addresses keeps working: they redirect
 there.
+
+:::tip One command
+On Debian, Ubuntu, Fedora, RHEL and Alpine, the [`byjg-repo`](https://shellscript.download/scripts/byjg-repo)
+script of [shellscript.download](https://shellscript.download) does the setup below, signing key
+included, and can list and install the packages:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://shellscript.download/install/loader)"   # once: installs load.sh
+load.sh byjg-repo -- --install <package-name>
+```
+
+`load.sh remove -- byjg-repo` takes the repository out again.
+:::
 
 <Tabs>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
@@ -71,6 +81,20 @@ EOF
 ```
 
 </TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+Install the signing key and add the repository:
+
+```bash
+sudo wget -qO /etc/apk/keys/byjg.rsa.pub https://packages.byjg.com/byjg.rsa.pub
+echo https://packages.byjg.com/alpine | sudo tee -a /etc/apk/repositories
+sudo apk update
+```
+
+The key must keep the name `byjg.rsa.pub`: the repository's signature names it.
+The repository has amd64 (`x86_64`) and arm64 (`aarch64`) packages.
+
+</TabItem>
 <TabItem value="brew" label="macOS / Linux (Homebrew)">
 
 Add the ByJG tap:
@@ -116,21 +140,12 @@ brew install byjg/tap/<formula-name>
 </TabItem>
 <TabItem value="alpine" label="Alpine (APK)">
 
-Download the `.apk` of the latest release for this machine (amd64 or arm64)
-and install it. Set `REPO` to the project's GitHub repository and `NAME` to
-its package name; the project's README has the command filled in:
-
 ```bash
-REPO=byjg/<repository>; NAME=<package-name>
-VERSION=$(wget -qO- https://api.github.com/repos/$REPO/releases/latest | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')
-ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
-wget "https://github.com/$REPO/releases/download/v${VERSION}/${NAME}_${VERSION}_linux_${ARCH}.apk"
-apk add --allow-untrusted "${NAME}_${VERSION}_linux_${ARCH}.apk"
+sudo apk add <package-name>
 ```
 
-The packages are not signed, hence `--allow-untrusted`, and there is no
-repository: `apk upgrade` does not update them. Run the same command again
-for a new version. To remove one: `apk del <package-name>`.
+Run `sudo apk update` first if the package was released in the last hours:
+apk can keep an index it fetched recently (`apk update --force-refresh` fetches it again).
 
 </TabItem>
 </Tabs>
@@ -152,6 +167,13 @@ This reads the index from the repository itself. The copy `apt` keeps in
 
 ```bash
 dnf repoquery --repo=byjg --available
+```
+
+</TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+```bash
+wget -qO- https://packages.byjg.com/alpine/$(apk --print-arch)/APKINDEX.tar.gz | tar -xzO APKINDEX | sed -n 's/^P://p' | sort -u
 ```
 
 </TabItem>
@@ -182,6 +204,14 @@ sudo apt update
 ```bash
 sudo rm /etc/yum.repos.d/byjg.repo
 sudo dnf clean all
+```
+
+</TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+```bash
+sudo sed -i '\|^https://packages.byjg.com/alpine$|d' /etc/apk/repositories
+sudo rm /etc/apk/keys/byjg.rsa.pub
 ```
 
 </TabItem>
