@@ -2,7 +2,7 @@
 id: packages
 slug: /packages
 sort: 5
-tags: [linux, macos, packages, apt, rpm, deb, homebrew]
+tags: [linux, macos, packages, apt, rpm, deb, apk, alpine, homebrew]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -19,6 +19,19 @@ with our command-line tools for macOS and Linux.
 The repositories are served from `https://packages.byjg.com`. A setup made with
 the former `https://opensource.byjg.com` addresses keeps working: they redirect
 there.
+
+:::tip One command
+On Debian, Ubuntu, Fedora, RHEL and Alpine, the [`byjg-repo`](https://shellscript.download/scripts/byjg-repo)
+script of [shellscript.download](https://shellscript.download) does the setup below, signing key
+included, and can list and install the packages:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://shellscript.download/install/loader)"   # once: installs load.sh
+load.sh byjg-repo -- --install <package-name>
+```
+
+`load.sh remove -- byjg-repo` takes the repository out again.
+:::
 
 <Tabs>
 <TabItem value="debian" label="Debian / Ubuntu (APT)" default>
@@ -68,6 +81,20 @@ EOF
 ```
 
 </TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+Install the signing key and add the repository:
+
+```bash
+sudo wget -qO /etc/apk/keys/byjg.rsa.pub https://packages.byjg.com/byjg.rsa.pub
+echo https://packages.byjg.com/alpine | sudo tee -a /etc/apk/repositories
+sudo apk update
+```
+
+The key must keep the name `byjg.rsa.pub`: the repository's signature names it.
+The repository has amd64 (`x86_64`) and arm64 (`aarch64`) packages.
+
+</TabItem>
 <TabItem value="brew" label="macOS / Linux (Homebrew)">
 
 Add the ByJG tap:
@@ -111,6 +138,16 @@ brew install byjg/tap/<formula-name>
 ```
 
 </TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+```bash
+sudo apk add <package-name>
+```
+
+Run `sudo apk update` first if the package was released in the last hours:
+apk can keep an index it fetched recently (`apk update --force-refresh` fetches it again).
+
+</TabItem>
 </Tabs>
 
 ## List available packages
@@ -130,6 +167,13 @@ This reads the index from the repository itself. The copy `apt` keeps in
 
 ```bash
 dnf repoquery --repo=byjg --available
+```
+
+</TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+```bash
+wget -qO- https://packages.byjg.com/alpine/$(apk --print-arch)/APKINDEX.tar.gz | tar -xzO APKINDEX | sed -n 's/^P://p' | sort -u
 ```
 
 </TabItem>
@@ -160,6 +204,14 @@ sudo apt update
 ```bash
 sudo rm /etc/yum.repos.d/byjg.repo
 sudo dnf clean all
+```
+
+</TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+```bash
+sudo sed -i '\|^https://packages.byjg.com/alpine$|d' /etc/apk/repositories
+sudo rm /etc/apk/keys/byjg.rsa.pub
 ```
 
 </TabItem>

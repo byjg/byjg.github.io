@@ -114,6 +114,14 @@ deb:
   label: DEB
   description: Debian package format
 
+apk:
+  label: APK
+  description: Alpine package format
+
+alpine:
+  label: Alpine
+  description: Alpine Linux
+
 rust:
   label: Rust
   description: Rust tools and libraries
