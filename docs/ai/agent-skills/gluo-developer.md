@@ -1,12 +1,12 @@
 ---
 title: gluo-developer
 tags: [ai]
-description: "Develop and maintain PHP REST APIs created with byjg/gluo: endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever working on a Gluo PHP application, even for generic requests such as \"add a new endpoint\" or \"fix this bug\" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration."
+description: "Create, develop and maintain PHP REST APIs with byjg/gluo: new projects, endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever creating or working on a Gluo PHP application, even for generic requests such as \"start a new PHP API\", \"add a new endpoint\" or \"fix this bug\" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration."
 ---
 
 # gluo-developer
 
-Develop and maintain PHP REST APIs created with byjg/gluo: endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever working on a Gluo PHP application, even for generic requests such as "add a new endpoint" or "fix this bug" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration.
+Create, develop and maintain PHP REST APIs with byjg/gluo: new projects, endpoints, models, persistence, DI configuration, migrations, authentication, OpenAPI, and tests. Use whenever creating or working on a Gluo PHP application, even for generic requests such as "start a new PHP API", "add a new endpoint" or "fix this bug" that do not name Gluo explicitly. Follow the project's installed dependency versions and existing conventions. Frontend-only work needs this skill only when it changes the API integration.
 
 ## Install
 
