@@ -61,6 +61,7 @@ nfpms:
     formats:
       - deb
       - rpm
+      - apk
 ```
 
 - Build at least **amd64 and arm64**. Other architectures are fine (nimbus
@@ -68,6 +69,11 @@ nfpms:
   declares whatever architectures the packages in the repository have.
 - `package_name` is what users type in `apt install`. All ByJG packages share
   one repository, so it must be unique across projects.
+- `apk` builds Alpine packages. There is no Alpine repository: `add-pkg` picks
+  up only the `.deb` and `.rpm`, and the `.apk` stays a release asset, unsigned.
+  Users download it from the release ([Package Repository](/docs/packages#install-a-package),
+  the Alpine tab); put the command, filled in for the project, in its README.
+  A static binary (`CGO_ENABLED=0`) runs on Alpine's musl as it is.
 
 ## Add the release workflow
 

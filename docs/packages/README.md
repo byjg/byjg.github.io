@@ -2,7 +2,7 @@
 id: packages
 slug: /packages
 sort: 5
-tags: [linux, macos, packages, apt, rpm, deb, homebrew]
+tags: [linux, macos, packages, apt, rpm, deb, apk, alpine, homebrew]
 ---
 
 import Tabs from '@theme/Tabs';
@@ -13,6 +13,9 @@ import TabItem from '@theme/TabItem';
 Here you can find Linux packages for our opensource projects, and a
 [Homebrew](https://brew.sh) tap ([byjg/homebrew-tap](https://github.com/byjg/homebrew-tap))
 with our command-line tools for macOS and Linux.
+
+Alpine packages (`.apk`) are not in a repository: each release of a project
+has them as assets, so they need no setup. See [Install a package](#install-a-package).
 
 ## Setup
 
@@ -109,6 +112,25 @@ sudo yum install <package-name>
 ```bash
 brew install byjg/tap/<formula-name>
 ```
+
+</TabItem>
+<TabItem value="alpine" label="Alpine (APK)">
+
+Download the `.apk` of the latest release for this machine (amd64 or arm64)
+and install it. Set `REPO` to the project's GitHub repository and `NAME` to
+its package name; the project's README has the command filled in:
+
+```bash
+REPO=byjg/<repository>; NAME=<package-name>
+VERSION=$(wget -qO- https://api.github.com/repos/$REPO/releases/latest | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')
+ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
+wget "https://github.com/$REPO/releases/download/v${VERSION}/${NAME}_${VERSION}_linux_${ARCH}.apk"
+apk add --allow-untrusted "${NAME}_${VERSION}_linux_${ARCH}.apk"
+```
+
+The packages are not signed, hence `--allow-untrusted`, and there is no
+repository: `apk upgrade` does not update them. Run the same command again
+for a new version. To remove one: `apk del <package-name>`.
 
 </TabItem>
 </Tabs>
