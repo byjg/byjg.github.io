@@ -6,7 +6,7 @@ tags: [ai, rust, shell, acp]
 # Parolsh
 
 <p align="center">
-  <img src="docs/images/logo.png" alt="Parolsh logo: a speech bubble with a terminal prompt, above the name parolsh" width="360" />
+  <img src={require('./images/logo.png').default} alt="Parolsh logo: a speech bubble with a terminal prompt, above the name parolsh" width="360" />
 </p>
 
 [![Build Status](https://github.com/byjg/parolsh/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/byjg/parolsh/actions/workflows/build.yml)
@@ -71,19 +71,19 @@ See [Input routing](input-routing).
 
 ## Install
 
-Add the [ByJG package repository](https://opensource.byjg.com/docs/packages),
-then:
+### Linux Packages (Debian/Fedora)
+
+Add the [ByJG package repository](https://opensource.byjg.com/docs/packages#setup) for your distribution, then:
 
 ```bash
-# Debian/Ubuntu
-sudo apt install parolsh
-
-# Fedora/RHEL
-sudo dnf install parolsh
+sudo apt install parolsh   # Debian/Ubuntu
+sudo dnf install parolsh   # Fedora/RHEL
 ```
 
 Packages are built for `amd64` and `arm64`, and need glibc 2.28 or newer
 (Debian 10+, Ubuntu 20.04+, RHEL 8+).
+
+### Homebrew
 
 On macOS (or Linux) with [Homebrew](https://brew.sh):
 
@@ -93,7 +93,9 @@ brew install byjg/tap/parolsh
 
 Homebrew builds it from source, installing Rust only for the build.
 
-Then install an ACP agent, for example
+### After installing
+
+Install an ACP agent, for example
 `npm install -g @agentclientprotocol/claude-agent-acp`, and run `parolsh`: the
 first run creates `~/.config/parolsh/config.toml` with the agents it finds
 already enabled. See [Getting started](getting-started).
@@ -104,6 +106,7 @@ already enabled. See [Getting started](getting-started).
 - [Input routing](input-routing)
 - [Working with agents](working-with-agents)
 - [Sessions and history](sessions)
+- [Spells](spells)
 - [Agents](agents)
 - [Projects](projects)
 - [Configuration](configuration)
