@@ -93,11 +93,15 @@ jobs:
             # one when it has none - otherwise Docusaurus parses the first block and
             # renders the second as page content, and any tags: are discarded.
             DEST=byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/README.md
+            # docs/ is the page's own folder on the site. Markdown links and images
+            # drop the prefix; an HTML <img src="docs/..."> (to keep a width) is not
+            # bundled by Docusaurus as written, so it gets a require() instead.
+            DOCS_LINKS=(-e "s~(docs/~(~g" -e "s~src=\"docs/\([^\"]*\)\"~src={require('./\1').default}~g")
             if head -1 ${{ inputs.project }}/README.md | grep -q '^---$'; then
-              sed "s~(docs/~(~g" ${{ inputs.project }}/README.md > "$DEST"
+              sed "${DOCS_LINKS[@]}" ${{ inputs.project }}/README.md > "$DEST"
             else
               printf -- '---\nsidebar_key: %s\n---\n\n' "$PROJECT_WITHOUT_FOLDER" > "$DEST"
-              sed "s~(docs/~(~g" ${{ inputs.project }}/README.md >> "$DEST"
+              sed "${DOCS_LINKS[@]}" ${{ inputs.project }}/README.md >> "$DEST"
             fi
             find byjg.github.io/docs/${{ inputs.folder }}/$PROJECT_WITHOUT_FOLDER/ -name '*.md' -exec sed -i "s~\.md)~)~g" {} \; -print
           else
