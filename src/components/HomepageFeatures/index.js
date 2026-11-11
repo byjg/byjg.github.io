@@ -19,7 +19,7 @@ const HighlightedProjects = [
   {
     title: 'DockNimbus',
     link: '/docs/devops/nimbus',
-    image: require('@site/docs/devops/nimbus/docknimbus-transparent.png').default,
+    Svg: require('@site/static/img/carousel/docknimbus.svg').default,
     description: (
       <>
         Turns bare metal machines into a platform with compute, networking, storage and clusters.
@@ -29,7 +29,7 @@ const HighlightedProjects = [
   {
     title: 'EasyHAProxy',
     link: '/docs/devops/docker-easy-haproxy',
-    image: require('@site/docs/devops/docker-easy-haproxy/logo.png').default,
+    Svg: require('@site/static/img/carousel/easyhaproxy.svg').default,
     description: (
       <>
         Simple and powerful HAProxy configuration with Docker support and auto-discovery services.
@@ -37,9 +37,19 @@ const HighlightedProjects = [
     ),
   },
   {
+    title: 'WarmPHP',
+    link: '/docs/devops/warmphp',
+    Svg: require('@site/static/img/carousel/warmphp.svg').default,
+    description: (
+      <>
+        Turns your PHP CLI into a web application server, with persistent workers.
+      </>
+    ),
+  },
+  {
     title: 'N8N-GitOps',
     link: '/docs/devops/n8n-gitops',
-    image: require('@site/docs/devops/n8n-gitops/n8n-gitops-256.png').default,
+    Svg: require('@site/static/img/carousel/n8n-gitops.svg').default,
     description: (
       <>
         GitOps CLI tool for n8n that brings version control and collaborative workflow development.

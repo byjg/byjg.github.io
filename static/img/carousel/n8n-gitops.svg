@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="204" height="204" viewBox="29 18 204 204" role="img" aria-label="n8n-gitops">
+  <defs>
+    <linearGradient id="workflow" gradientUnits="userSpaceOnUse" x1="0" y1="46" x2="0" y2="194">
+      <stop stop-color="#25B9DC"/>
+      <stop offset="0.5" stop-color="#2F6FE0"/>
+      <stop offset="1" stop-color="#7964DE"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4 0)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M80 40 C62 40 60 50 60 66 V98 C60 112 54 120 44 120 C54 120 60 128 60 142 V174 C60 190 62 200 80 200
+             M174 40 C192 40 194 50 194 66 V98 C194 112 200 120 210 120 C200 120 194 128 194 142 V174 C194 190 192 200 174 200"
+          stroke="#F05A28" stroke-width="14"/>
+    <path d="M127 82 V102 M127 138 V158" stroke="url(#workflow)" stroke-width="9"/>
+    <rect x="109" y="46" width="36" height="36" rx="9" fill="#25B9DC"/>
+    <rect x="109" y="102" width="36" height="36" rx="9" fill="#2F6FE0"/>
+    <rect x="109" y="158" width="36" height="36" rx="9" fill="#7964DE"/>
+  </g>
+</svg>
