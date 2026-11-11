@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="47 28 200 200" role="img" aria-label="DockNimbus">
+  <defs>
+    <linearGradient id="cloud" gradientUnits="userSpaceOnUse" x1="24" y1="36" x2="222" y2="172">
+      <stop offset="0" stop-color="#00E8BB"/>
+      <stop offset="1" stop-color="#00A88A"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(24 0)">
+    <path d="M60 172 C38 172 24 155 24 136 C24 116 40 100 60 100 C64 64 92 36 126 36
+             C158 36 184 58 190 90 C210 92 222 110 222 130 C222 154 204 172 182 172 Z"
+          fill="url(#cloud)"/>
+    <g fill="#0F2A44">
+      <rect x="78" y="96"  width="88" height="18" rx="5"/>
+      <rect x="78" y="120" width="88" height="18" rx="5"/>
+      <rect x="78" y="144" width="88" height="18" rx="5"/>
+    </g>
+    <g fill="#00E8BB">
+      <circle cx="152" cy="105" r="4"/>
+      <circle cx="152" cy="129" r="4"/>
+      <circle cx="152" cy="153" r="4"/>
+    </g>
+    <path d="M89 105 H124 M89 129 H124 M89 153 H124" fill="none" stroke="#00E8BB" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+    <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+      <path d="M72 172 V196 M122 172 V196 M172 172 V196"/>
+      <path d="M72 208 H172"/>
+    </g>
+    <g fill="currentColor">
+      <rect x="61" y="197" width="22" height="22" rx="5"/>
+      <rect x="111" y="197" width="22" height="22" rx="5"/>
+      <rect x="161" y="197" width="22" height="22" rx="5"/>
+    </g>
+  </g>
+</svg>
