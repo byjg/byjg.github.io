@@ -183,7 +183,7 @@ wget -qO- https://packages.byjg.com/alpine/$(apk --print-arch)/APKINDEX.tar.gz |
 ls "$(brew --repository byjg/tap)/Formula"
 ```
 
-The tap has the command-line tools: `parolsh` and `static-httpserver`.
+The tap has the command-line tools: `parolsh`, `static-httpserver` and `warmphp`.
 
 </TabItem>
 </Tabs>
