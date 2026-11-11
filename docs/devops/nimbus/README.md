@@ -5,6 +5,8 @@ tags: [devops, docker, cli]
 
 # DockNimbus
 
+![DockNimbus — Bare metal. Your cloud.](logo.svg)
+
 Self-hosted cloud platform for bare metal machines.
 
 [Website](https://docknimbus.com) | [Documentation](https://opensource.byjg.com/docs/devops/nimbus/) | [GitHub](https://github.com/docknimbus/nimbus)
@@ -87,4 +89,4 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 
 ## Current Release
 
-v0.10.1
+v0.10.2
