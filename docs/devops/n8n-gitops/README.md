@@ -5,6 +5,8 @@ tags: [docker, devops, cli]
 
 # n8n-gitops
 
+![n8n-gitops — GitOps for n8n workflows](logo.svg)
+
 A GitOps CLI tool for [n8n](https://n8n.io) Community Edition that brings version control and collaborative workflow development to n8n.
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%23ea4aaa?logo=githubsponsors&logoColor=white&labelColor=0d1117)](https://github.com/sponsors/byjg)
@@ -26,8 +28,6 @@ A GitOps CLI tool for [n8n](https://n8n.io) Community Edition that brings versio
 - ✅ **Validation**: Validate workflows and manifests before deployment
 - 🔌 **Active State Management**: Control workflow activation via API endpoints
 - 🧹 **Clean Deployments**: Replace workflows with clean state
-
-![Logo](n8n-gitops-256.png)
 
 ## Quick Start
 
