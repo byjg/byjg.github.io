@@ -98,7 +98,7 @@ See the [CLI Reference](../../reference/cli) for full details.
 
 ### `volumes`
 
-NFS volumes hosted on a node. A directory is created and exported via NFS so it can be mounted by compute instances or Kubernetes clusters.
+NFS volumes hosted on a node. A directory is created and exported via NFS so it can be mounted by containers or Kubernetes clusters.
 
 ```yaml
 volumes:
@@ -192,7 +192,7 @@ kubernetes:
                     - containerPort: 80
 ```
 
-`lb` is asked for, as with `nimbus k8s create --lb`. Without it the cluster has no ingress controller, and nothing serves its Ingress objects, including the ones compute instances on the cluster generate (`ingressClassName: easyhaproxy`). That is the right shape when ingress is handled elsewhere.
+`lb` is asked for, as with `nimbus k8s create --lb`. Without it the cluster has no ingress controller, and nothing serves its Ingress objects, including the ones containers on the cluster generate (`ingressClassName: easyhaproxy`). That is the right shape when ingress is handled elsewhere.
 
 Adding `lb: true` to an existing cluster and applying again deploys the load balancer. Removing it, or setting it to `false`, never takes one away: that is done on purpose, with `nimbus gateway lb delete --cluster <id>`.
 
@@ -208,16 +208,16 @@ On re-apply, cluster node membership is reconciled (the control plane node canno
 
 The inline `manifests` become one service, named `<cluster>-manifests`, the same as `nimbus service deploy --cluster` would create: the agent on the cluster's control node applies them with the kubectl K3s ships, so the machine running the API needs no kubectl. The service shows in `nimbus service list` with its status. Nimbus records the objects it applied, so applying again deletes the ones no longer in the list, and `nimbus manifest remove` removes them before the cluster, external clusters included. Applying waits for the service to run, so the compute and services that follow can rely on what it created.
 
-### `compute`
+### `containers`
 
-Container instances deployed to either a Docker Swarm or a Kubernetes cluster. Specify exactly one of `swarm` or `k8s`.
+Containers deployed to either a Docker Swarm or a Kubernetes cluster. Specify exactly one of `swarm` or `k8s`.
 
 ```yaml
-compute:
+containers:
   web-app:
     swarm: prod                # Deploy to Docker Swarm
     image: byjg/static-httpserver
-    type: small
+    size: small
     replicas: 1
     domain: app.example.com
     ports:
@@ -232,7 +232,7 @@ compute:
   k8s-app:
     k8s: dev-k8s               # Deploy to Kubernetes cluster
     image: nginx:latest
-    type: medium
+    size: medium
     ports:
       - "80:80"
 ```
@@ -242,9 +242,11 @@ compute:
 | `swarm` | Swarm alias to deploy to (mutually exclusive with `k8s`) |
 | `k8s` | Kubernetes cluster alias to deploy to (mutually exclusive with `swarm`) |
 | `image` | Container image |
-| `type` | Instance type: `nano`, `micro`, `small`, `medium`, `large`, `xlarge` |
+| `size` | A [size](../../reference/sizes), shorthand for `cpu` and `memory` (default: `small`) |
+| `cpu` | CPU limit in cores, e.g. `0.5` (instead of `size`) |
+| `memory` | Memory limit, e.g. `512M`, `2G` (instead of `size`) |
 | `replicas` | Number of replicas (default: 1) |
-| `domain` | Custom domain for the instance (routed via load balancer) |
+| `domain` | Custom domain for the container (routed via load balancer) |
 | `ports` | Port mappings in `"host:container"` format |
 | `volumes` | Volume mounts in `"volume-alias:/mount/path"` format |
 | `env` | Environment variables in `KEY=VALUE` format |
@@ -252,7 +254,7 @@ compute:
 | `platform` | Target platform constraint (e.g. `arm64`) |
 | `gpu` | Number of NVIDIA GPUs to request (default: 0) |
 
-On re-apply, changes to `image`, `type`, `domain`, `ports`, `env`, `command`, or `volumes` are detected and the instance is recreated. Replica count changes are applied in-place via scaling.
+On re-apply, changes to `image`, the CPU or memory limits, `domain`, `ports`, `env`, `command`, or `volumes` are detected and the container is recreated. Replica count changes are applied in-place via scaling.
 
 ### `services`
 
@@ -291,7 +293,7 @@ Any node, volume, swarm, or Kubernetes cluster can be marked as `external: true`
 - Must already exist in the API (looked up by the manifest alias as the resource name)
 - Are never created, modified, or deleted by `apply` or `remove`
 - Are never pruned by `--prune`
-- Can be referenced by other sections (e.g. compute instances can target an external swarm)
+- Can be referenced by other sections (e.g. containers can target an external swarm)
 
 ```yaml
 nodes:
@@ -316,17 +318,17 @@ kubernetes:
         kind: Deployment
         ...
 
-compute:
+containers:
   web-app:
     swarm: prod                # Uses the external swarm
     image: nginx:latest
-    type: small
+    size: small
 ```
 
 This is useful when:
 - Infrastructure is shared across multiple manifests (e.g. nodes managed by one manifest, apps by another)
 - You want to deploy workloads to existing swarms or clusters without managing their lifecycle
-- Teams are separated — infra team manages nodes/swarms, app team manages compute/services
+- Teams are separated — infra team manages nodes/swarms, app team manages containers/services
 
 `external: true` is mutually exclusive with resource-specific fields. For example, an external node cannot have `ip` or `ssh` fields, and an external swarm cannot have `nodes` or `lb` fields.
 
@@ -388,7 +390,7 @@ This is useful when you remove a section from your manifest and want the corresp
 nimbus manifest apply --file infra.yaml --prune
 
 # Later, remove api-server from the YAML and re-apply
-# --prune will delete the orphaned api-server instance
+# --prune will delete the orphaned api-server container
 nimbus manifest apply --file infra.yaml --prune
 ```
 

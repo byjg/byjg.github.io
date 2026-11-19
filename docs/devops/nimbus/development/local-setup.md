@@ -103,7 +103,7 @@ Nodes form a full-mesh WireGuard VPN automatically.
 
 ## Try it out
 
-With your node ready, try the workflows in the [Guides](../guides/compute) section, using `./bin/nimbus` instead of the installed binary.
+With your node ready, try the workflows in the [Guides](../guides/containers) section, using `./bin/nimbus` instead of the installed binary.
 
 ## Cross-compilation
 

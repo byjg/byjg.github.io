@@ -6,7 +6,7 @@ title: "Volumes"
 
 # Volumes
 
-Volumes provide persistent storage in a folder on a node, mountable by compute instances, Compose stacks and Kubernetes manifests alike. A volume is one of two types, chosen when it is created and fixed after:
+Volumes provide persistent storage in a folder on a node, mountable by containers, Compose stacks and Kubernetes manifests alike. A volume is one of two types, chosen when it is created and fixed after:
 
 | Type | Where the data is used | Network |
 |------|------------------------|---------|
@@ -27,24 +27,24 @@ For an NFS volume, this sets up the NFS export on the node and creates the match
 ```bash
 nimbus volume list                        # every volume
 nimbus volume list --cluster CLUSTER_ID   # what a cluster has attached, and the claim each provides
-nimbus volume list --instance INSTANCE_ID # what an instance mounts, and where
+nimbus volume list --container CONTAINER_ID # what a container mounts, and where
 ```
 
-## Attach to a compute instance
+## Attach to a container
 
 At creation time:
 
 ```bash
-nimbus compute create --name app --swarm SWARM_ID \
-  --image myapp --type small --volume VOL_ID:/data
+nimbus container create --name app --swarm SWARM_ID \
+  --image myapp --size small --volume VOL_ID:/data
 ```
 
-To a running instance (NFS volumes only: a local volume would have to move the running service to its node, so it is attached by creating or updating the instance with it):
+To a running container (NFS volumes only: a local volume would have to move the running service to its node, so it is attached by creating or updating the container with it):
 
 ```bash
-nimbus volume attach VOL_ID --instance INSTANCE_ID --path /data
-nimbus volume detach VOL_ID --instance INSTANCE_ID
-nimbus volume list --instance INSTANCE_ID
+nimbus volume attach VOL_ID --container CONTAINER_ID --path /data
+nimbus volume detach VOL_ID --container CONTAINER_ID
+nimbus volume list --container CONTAINER_ID
 ```
 
 ## Local volumes
@@ -53,7 +53,7 @@ A local volume is a folder on one node that nothing else can reach — no NFS ex
 
 Whatever uses a local volume runs on its node, and Nimbus places it there:
 
-- **Compute instances** are pinned to the volume's node (`node.hostname == <node>`), at creation, on update, and when a stopped service is recreated on start. Asking for another node with `--node` is refused.
+- **Containers** are pinned to the volume's node (`node.hostname == <node>`), at creation, on update, and when a stopped service is recreated on start. Asking for another node with `--node` is refused.
 - **Compose stacks**: every service that mounts the volume gets the same constraint added under `deploy.placement.constraints` in the copy sent to the node. The stack as you wrote it is what Nimbus stores and shows.
 - **Kubernetes**: the volume becomes a `local` PersistentVolume (`ReadWriteOnce`) with `nodeAffinity` to its node, so every pod using the claim is scheduled there. The claim is named `nfs-<volume>`, like an NFS one, so manifests do not change with the type.
 - **S3 instances** run on the volume's node.

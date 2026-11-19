@@ -61,7 +61,7 @@ nimbus:<resource-type>:<resource-id>:<permission>
 | `nimbus:k8s:cls-abc123:read`  | Read-only on cluster `cls-abc123` only  |
 | `nimbus:s3:*:admin`           | Admin on **all** S3 instances           |
 | `nimbus:s3:s3-xyz789:read`    | Read-only on S3 instance `s3-xyz789`    |
-| `nimbus:compute:*:admin`      | Admin on all compute instances          |
+| `nimbus:container:*:admin`      | Admin on all containers          |
 
 For external services (OAuth2 clients):
 ```
@@ -91,8 +91,8 @@ Groups are named collections of scopes. Assign a group to a user instead of mana
 
 | Group        | Sco-pes                                                             |
 |--------------|---------------------------------------------------------------------|
-| `admin`      | `nimbus:k8s:*:admin`, `nimbus:s3:*:admin`, `nimbus:compute:*:admin` |
-| `admin-read` | `nimbus:k8s:*:read`, `nimbus:s3:*:read`, `nimbus:compute:*:read`    |
+| `admin`      | `nimbus:k8s:*:admin`, `nimbus:s3:*:admin`, `nimbus:container:*:admin` |
+| `admin-read` | `nimbus:k8s:*:read`, `nimbus:s3:*:read`, `nimbus:container:*:read`    |
 
 Built-in groups cannot be deleted. Admin users are automatically assigned to the `admin` group.
 

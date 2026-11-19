@@ -67,11 +67,11 @@ nimbus volume detach VOL_ID --cluster CLUSTER_ID
 
 This installs `nfs-common` on all cluster nodes and creates the PV/PVC resources. The claim is named `nfs-<volume>`, which is what a manifest mounts. Until a volume is attached that claim does not exist, and a manifest mounting it applies cleanly and then never schedules.
 
-## Deploy compute instances to K8s
+## Deploy containers to K8s
 
 ```bash
-nimbus compute create --name web-app --k8s CLUSTER_ID \
-  --image nginx:latest --type small --port 80:80
+nimbus container create --name web-app --k8s CLUSTER_ID \
+  --image nginx:latest --size small --port 80:80
 ```
 
 This creates a Deployment, Service, and Ingress (via EasyHAProxy) in the cluster.
@@ -83,7 +83,7 @@ nimbus k8s list
 nimbus k8s delete CLUSTER_ID
 ```
 
-A cluster that still has instances or services Nimbus manages (that are not terminated) cannot be
+A cluster that still has containers or services Nimbus manages (that are not terminated) cannot be
 deleted, nor its last node removed: delete them first.
 
 Every node uninstalls K3s, and the cluster shows as `deleting` until all of them have; a node whose
@@ -100,7 +100,7 @@ A cluster gets EasyHAProxy as its ingress controller when it is asked for, exact
 nimbus k8s create --name dev-k8s --nodes NODE1_ID --lb
 ```
 
-Without it the cluster runs fine and workloads are reachable inside it, but nothing serves Ingress objects — which is what you want when ingress is someone else's job. Compute instances deployed to a cluster get an Ingress with a domain in the format `<name>.<cluster-name>.nimbus`, and that Ingress needs a controller to answer it.
+Without it the cluster runs fine and workloads are reachable inside it, but nothing serves Ingress objects — which is what you want when ingress is someone else's job. Containers deployed to a cluster get an Ingress with a domain in the format `<name>.<cluster-name>.nimbus`, and that Ingress needs a controller to answer it.
 
 The decision is not permanent:
 

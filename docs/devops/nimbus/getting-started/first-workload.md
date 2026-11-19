@@ -8,16 +8,16 @@ title: "Deploy Your First Workload"
 
 With nodes registered and ready, here are the main things you can do with DockNimbus.
 
-## Docker Swarm compute instance
+## Docker Swarm container
 
 ```bash
 # Create a Docker Swarm group with load balancer
 nimbus swarm create --name production --lb
 nimbus swarm add-node --swarm SWARM_ID --node NODE_ID
 
-# Launch a compute instance
-nimbus compute create --name web-1 --swarm SWARM_ID \
-  --image byjg/static-httpserver --type medium \
+# Launch a container
+nimbus container create --name web-1 --swarm SWARM_ID \
+  --image byjg/static-httpserver --size medium \
   --port 80:8080 --env TITLE=soon --env "MESSAGE=Keep In Touch"
 ```
 
@@ -36,10 +36,10 @@ kubectl get nodes
 ## NFS volume
 
 ```bash
-# Create a volume and attach to compute
+# Create a volume and attach to a container
 nimbus volume create --name mydata --node NODE_ID --folder /exports/mydata
-nimbus compute create --name app --swarm SWARM_ID \
-  --image myapp --type small --volume VOL_ID:/data
+nimbus container create --name app --swarm SWARM_ID \
+  --image myapp --size small --volume VOL_ID:/data
 
 # Or attach to a K8s cluster (creates PV + PVC as claim nfs-<volume>)
 nimbus volume attach VOL_ID --cluster CLUSTER_ID

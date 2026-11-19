@@ -16,7 +16,7 @@ Naming: `test-{feature}-{method}.sh` where method is `cli` (provisioned via nimb
 
 | Script | Environment | What it tests |
 |--------|-------------|---------------|
-| `test-swarm-cli.sh` | 2 remote VMs | Swarm lifecycle, compute instances, EasyHAProxy ingress, local DNS resolution, NFS volume creation and mount on a compute instance. |
+| `test-swarm-cli.sh` | 2 remote VMs | Swarm lifecycle, containers, EasyHAProxy ingress, local DNS resolution, NFS volume creation and mount on a container. |
 | `test-kubernetes-cli.sh` | 2 remote VMs | K3s cluster creation, OIDC auth, kubeconfig retrieval, EasyHAProxy ingress on K8s, NFS volume attach/detach with PV/PVC verification. |
 | `test-s3-cli.sh` | 1 remote VM | RustFS S3 instance deployment, health check, console route, console SSO token, object operations, and teardown. |
 
@@ -26,7 +26,7 @@ Same test scenarios as above but using `nimbus manifest apply` for provisioning:
 
 | Script | Environment | What it tests |
 |--------|-------------|---------------|
-| `test-swarm-manifest.sh` | 2 remote VMs | Swarm manifest apply/remove, compute, NFS, EasyHAProxy |
+| `test-swarm-manifest.sh` | 2 remote VMs | Swarm manifest apply/remove, containers, NFS, EasyHAProxy |
 | `test-kubernetes-manifest.sh` | 2 remote VMs | K3s manifest apply/remove, kubeconfig, NFS PV/PVC |
 | `test-s3-manifest.sh` | 1 remote VM | S3 manifest apply/remove, RustFS health, console route, object operations |
 

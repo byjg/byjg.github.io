@@ -134,6 +134,14 @@ listen: ":9443"
 | `tls_cert` | | Path to TLS certificate (omit for auto-generated) |
 | `tls_key` | | Path to TLS private key |
 
+The GUI forwards dashboard requests to the API with the browser's address in
+`X-Forwarded-For`, so the API log names the real client. The API believes that
+header only from the GUI, which proves itself with its own client certificate
+(`gui-client.crt`/`gui-client.key` in the data directory, signed by the API CA).
+It is created and renewed automatically, and is separate from `tls_cert`, so
+using your own dashboard certificate does not affect it. Any other caller's
+`X-Forwarded-For` is ignored.
+
 TLS certificate behavior:
 - If `tls_cert`/`tls_key` are set, those are used directly
 - Otherwise, the GUI cert is auto-generated and signed by the API CA

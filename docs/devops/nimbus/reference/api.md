@@ -98,7 +98,7 @@ Values given inline override the profile's. With none, the control plane's own s
 
 The result is **never stored**. The task row is only the transport, and the API deletes it as soon as it hands the result over, so a scan is a live look at the runtime rather than an inventory that can go stale. Poll again for a fresh answer — the same task ID cannot be read twice.
 
-The scan reports only what DockNimbus did not create. Its own workloads are excluded, which is not simply a matter of one label: instances, the load balancer and DNS carry different `nimbus` label values, services belonging to a DockNimbus compose stack carry no `nimbus` label at all, and on Kubernetes the cluster's system namespaces and DockNimbus's own ingress namespace are excluded too.
+The scan reports only what DockNimbus did not create. Its own workloads are excluded, which is not simply a matter of one label: containers, the load balancer and DNS carry different `nimbus` label values, services belonging to a DockNimbus compose stack carry no `nimbus` label at all, and on Kubernetes the cluster's system namespaces and DockNimbus's own ingress namespace are excluded too.
 
 ### Node name vs. hostname
 
@@ -150,18 +150,25 @@ The IP change and the reissue are reported independently: if the certificate fai
 
 | Method   | Path                                            | Description                                        |
 |----------|-------------------------------------------------|----------------------------------------------------|
-| `POST`   | `/v1/compute/instances`                         | Create instance                                    |
-| `GET`    | `/v1/compute/instances`                         | List instances                                     |
-| `GET`    | `/v1/compute/instances/{id}`                    | Get instance                                       |
-| `DELETE` | `/v1/compute/instances/{id}`                    | Terminate instance                                 |
-| `POST`   | `/v1/compute/instances/{id}/stop`               | Stop instance                                      |
-| `POST`   | `/v1/compute/instances/{id}/start`              | Start instance                                     |
-| `POST`   | `/v1/compute/instances/{id}/scale`              | Scale replicas                                     |
-| `POST`   | `/v1/compute/instances/{id}/logs`               | Queue log fetch (`?lines=N` or `?since=TIMESTAMP`) |
-| `GET`    | `/v1/compute/instances/{id}/logs/{taskId}`      | Poll log fetch result                              |
-| `POST`   | `/v1/compute/instances/{id}/volumes`            | Attach volume                                      |
-| `DELETE` | `/v1/compute/instances/{id}/volumes/{volumeId}` | Detach volume                                      |
-| `GET`    | `/v1/compute/instance-types`                    | List instance types                                |
+| `POST`   | `/v1/containers`                         | Create container                                    |
+| `GET`    | `/v1/containers`                         | List containers                                     |
+| `GET`    | `/v1/containers/{id}`                    | Get container                                       |
+| `DELETE` | `/v1/containers/{id}`                    | Terminate container                                 |
+| `POST`   | `/v1/containers/{id}/stop`               | Stop container                                      |
+| `POST`   | `/v1/containers/{id}/start`              | Start container                                     |
+| `POST`   | `/v1/containers/{id}/scale`              | Scale replicas                                     |
+| `POST`   | `/v1/containers/{id}/logs`               | Queue log fetch (`?lines=N` or `?since=TIMESTAMP`) |
+| `GET`    | `/v1/containers/{id}/logs/{taskId}`      | Poll log fetch result                              |
+| `POST`   | `/v1/containers/{id}/volumes`            | Attach volume                                      |
+| `DELETE` | `/v1/containers/{id}/volumes/{volumeId}` | Detach volume                                      |
+| `GET`    | `/v1/containers/sizes`                   | List container sizes                               |
+
+A container's limits are given on create and update either as `size` (a name
+from `/v1/containers/sizes`) or as `cpu_limit` (millicores) and `mem_limit`
+(bytes), never both. On create, a limit not given comes from the `small` size;
+on update, from the container's current limits. Containers report `cpu_limit`
+and `mem_limit`; the size they were created with is not kept. Container log
+reads take `?replica=` to read one replica.
 
 ## Kubernetes (K3s)
 
@@ -214,7 +221,7 @@ fixed once created; volumes report it as `type`. A local volume has no `server_i
 | `DELETE` | `/v1/s3/instances/{id}` | Delete instance        |
 
 Deploy body: `name`, `swarm_id` and `volume_id` are required; `password` (at least 8 characters,
-generated when omitted) and `cert_id` (enables console SSO) are optional. Instances report `domain`
+generated when omitted) and `cert_id` (enables console SSO) are optional. Containers report `domain`
 (the S3 API) and `console_domain` (the web console).
 
 ## Services

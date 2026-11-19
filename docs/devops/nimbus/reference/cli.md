@@ -16,7 +16,7 @@ nimbus --context prod node list                           # use it
 export NIMBUS_CONFIG=prod                                 # or for the whole shell
 ```
 
-`--output` (`-o`) sets how read commands print: `table` (the default) for people, or `json` for scripts. It applies to every `list` command and to `node events`, `gateway status`, `manifest status` and `compute instance-types`; `describe` and `task show` print JSON already. The JSON is what the API returns, with its field names, so a script reads a field by name instead of by column position, and keeps working when a column is added to the table. An empty list prints `[]`.
+`--output` (`-o`) sets how read commands print: `table` (the default) for people, or `json` for scripts. It applies to every `list` command and to `node events`, `gateway status`, `manifest status` and `container sizes`; `describe` and `task show` print JSON already. The JSON is what the API returns, with its field names, so a script reads a field by name instead of by column position, and keeps working when a column is added to the table. An empty list prints `[]`.
 
 ```bash
 nimbus service list -o json | jq -r '.[] | select(.name == "web") | .status'
@@ -76,7 +76,7 @@ There are two ways to get a new agent onto a node, and they differ only in trans
 
 Like `add`, `update` runs its SSH connection from the **control plane**, not from your machine. It can use a stored SSH profile (`--profile`), and it reaches nodes your machine cannot. A `--key` file is read on your machine and sent to the control plane. The control plane copies the agent binary and a freshly issued client certificate to a private staging directory on the node, installs them owned by root (the certificate goes to `/var/lib/nimbus`, where the agent reads it), and restarts the agent. A non-root SSH user needs passwordless `sudo`. Progress is recorded as node events (`ssh_update_started`, `ssh_update_completed` or `ssh_update_failed`), which `update` prints as they arrive; it exits non-zero if any node failed. `update --local` updates the agent on the machine you run it on, without SSH.
 
-`os update` runs a full OS package upgrade (`apt-get upgrade` / `dnf upgrade`) on the node through its agent — it does not use SSH. If the upgrade requires a reboot (for example a new kernel), the node transitions to the `needs_reboot` state and stops running tasks until an administrator reboots it manually; the agent never reboots on its own. Use `--all` to queue the upgrade on every ready node. A node runs one upgrade at a time: a second request while one is running fails with "an OS update is already running on this node". The upgrade reports its own result when it ends; if it ends without doing so, the next heartbeat marks the task failed and queues an update check, so the node's counts and reboot flag still reflect what was installed.
+`os update` runs a full OS package upgrade (`apt-get dist-upgrade` / `dnf upgrade`) on the node through its agent — it does not use SSH. On apt, `dist-upgrade` rather than `upgrade` is what keeps a kernel and its prebuilt driver modules together: a plain or `--with-new-pkgs` upgrade installs the new kernel but keeps back the NVIDIA module that needs the old one removed, leaving the GPU without a driver after the reboot. The update check simulates the same command (`apt-get -s dist-upgrade` / `dnf upgrade --assumeno`), so the node's count is the packages it would upgrade (on dnf a new kernel counts, as it is installed beside the running one), and `node describe` (and the node page in the dashboard) lists separately the new packages it would install and the ones it would **remove**: read those before running `os update`. Phased updates still roll out gradually, and held packages (`apt-mark hold`) stay held. If the upgrade requires a reboot (for example a new kernel), the node transitions to the `needs_reboot` state and stops running tasks until an administrator reboots it manually; the agent never reboots on its own. Use `--all` to queue the upgrade on every ready node. A node runs one upgrade at a time: a second request while one is running fails with "an OS update is already running on this node". The upgrade reports its own result when it ends; if it ends without doing so, the next heartbeat marks the task failed and queues an update check, so the node's counts and reboot flag still reflect what was installed.
 
 Because the upgrade can take several minutes, the task reports a `running` status while it is in progress (visible in the node's task list in the UI and via `nimbus task list`). When it finishes, the package-manager output is stored on the task result — inspect it with `nimbus task show <task-id>`.
 
@@ -125,20 +125,20 @@ The agent also checks for available OS package updates automatically once per da
 | `list`      | List swarms          |                                             |
 | `delete`    | Delete a swarm       | `[id]`, `--force`                           |
 
-## nimbus compute
+## nimbus container
 
 | Subcommand       | Description           | Key Flags                                                                                                                                                   |
 |------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `create`         | Create an instance    | `--name`, `--image` (required), `--swarm` or `--k8s`, `--type`, `--replicas`, `--port`, `--domain`, `--volume`, `--env`, `--command`, `--platform`, `--gpu` |
+| `create`         | Create a container    | `--name`, `--image` (required), `--swarm` or `--k8s`, `--size` or `--cpu`/`--memory`, `--replicas`, `--port`, `--domain`, `--volume`, `--env`, `--command`, `--platform`, `--gpu` |
 | `scale`          | Scale replicas        | `--id` (required), `--replicas` (required)                                                                                                                  |
-| `clone`          | Clone an instance     | `--id` (required), `--name`, `--target-swarm`, `--target-k8s`                                                                                                |
-| `list`           | List instances        |                                                                                                                                                             |
-| `describe`       | Show instance details | `[id]`                                                                                                                                                      |
-| `delete`         | Delete an instance    | `[id]`                                                                                                                                                      |
-| `stop`           | Stop an instance      | `[id]`                                                                                                                                                      |
-| `start`          | Start an instance     | `[id]`                                                                                                                                                      |
-| `logs`           | Fetch instance logs   | `[id]`, `-n` (lines), `-w` (follow)                                                                                                                         |
-| `instance-types` | List instance types   |                                                                                                                                                             |
+| `clone`          | Clone a container     | `--id` (required), `--name`, `--target-swarm`, `--target-k8s`                                                                                                |
+| `list`           | List containers        |                                                                                                                                                             |
+| `describe`       | Show container details | `[id]`                                                                                                                                                      |
+| `delete`         | Delete a container    | `[id]`                                                                                                                                                      |
+| `stop`           | Stop a container      | `[id]`                                                                                                                                                      |
+| `start`          | Start a container     | `[id]`                                                                                                                                                      |
+| `logs`           | Fetch container logs   | `[id]`, `-n` (lines), `-w` (follow)                                                                                                                         |
+| `sizes`          | List container sizes  |                                                                                                                                                             |
 
 ## nimbus k8s
 
@@ -173,16 +173,16 @@ where it goes is a flag.
 | Subcommand  | Description                                   | Key Flags                                                                     |
 |-------------|-----------------------------------------------|-------------------------------------------------------------------------------|
 | `create`    | Create a volume (NFS, or local with `--local`) | `--name` (required), `--node` (required), `--folder` (required), `--local`    |
-| `list`      | List volumes, or what a target has            | `--cluster`, `--instance`                                                     |
-| `attach`    | Attach to an instance or a Kubernetes cluster | `[volume-id]`, `--instance` **or** `--cluster` (required), `--path`, `--size` |
-| `detach`    | Detach from an instance or a cluster          | `[volume-id]`, `--instance` **or** `--cluster` (required)                     |
+| `list`      | List volumes, or what a target has            | `--cluster`, `--container`                                                     |
+| `attach`    | Attach to a container or a Kubernetes cluster | `[volume-id]`, `--container` **or** `--cluster` (required), `--path`, `--size` |
+| `detach`    | Detach from a container or a cluster          | `[volume-id]`, `--container` **or** `--cluster` (required)                     |
 | `delete`    | Delete volume                                 | `[id]`                                                                        |
 
-`attach` takes exactly one target. `--path` is the mount path inside an instance and applies only to `--instance`; `--size` is the claim size and applies only to `--cluster`, where it defaults to `10Gi` — a claim has to carry a figure, and NFS ignores it.
+`attach` takes exactly one target. `--path` is the mount path inside a container and applies only to `--container`; `--size` is the claim size and applies only to `--cluster`, where it defaults to `10Gi` — a claim has to carry a figure, and NFS ignores it.
 
 There is no `--swarm`, for either verb. A volume is created as a Docker volume on **every** swarm node when it is created, so a Compose stack can reference `nfs-<volume>` as `external` with nothing to attach first. Kubernetes is the exception: the claim is per-cluster and exists only once attached. See [Volumes](../guides/volumes).
 
-`list` with no flags shows every volume. `--cluster` shows what is attached to a cluster and the claim each provides; `--instance` shows what is mounted in an instance and where. Detaching from a cluster waits for the cluster's answer and reports it: Kubernetes will not complete the deletion while a pod still mounts the claim.
+`list` with no flags shows every volume. `--cluster` shows what is attached to a cluster and the claim each provides; `--container` shows what is mounted in a container and where. Detaching from a cluster waits for the cluster's answer and reports it: Kubernetes will not complete the deletion while a pod still mounts the claim.
 
 ## nimbus secret / nimbus config
 

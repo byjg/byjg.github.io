@@ -53,7 +53,7 @@ Running `nimbus manifest apply` multiple times is safe:
 
 ### Change detection
 
-On re-apply, compute instances are compared against the manifest. Changes to `image`, `type`, `domain`, `ports`, `env`, `command`, or `volumes` trigger automatic recreation. Replica count changes are applied in-place via scaling.
+On re-apply, containers are compared against the manifest. Changes to `image`, the CPU or memory limits, `domain`, `ports`, `env`, `command`, or `volumes` trigger automatic recreation. Replica count changes are applied in-place via scaling.
 
 ### Node reconciliation
 
@@ -72,11 +72,11 @@ swarms:
   prod:
     external: true
 
-compute:
+containers:
   web-app:
     swarm: prod           # Uses the external swarm
     image: nginx:latest
-    type: small
+    size: small
 ```
 
 This enables multi-manifest workflows where infra and apps are managed separately.
@@ -90,7 +90,7 @@ With `--prune`, resources tagged with the manifest name that are no longer decla
 nimbus manifest apply --file infra.yaml --prune
 
 # Later, remove api-server from the YAML and re-apply
-# --prune deletes the orphaned api-server instance
+# --prune deletes the orphaned api-server container
 nimbus manifest apply --file infra.yaml --prune
 ```
 

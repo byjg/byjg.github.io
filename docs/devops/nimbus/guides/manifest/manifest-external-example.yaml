@@ -59,11 +59,11 @@ kubernetes:
     #             - name: app
     #               image: nginx:latest
 
-compute:
+containers:
   web-app:
     swarm: prod
     image: byjg/static-httpserver
-    type: small
+    size: small
     replicas: 1
     # domain: app.example.com
     ports:

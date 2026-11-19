@@ -6,7 +6,7 @@ title: "Docker Swarms & Load Balancing"
 
 # Docker Swarms & Load Balancing
 
-Docker Swarms group nodes into a cluster for running compute instances and services. EasyHAProxy provides automatic load balancing and ingress routing.
+Docker Swarms group nodes into a cluster for running containers and services. EasyHAProxy provides automatic load balancing and ingress routing.
 
 ## Create a swarm
 
@@ -69,7 +69,7 @@ An upgrade replaces the image and keeps EasyHAProxy on managers, which it needs 
 
 ## HTTPS with your own certificates
 
-A certificate registered with `nimbus certificate create` is also served by the load balancer of every swarm, on 443, for any service routed to its domain: a compute instance created with `--domain`, or a Compose stack with EasyHAProxy labels.
+A certificate registered with `nimbus certificate create` is also served by the load balancer of every swarm, on 443, for any service routed to its domain: a container created with `--domain`, or a Compose stack with EasyHAProxy labels.
 
 ```bash
 nimbus certificate create --domain chat.example.lan \
@@ -130,7 +130,7 @@ DockNimbus manages only the resources it created, so anything you deploy straigh
 
 Press **Scan** to run it. The scan is manual rather than automatic because each run queues a task on the swarm manager, and its result is never stored — it is a live look at the swarm, accurate as of the moment you pressed the button.
 
-DockNimbus's own services are excluded: instances, the load balancer, local DNS, and every service belonging to a stack deployed through DockNimbus, including stacks whose services carry no DockNimbus label of their own.
+DockNimbus's own services are excluded: containers, the load balancer, local DNS, and every service belonging to a stack deployed through DockNimbus, including stacks whose services carry no DockNimbus label of their own.
 
 The panel is read-only. It shows you what is there; stopping it is still done through Docker.
 
@@ -141,7 +141,7 @@ nimbus swarm delete SWARM_ID          # load balancer and nodes removed first
 nimbus swarm delete SWARM_ID --force  # removes the load balancer, every node leaves
 ```
 
-A swarm that still has instances or services Nimbus manages (that are not terminated) cannot be
+A swarm that still has containers or services Nimbus manages (that are not terminated) cannot be
 deleted: delete them first. The same holds for removing its last node, or deleting that node.
 
 Every member leaves the Docker swarm, and the swarm shows as `deleting` until they all have. A node

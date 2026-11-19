@@ -17,10 +17,10 @@ DockNimbus turns heterogeneous bare metal machines (Raspberry Pi 4/5, x86 server
 
 **Key capabilities:**
 
-- **Infrastructure as Code** — Declare your entire infrastructure in a [single YAML manifest](guides/manifest/overview): nodes, volumes, swarms, Kubernetes clusters, compute instances, and services. Idempotent apply, drift detection, and pruning of orphaned resources.
+- **Infrastructure as Code** — Declare your entire infrastructure in a [single YAML manifest](guides/manifest/overview): nodes, volumes, swarms, Kubernetes clusters, containers, and services. Idempotent apply, drift detection, and pruning of orphaned resources.
 - **Zero-trust networking** — All inter-node traffic is encrypted via a WireGuard mesh VPN. Agents authenticate to the control plane using mTLS with auto-issued per-node certificates.
 - **Heterogeneous hardware** — Mix ARM64 (Raspberry Pi) and x86 servers in the same cluster. Platform constraints route workloads to the right architecture.
-- **GPU compute** — NVIDIA GPU support with automatic driver installation, per-device inventory, and time-slicing. Request GPUs with `--gpu N` on any instance type.
+- **GPU compute** — NVIDIA GPU support with automatic driver installation, per-device inventory, and time-slicing. Request GPUs with `--gpu N` on any container size.
 
 ## Architecture
 
@@ -51,7 +51,7 @@ User --> nimbus-gui (Web UI) -------^
 | [Getting Started](getting-started/installation) | Installation, quick start, first workload |
 | [Guides](guides/compute) | Task-oriented guides for compute, Kubernetes, volumes, S3, swarms, services, IAM, and manifests |
 | [Concepts](concepts/architecture) | Architecture, networking, and security model |
-| [Reference](reference/cli) | CLI commands, API endpoints, configuration, instance types |
+| [Reference](reference/cli) | CLI commands, API endpoints, configuration, container sizes |
 | [Development](development/local-setup) | Local setup, building, and testing |
 
 ## Quick Start
@@ -89,4 +89,4 @@ See the [Quick Start guide](getting-started/quick-start) for the full walkthroug
 
 ## Current Release
 
-v0.10.2
+v0.11.0
