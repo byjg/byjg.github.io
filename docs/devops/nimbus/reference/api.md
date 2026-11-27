@@ -47,6 +47,8 @@ Used by agents. Requires mutual TLS with a valid client certificate.
 | `POST`   | `/v1/nodes/{id}/drain`          | Cordon a node and have its orchestrators move the workloads off           |
 | `POST`   | `/v1/nodes/{id}/cordon`         | Mark a node unschedulable, leaving its workloads alone                    |
 | `POST`   | `/v1/nodes/{id}/uncordon`       | Put a cordoned or drained node back into service                          |
+| `POST`   | `/v1/nodes/{id}/vm-host`        | Make a node a VM host (`{"bridge"}`: a bridge on the node; empty, Nimbus creates `nimbus-br0`). `202`; `409` with the reason when the node cannot be one |
+| `DELETE` | `/v1/nodes/{id}/vm-host`        | Make a VM host an ordinary node again, removing the bridge Nimbus created (`202`) |
 | `POST`   | `/v1/nodes/{id}/gpu-overcommit` | Set GPU overcommit factor (`{"gpu_overcommit_factor": N}`, N ∈ {1,2,4,8}) |
 | `POST`   | `/v1/nodes/{id}/update-agent`   | Queue an agent binary update on the node (no SSH; node must be `ready`)   |
 | `POST`   | `/v1/nodes/{id}/update-ssh`     | Update the agent binary and client certificate over SSH from the control plane, in the background (`202`); for an agent that is down. Takes the SSH credential fields below |
@@ -169,6 +171,31 @@ from `/v1/containers/sizes`) or as `cpu_limit` (millicores) and `mem_limit`
 on update, from the container's current limits. Containers report `cpu_limit`
 and `mem_limit`; the size they were created with is not kept. Container log
 reads take `?replica=` to read one replica.
+
+## VMs
+
+VMs on VM hosts ([VMs](../guides/vms)). `{id}` is a VM's ID or name.
+
+| Method   | Path                          | Description |
+|----------|-------------------------------|-------------|
+| `GET`    | `/v1/vms`                     | List VMs |
+| `POST`   | `/v1/vms`                     | Create a VM (`{"name", "node_id", "image", "size"` or `"cpu"` (millicores, whole vCPUs) and `"memory"` (bytes), `"disk"` (bytes, default 20 GiB), `"ssh_keys": [...]`, `"ssh_profiles": [...]` (profile names; their public keys are added), `"cloud_init"` (`#cloud-config` or `#!` script, up to 64 KiB, merged with Nimbus's; not kept after the node has it)}); `202`. `400`/`409` with the reason when it cannot be created |
+| `GET`    | `/v1/vms/images`              | The images a VM takes by name, with their URL per architecture |
+| `GET`    | `/v1/vms/{id}`                | Get a VM |
+| `DELETE` | `/v1/vms/{id}`                | Delete a VM and its disk (`202`) |
+| `POST`   | `/v1/vms/{id}/start`          | Start a stopped VM (`202`) |
+| `POST`   | `/v1/vms/{id}/stop`           | Shut a VM down: power button, forced after 60 s (`202`) |
+| `POST`   | `/v1/vms/{id}/restart`        | Stop and start a VM (`202`) |
+| `POST`   | `/v1/vms/{id}/resize`         | Resize a running or stopped VM (`{"size"` or `"cpu"`/`"memory"`, `"disk"}`; a limit not given stays, the disk can only grow); `202`. A running VM restarts. `400`/`409` with the reason |
+| `POST`   | `/v1/vms/{id}/logs`           | Queue reading the serial console (`?lines=N`, default 100); returns a task ID |
+| `GET`    | `/v1/vms/{id}/logs/{taskId}`  | Poll the console read |
+
+A running VM has `usage` (`{"cpu"` millicores, averaged since the previous
+heartbeat, `"memory"` bytes QEMU holds, `"disk"` bytes written over its image`}`),
+absent while it is not running and until its host has measured it twice. A VM
+host's node has `vm_capacity` (`{"vms", "cpu", "cpu_given"` millicores,
+`"memory", "memory_given"` bytes, `"disk_given", "disk_free"` bytes`}`): what its
+VMs, stopped ones included, were given and what they can have.
 
 ## Kubernetes (K3s)
 
