@@ -66,6 +66,8 @@ Show client and server versions.
 | `cordon`         | Stop scheduling new workloads on a node | `[id]`                                                                               |
 | `drain`          | Cordon a node and move its workloads elsewhere | `[id]`                                                                        |
 | `uncordon`       | Put a drained node back into service | `[id]`                                                                                  |
+| `vm-host enable` | Make a node a VM host: install QEMU and set up the bridge its VMs use ([VMs](../guides/vms)) | `NODE`, `--bridge` |
+| `vm-host disable` | Make a VM host an ordinary node again, removing the bridge Nimbus created | `NODE`                                          |
 | `delete`         | Delete a node                 | `[id]`                                                                                                         |
 | `set-ip`         | Change a node's IP / pinned interface | `[node-id]`, `--ip`, `--interface`, `--regenerate-cert`                                                |
 | `gpu-overcommit` | Set GPU overcommit factor     | `[node-id]` `[factor]` (1, 2, 4, or 8)                                                                         |
@@ -115,6 +117,24 @@ Cordoning is independent of a node's status, so a cordoned node still reports `r
 `set-ip` records a node's new address and pins the interface the agent watches for future changes. For the **control-plane** node, add `--regenerate-cert`: the API's TLS certificate lists the addresses it was issued for, so after the control plane moves, clients cannot verify it on the new one. The flag reissues that certificate from the existing CA and swaps it in without a restart — agents and already-downloaded connection configs keep working, since the CA is unchanged. See [Handling Dynamic Node IPs](../guides/node-dynamic-ip).
 
 The agent also checks for available OS package updates automatically once per day and reports the counts back to the control plane. `nimbus node list` shows an `UPDATES` column (total, with the security subset in parentheses; `-` means the node has not reported a check yet), and the node detail view shows the same along with when it was last checked. Each check also looks for a pending reboot (`/var/run/reboot-required`, or `dnf needs-restarting -r`), so packages installed outside `os update` — by `unattended-upgrades` or by hand — still put the node in `needs_reboot`. Nothing is installed automatically — use `os update` when you want to apply them.
+
+## nimbus vm
+
+VMs on VM hosts; see [VMs](../guides/vms).
+
+| Subcommand | Description | Key Flags |
+|------------|-------------|-----------|
+| `create`   | Create a VM on a VM host and start it | `--name`, `--node` (required), `--image` (default `ubuntu-24.04`), `--size` or `--cpu`/`--memory`, `--disk` (default `20G`), `--ssh-key`, `--ssh-profile` (repeatable), `--cloud-init` |
+| `list`     | List VMs, with their addresses, how to log in and, while they run, what they use | `-o json` |
+| `describe` | Show a VM's details | `VM` |
+| `start`    | Start a stopped VM | `VM` |
+| `stop`     | Shut a VM down; the guest gets 60 s before it is stopped hard | `VM` |
+| `restart`  | Stop and start a VM | `VM` |
+| `resize`   | Change a VM's vCPUs and memory, or grow its disk; a running VM restarts, after you confirm | `VM`, `--size` or `--cpu`/`--memory`, `--disk`, `--yes` |
+| `delete`   | Delete a VM and its disk, after typing its name | `VM`, `--yes` |
+| `logs`     | The end of a VM's serial console | `VM`, `-n LINES` |
+| `images`   | The images a VM takes by name | |
+| `sizes`    | The sizes a VM can take (whole vCPUs) | |
 
 ## nimbus swarm
 

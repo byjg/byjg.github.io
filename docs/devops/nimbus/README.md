@@ -49,7 +49,7 @@ User --> nimbus-gui (Web UI) -------^
 | Section | Description |
 |---------|-------------|
 | [Getting Started](getting-started/installation) | Installation, quick start, first workload |
-| [Guides](guides/compute) | Task-oriented guides for compute, Kubernetes, volumes, S3, swarms, services, IAM, and manifests |
+| [Guides](guides/containers) | Task-oriented guides for compute, Kubernetes, volumes, S3, swarms, services, IAM, and manifests |
 | [Concepts](concepts/architecture) | Architecture, networking, and security model |
 | [Reference](reference/cli) | CLI commands, API endpoints, configuration, container sizes |
 | [Development](development/local-setup) | Local setup, building, and testing |
